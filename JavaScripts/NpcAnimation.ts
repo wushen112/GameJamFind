@@ -1,30 +1,47 @@
 ﻿
 @Component
 export default class NpcAnimation extends Script {
-    @Property({displayName:"动画guid"})
-    private   AnimaGuid : string = "";
+    @Property({ displayName: "动画guid" })
+    private AnimaGuid: string = "";
+    @Property({ displayName: "动画动画插槽" })
+    private animSlot:AnimSlot =0 ;
+    @Property({ displayName: "姿态guid" })
+    private StanceGuid: string = "";
 
-    private Npc : Character;
+    private Npc: Character;
     private anima: Animation;
+    private Stance: SubStance;
     /** 当脚本被实例后，会在第一帧更新前调用此函数 */
     protected onStart(): void {
         setTimeout(() => {
-            this.Npc= this.gameObject as Character;
-            this.init(this.AnimaGuid)
+            this.Npc = this.gameObject as Character;
+            this.init()
         }, 3000);
-        // AssetUtil.asyncDownloadAsset(this.AnimaGuid)
-        // 
     }
 
 
-    async init(guid){
-        if(AssetUtil.assetLoaded(guid)){
-            await AssetUtil.asyncDownloadAsset(guid)
+    async init() {
+        //判断是否有动画
+        if(this.StanceGuid!=null&&this.StanceGuid!=""){
+            if (AssetUtil.assetLoaded(this.AnimaGuid)) {
+                await AssetUtil.asyncDownloadAsset(this.AnimaGuid)
+            }
+            this.anima = this.Npc.loadAnimation(this.AnimaGuid)
+            this.anima.loop = 0;
+            this.anima.slot=this.animSlot;
+            this.anima.play()
+            console.log("Anima:" + this.gameObject + ":" + this.anima)
         }
-        this.anima=this.Npc.loadAnimation(this.AnimaGuid)
-        this.anima.loop=0;
-        this.anima.play()
-        console.log("anima:"+this.gameObject+":"+this.anima)
+        //判断是否有姿态
+        if(this.StanceGuid!=null&&this.StanceGuid!=""){
+            if (AssetUtil.assetLoaded(this.StanceGuid)) {
+                await AssetUtil.asyncDownloadAsset(this.StanceGuid)
+            }
+            this.Stance = this.Npc.loadSubStance(this.StanceGuid);
+            this.Stance.blendMode = StanceBlendMode.BlendLower;
+            this.Stance.play();
+            console.log("Stance:" + this.gameObject + ":" + this.anima)
+        }
     }
 
     /**
