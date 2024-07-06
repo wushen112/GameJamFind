@@ -23,9 +23,6 @@ export default class EventController  {
         return UIService.getUI(DefaultUI).slots;
     }
 
-    public get exChangeMap(){
-        return UIService.getUI(DefaultUI).exChange;
-    }
 
     public judge(obj:GameObject){
         try {

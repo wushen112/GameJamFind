@@ -993,9 +993,10 @@ export default class GameStart extends Script {
             M_Player.instance.test_query()
             this.cnt_time = 0
         }
-        if(this._character.worldTransform.position.z<= -750){
-            GameController.instance.judgeDie(true);
-        }
+        // if(this._character.worldTransform.position.z<= -750){
+        //     GameController.instance.judgeDie(true);
+        //     this._character.worldTransform.position = 
+        // }
 
     }
 }
