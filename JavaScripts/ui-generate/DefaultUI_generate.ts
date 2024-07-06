@@ -10,7 +10,14 @@
 
 @UIBind('UI/DefaultUI.ui')
 export default class DefaultUI_Generate extends UIScript {
-		private mCanvas_Time_Internal: mw.Canvas
+		private virtualJoystickPanel_Internal: mw.VirtualJoystickPanel
+	public get virtualJoystickPanel(): mw.VirtualJoystickPanel {
+		if(!this.virtualJoystickPanel_Internal&&this.uiWidgetBase) {
+			this.virtualJoystickPanel_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/virtualJoystickPanel') as mw.VirtualJoystickPanel
+		}
+		return this.virtualJoystickPanel_Internal
+	}
+	private mCanvas_Time_Internal: mw.Canvas
 	public get mCanvas_Time(): mw.Canvas {
 		if(!this.mCanvas_Time_Internal&&this.uiWidgetBase) {
 			this.mCanvas_Time_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time') as mw.Canvas

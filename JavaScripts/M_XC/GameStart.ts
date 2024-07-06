@@ -6,6 +6,7 @@
  * @abstract 增加收获奖杯动效
  */
 import { Obj_Manager } from "./Obj_Manager";
+import MainUI from "./ui/UIMain";
 
 export namespace Tools{
     export function imageJump(targetImg: mw.Widget) {
@@ -708,7 +709,7 @@ export class M_Player {
     //射线检测
     public test_query(){ 
        let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(600))
-       ,false,false,[],false,false,this.PlayerChar)
+       ,false,true,[],false,false,this.PlayerChar)
        Obj_Manager.instance.check_get(res)
     }
     //根据资源GUID播放音乐
@@ -957,6 +958,10 @@ export default class GameStart extends Script {
                 M_Player.instance.UpdateTitle(title);
             })
         }
+        this.useUpdate = true
+
+        UIService.show(MainUI)
+
     }
 
     protected onUpdate(dt: number): void {
