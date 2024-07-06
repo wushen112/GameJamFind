@@ -10,7 +10,21 @@
 
 @UIBind('UI/DefaultUI.ui')
 export default class DefaultUI_Generate extends UIScript {
-	
+		private mCanvas_Time_Internal: mw.Canvas
+	public get mCanvas_Time(): mw.Canvas {
+		if(!this.mCanvas_Time_Internal&&this.uiWidgetBase) {
+			this.mCanvas_Time_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time') as mw.Canvas
+		}
+		return this.mCanvas_Time_Internal
+	}
+	private mText_Time_Internal: mw.TextBlock
+	public get mText_Time(): mw.TextBlock {
+		if(!this.mText_Time_Internal&&this.uiWidgetBase) {
+			this.mText_Time_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time/mText_Time') as mw.TextBlock
+		}
+		return this.mText_Time_Internal
+	}
+
 
  
 	/**
