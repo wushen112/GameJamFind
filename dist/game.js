@@ -1631,6 +1631,672 @@ var foreign9 = /*#__PURE__*/Object.freeze({
     default: UseItemTrigger$1
 });
 
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/DefaultUI.ui
+*/
+let DefaultUI_Generate = class DefaultUI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+DefaultUI_Generate = __decorate([
+    UIBind('UI/DefaultUI.ui')
+], DefaultUI_Generate);
+var DefaultUI_Generate$1 = DefaultUI_Generate;
+
+var foreign10 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: DefaultUI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Dress_UI.ui
+*/
+let Dress_UI_Generate = class Dress_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Dress_UI_Generate = __decorate([
+    UIBind('UI/Dress_UI.ui')
+], Dress_UI_Generate);
+var Dress_UI_Generate$1 = Dress_UI_Generate;
+
+var foreign11 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Dress_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/GameManagerUI.ui
+*/
+let GameManagerUI_Generate = class GameManagerUI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+GameManagerUI_Generate = __decorate([
+    UIBind('UI/GameManagerUI.ui')
+], GameManagerUI_Generate);
+var GameManagerUI_Generate$1 = GameManagerUI_Generate;
+
+var foreign12 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: GameManagerUI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Get_Item_UI.ui
+*/
+let Get_Item_UI_Generate = class Get_Item_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Get_Item_UI_Generate = __decorate([
+    UIBind('UI/Get_Item_UI.ui')
+], Get_Item_UI_Generate);
+var Get_Item_UI_Generate$1 = Get_Item_UI_Generate;
+
+var foreign13 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Get_Item_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/IAAUI.ui
+*/
+let IAAUI_Generate = class IAAUI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+IAAUI_Generate = __decorate([
+    UIBind('UI/IAAUI.ui')
+], IAAUI_Generate);
+var IAAUI_Generate$1 = IAAUI_Generate;
+
+var foreign14 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: IAAUI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Illustrate_UI.ui
+*/
+let Illustrate_UI_Generate = class Illustrate_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Illustrate_UI_Generate = __decorate([
+    UIBind('UI/Illustrate_UI.ui')
+], Illustrate_UI_Generate);
+var Illustrate_UI_Generate$1 = Illustrate_UI_Generate;
+
+var foreign15 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Illustrate_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Item_UI.ui
+*/
+let Item_UI_Generate = class Item_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Item_UI_Generate = __decorate([
+    UIBind('UI/Item_UI.ui')
+], Item_UI_Generate);
+var Item_UI_Generate$1 = Item_UI_Generate;
+
+var foreign16 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Item_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Level_UI.ui
+*/
+let Level_UI_Generate = class Level_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Level_UI_Generate = __decorate([
+    UIBind('UI/Level_UI.ui')
+], Level_UI_Generate);
+var Level_UI_Generate$1 = Level_UI_Generate;
+
+var foreign17 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Level_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Select_UI.ui
+*/
+let Select_UI_Generate = class Select_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Select_UI_Generate = __decorate([
+    UIBind('UI/Select_UI.ui')
+], Select_UI_Generate);
+var Select_UI_Generate$1 = Select_UI_Generate;
+
+var foreign18 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Select_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Slot_UI.ui
+*/
+let Slot_UI_Generate = class Slot_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Slot_UI_Generate = __decorate([
+    UIBind('UI/Slot_UI.ui')
+], Slot_UI_Generate);
+var Slot_UI_Generate$1 = Slot_UI_Generate;
+
+var foreign19 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Slot_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Tips.ui
+*/
+let Tips_Generate = class Tips_Generate extends UIScript {
+    get mCell1() {
+        if (!this.mCell1_Internal && this.uiWidgetBase) {
+            this.mCell1_Internal = this.uiWidgetBase.findChildByPath('Canvas/mCell1');
+        }
+        return this.mCell1_Internal;
+    }
+    get mCell2() {
+        if (!this.mCell2_Internal && this.uiWidgetBase) {
+            this.mCell2_Internal = this.uiWidgetBase.findChildByPath('Canvas/mCell2');
+        }
+        return this.mCell2_Internal;
+    }
+    get mCell3() {
+        if (!this.mCell3_Internal && this.uiWidgetBase) {
+            this.mCell3_Internal = this.uiWidgetBase.findChildByPath('Canvas/mCell3');
+        }
+        return this.mCell3_Internal;
+    }
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Tips_Generate = __decorate([
+    UIBind('UI/Tips.ui')
+], Tips_Generate);
+var Tips_Generate$1 = Tips_Generate;
+
+var foreign20 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Tips_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/Tip_UI.ui
+*/
+let Tip_UI_Generate = class Tip_UI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+Tip_UI_Generate = __decorate([
+    UIBind('UI/Tip_UI.ui')
+], Tip_UI_Generate);
+var Tip_UI_Generate$1 = Tip_UI_Generate;
+
+var foreign21 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Tip_UI_Generate$1
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/UserRankUI.ui
+*/
+let UserRankUI_Generate = class UserRankUI_Generate extends UIScript {
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+UserRankUI_Generate = __decorate([
+    UIBind('UI/UserRankUI.ui')
+], UserRankUI_Generate);
+var UserRankUI_Generate$1 = UserRankUI_Generate;
+
+var foreign22 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: UserRankUI_Generate$1
+});
+
+/*
+ * @Author       : hangyuan.zhang hangyuan.zhang@appshahe.com
+ * @Date         : 2023-05-18 14:57:43
+ * @LastEditors  : hangyuan.zhang hangyuan.zhang@appshahe.com
+ * @LastEditTime : 2024-04-24 11:48:40
+ * @FilePath     : \RE\JavaScripts\submodule\utils\GameAnimaiton.ts
+ * @Description  :
+ */
+class GameAnimation {
+    static get instance() {
+        if (GameAnimation._instance == null) {
+            GameAnimation._instance = new GameAnimation();
+        }
+        return GameAnimation._instance;
+    }
+    /**
+     * 不为全明星服务的通用的飘字
+     * @param startLocation
+     * @param endLocation
+     * @param targetUI
+     * @param time
+     * @param onFinished
+     */
+    playFlyUI(startLocation, endLocation, targetUI, time, onFinished) {
+        let tween = new mw.Tween(startLocation.clone());
+        //飘到指定位置
+        tween.to(endLocation, time * 1000).onUpdate((data) => {
+            console.log(targetUI.position);
+            targetUI.position = data;
+        }).onComplete(() => {
+            onFinished && onFinished();
+        });
+        tween.start();
+    }
+    /**
+     *
+     * @param targetUI 需要放大的目标UI
+     * @param largeTime 放大的时间
+     * @param largeStart 放大开始的大小
+     * @param largeRate 放大最终的大小
+     * @param shrinkTime 缩小的时间
+     * @param shrinkRate 缩小的最终大小
+     * @param onFinished 结束的回调
+     * @returns 两个tween 放大，缩小
+     */
+    playerEnlargeAnimation(targetUI, largeTime, largeStart, largeRate, shrinkTime = 0, shrinkRate, onFinished) {
+        //缩小
+        let shrinkAnim = null;
+        if (shrinkTime != 0) {
+            shrinkAnim = new mw.Tween(largeRate)
+                .to(shrinkRate, shrinkTime * 1000)
+                .onUpdate((data) => {
+                // console.log("data 缩小", data)
+                targetUI.renderScale = data;
+            }).onComplete(() => {
+                onFinished && onFinished();
+            });
+        }
+        //放大
+        let enLargeAnim = new mw.Tween(largeStart)
+            .to(largeRate, largeTime * 1000)
+            .onUpdate((data) => {
+            // console.log("data", data);
+            targetUI.renderScale = data;
+        }).onComplete(() => {
+            if (shrinkTime != 0) {
+                shrinkAnim.start();
+            }
+            else {
+                onFinished && onFinished();
+            }
+        })
+            .start();
+        return [enLargeAnim, shrinkAnim];
+    }
+    /**
+     * 平移的动画
+     * @param starVector2 开始的位置
+     * @param endVector2 结束的位置
+     * @param time 持续的时间
+     * @param ui 被平移的ui
+     */
+    playTranslateAnimation(startLocation, endLocation, time, targetUI, onFinished) {
+        return new mw.Tween(startLocation)
+            .to(endLocation, time * 1000)
+            .onUpdate((data) => {
+            //console.log("data", targetUI, data);
+            targetUI.position = data;
+        }).onComplete(() => {
+            onFinished && onFinished();
+        })
+            .start();
+    }
+    /**
+     * 渲染透明
+     * @param start
+     * @param end
+     * @param time
+     * @param targetUI
+     * @param onFinished
+     * @returns 返回tween
+     */
+    playFadeAnimation(start, end, time, targetUI, onFinished) {
+        return new mw.Tween({ renderOpacity: start })
+            .to({ renderOpacity: end }, time * 1000)
+            .onUpdate((data) => {
+            //console.log("data", targetUI, data);
+            targetUI.renderOpacity = data.renderOpacity;
+        }).onComplete(() => {
+            onFinished && onFinished();
+        })
+            .start();
+    }
+    /**
+     * 左右抖动的动画
+     * @param targetUI 目标UI
+     * @param angle 旋转的角度
+     * @param time 时间
+     * @param times 次数
+     * @param onFinished 结束的回调
+     */
+    playWobbleAnimation(targetUI, angle, time, times, onFinished, startAngle) {
+        if (!startAngle) {
+            startAngle = targetUI.renderTransformAngle;
+        }
+        let targetAngle = startAngle + angle;
+        let rightWobble = new mw.Tween({ angle1: targetAngle })
+            .to({ angle1: times != 0 ? startAngle - angle : startAngle }, time * 2000)
+            .onUpdate((data) => {
+            // console.log("data", targetUI, data.angle1);
+            targetUI.renderTransformAngle = data.angle1;
+        }).onComplete(() => {
+            if (times > 0) {
+                this.playWobbleAnimation(targetUI, angle, time, times - 1, onFinished, startAngle);
+            }
+            else {
+                onFinished && onFinished();
+            }
+        });
+        new mw.Tween({ angle1: startAngle })
+            .to({ angle1: targetAngle }, time * 1000)
+            .onUpdate((data) => {
+            // console.log("data", targetUI, data.angle1);
+            targetUI.renderTransformAngle = data.angle1;
+        }).onComplete(() => {
+            rightWobble.start();
+        })
+            .start();
+    }
+    /**
+    * 通过位移抖动的动画
+    * @param targetUI 目标UI
+    * @param offsetPos 位移相对原来位置得偏移
+    * @param time 时间
+    * @param times 次数
+    * @param onFinished 结束的回调
+    * @returns 返回左 右两个tween
+    */
+    playTransWobbleAnimation(targetUI, offsetPos, time, times, startPos, onFinished) {
+        let position = targetUI.position.clone();
+        if (startPos) {
+            position = startPos;
+        }
+        const endPosition = position.clone().subtract(offsetPos);
+        let rightWobble = new mw.Tween(endPosition.clone())
+            .to(position.clone(), time * 2000)
+            .onUpdate((data) => {
+            //console.log("data 位置", targetUI, data);
+            targetUI.position = data;
+        }).onComplete(() => {
+            if (times > 0) {
+                this.playTransWobbleAnimation(targetUI, offsetPos, time, times - 1, startPos, onFinished);
+            }
+            else {
+                onFinished && onFinished();
+            }
+        });
+        let leftWobble = new mw.Tween(position.clone())
+            .to(endPosition.clone(), time * 1000)
+            .onUpdate((data) => {
+            targetUI.position = data;
+        }).onComplete(() => {
+            rightWobble.start();
+        })
+            .start();
+        return [leftWobble, rightWobble];
+    }
+}
+GameAnimation._instance = null;
+var IconType;
+(function (IconType) {
+    /**建造的货币 */
+    IconType[IconType["MONEY"] = 1] = "MONEY";
+    /**竞技币 */
+    IconType[IconType["TOKEN"] = 2] = "TOKEN";
+    /** 战令经验 */
+    IconType[IconType["BP_EXP"] = 3] = "BP_EXP";
+    /**排位积分 */
+    IconType[IconType["BR_SCORE"] = 4] = "BR_SCORE";
+    IconType[IconType["WEEK_CHECK_SCORE"] = 5] = "WEEK_CHECK_SCORE";
+})(IconType || (IconType = {}));
+
+var foreign23 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    get IconType () { return IconType; },
+    default: GameAnimation
+});
+
+/**
+ * 系统提示，一个顶一个向上跳动，然后消失，最多三条。继承自Tips_Generate
+ */
+class Tips extends Tips_Generate$1 {
+    constructor() {
+        super(...arguments);
+        /**当前空闲的条目*/
+        this.freeCellArr = [];
+        /**当前激活的条目*/
+        this.activeCellArr = [];
+        /**已经完成的条目*/
+        this.overCellArr = [];
+    }
+    /**
+     * 获得提示单例
+     * @returns 返回提示单例
+     *  */
+    static get instance() {
+        if (this._instance == null) {
+            this._instance = mw.UIService.create(Tips);
+        }
+        return this._instance;
+    }
+    /**
+     * 初始化当前空闲的条目，隐藏UI
+     */
+    onStart() {
+        this.freeCellArr = [this.mCell1, this.mCell2, this.mCell3];
+        this.canUpdate = true;
+        this.onLayout();
+    }
+    /**
+     * 隐藏的对象不参与UI布局，所以要布局完成后再隐藏
+    */
+    onLayout() {
+        for (let i = 0; i < this.freeCellArr.length; i++) {
+            this.freeCellArr[i].visibility = (mw.SlateVisibility.Collapsed);
+        }
+    }
+    /**
+     * 显示系统提示 (Client Only)
+     * @param content 提示内容
+     */
+    static show(content) {
+        //	if (mw.SystemUtil.isServer()) return;
+        mw.UIService.showUI(Tips.instance, mw.UILayerSystem);
+        Tips.instance.showMsg(content);
+    }
+    /**
+     * 显示Msg提示，如果没有空闲的条目，就把最后一个条目移动到最上面，然后显示提示内容
+     * @param content 提示内容
+     */
+    showMsg(content) {
+        let cell = null;
+        if (this.freeCellArr.length > 0) {
+            cell = this.freeCellArr.shift();
+        }
+        else {
+            cell = this.activeCellArr.shift();
+        }
+        /**Fix 动态计算Canvas居中位置*/
+        cell.position = new mw.Vector2(mw.WindowUtil.getViewportSize().x / 2 - cell.size.x / 2, cell.position.y);
+        let text = cell.findChildByPath('Content_txt');
+        text.text = (content);
+        cell["state"] = 0;
+        cell["stopTime"] = 0;
+        this.activeCellArr.push(cell);
+    }
+    /**
+     * 计算条目canvas的位置，移动Tips，如果条目移动到最上面，就隐藏
+     * @param dt 两帧之间的时间差
+     */
+    onUpdate(dt) {
+        if (this.activeCellArr.length == 0)
+            return;
+        let pos = null;
+        for (let i = 0; i < this.activeCellArr.length; i++) {
+            let cell = this.activeCellArr[i];
+            switch (cell["state"]) {
+                case 0:
+                    cell.visibility = (mw.SlateVisibility.Visible);
+                    pos = cell.position;
+                    pos.y = Tips.Y_START;
+                    cell.position = (pos);
+                    cell["state"]++;
+                    break;
+                case 1:
+                    pos = cell.position;
+                    pos.y -= Tips.MOVE_SPEED * dt;
+                    if (i == 0) {
+                        if (pos.y <= Tips.Y_OVER) {
+                            pos.y = Tips.Y_OVER;
+                            cell["state"]++;
+                        }
+                    }
+                    else {
+                        let lastCellPos = this.activeCellArr[i - 1].position;
+                        if (pos.y <= lastCellPos.y + 60) {
+                            pos.y = lastCellPos.y + 60;
+                            cell["stopTime"] += dt;
+                            if (cell["stopTime"] >= Tips.KEEP_TIME) {
+                                cell["state"] += 2;
+                            }
+                        }
+                    }
+                    cell.position = (pos);
+                    break;
+                case 2:
+                    cell["stopTime"] += dt;
+                    if (cell["stopTime"] >= Tips.KEEP_TIME) {
+                        cell["state"]++;
+                    }
+                    break;
+                case 3:
+                    cell.visibility = (mw.SlateVisibility.Collapsed);
+                    this.overCellArr.push(cell);
+                    break;
+            }
+        }
+        while (this.overCellArr.length > 0) {
+            let cell = this.overCellArr.shift();
+            let index = this.activeCellArr.indexOf(cell);
+            this.activeCellArr.splice(index, 1);
+            this.freeCellArr.push(cell);
+        }
+    }
+}
+/**Y轴开始位置 */
+Tips.Y_START = 400;
+/**Y轴结束位置 */
+Tips.Y_OVER = 150;
+/**移动速度 */
+Tips.MOVE_SPEED = 500;
+/**停留时间 */
+Tips.KEEP_TIME = 0.5;
+
+var foreign24 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Tips
+});
+
 const MWModuleMap = { 
      'EF845E584ECE1C8E53A96195763FC1A5': foreign1,
      'E793F4E748068B7014AF149815249190': foreign2,
@@ -1641,6 +2307,21 @@ const MWModuleMap = {
      'B2294BEE486C64585D4D6C9D2E2A29B7': foreign7,
      'BE51F1314FF9E1B0831555944A504573': foreign8,
      '1AF9AC044BAA508BD6CB78A1D707B013': foreign9,
+     'D19D4E004C90F3D4E782A2AFE156D630': foreign10,
+     '0965A9604AF9AD8B0D8833AEA19AD6B3': foreign11,
+     '47D601104E1D68F07F2871B500E05DDA': foreign12,
+     'B32DECB342B4A4672D51B18EACB7414D': foreign13,
+     '8185F352414C0F496EE35CA1F89225DD': foreign14,
+     '6EB27D4A41492DD6186ED4B7EE8D2769': foreign15,
+     '8429EB3645CB15E6D119FE9993CE5143': foreign16,
+     'B65F55934F932B773F12C3B17E2BD513': foreign17,
+     '4EE162D549346C5B7AF997BDA462E33A': foreign18,
+     'E92897A248DE8503D010E6862B7DEAF3': foreign19,
+     '170235FE46D26B4DAADC9293EE730933': foreign20,
+     'DC156E8E44BD796E1A1BEDB806E0B1FF': foreign21,
+     '49C2BC27412134605F5B07941953FA9F': foreign22,
+     '29D97FD64EBCDB9B626BAD9E95CEB3B0': foreign23,
+     '20B62ED84F3052C4D65101B34996EF09': foreign24,
 };
 const MWFileMapping = new WeakMap([[foreign1 || {}, "JavaScripts/M_XC/Data/Data_interface"],
 [foreign2 || {}, "JavaScripts/M_XC/DefaultUI"],
@@ -1650,7 +2331,22 @@ const MWFileMapping = new WeakMap([[foreign1 || {}, "JavaScripts/M_XC/Data/Data_
 [foreign6 || {}, "JavaScripts/Trigger/NPCTrigger"],
 [foreign7 || {}, "JavaScripts/Trigger/Pos_Trigger"],
 [foreign8 || {}, "JavaScripts/Trigger/SlotTrigger"],
-[foreign9 || {}, "JavaScripts/Trigger/UseItemTrigger"]]);
+[foreign9 || {}, "JavaScripts/Trigger/UseItemTrigger"],
+[foreign10 || {}, "JavaScripts/ui-generate/DefaultUI_generate"],
+[foreign11 || {}, "JavaScripts/ui-generate/Dress_UI_generate"],
+[foreign12 || {}, "JavaScripts/ui-generate/GameManagerUI_generate"],
+[foreign13 || {}, "JavaScripts/ui-generate/Get_Item_UI_generate"],
+[foreign14 || {}, "JavaScripts/ui-generate/IAAUI_generate"],
+[foreign15 || {}, "JavaScripts/ui-generate/Illustrate_UI_generate"],
+[foreign16 || {}, "JavaScripts/ui-generate/Item_UI_generate"],
+[foreign17 || {}, "JavaScripts/ui-generate/Level_UI_generate"],
+[foreign18 || {}, "JavaScripts/ui-generate/Select_UI_generate"],
+[foreign19 || {}, "JavaScripts/ui-generate/Slot_UI_generate"],
+[foreign20 || {}, "JavaScripts/ui-generate/Tips_generate"],
+[foreign21 || {}, "JavaScripts/ui-generate/Tip_UI_generate"],
+[foreign22 || {}, "JavaScripts/ui-generate/UserRankUI_generate"],
+[foreign23 || {}, "JavaScripts/util/GameAnimaiton"],
+[foreign24 || {}, "JavaScripts/util/Tips"]]);
 
 exports.MWFileMapping = MWFileMapping;
 exports.MWModuleMap = MWModuleMap;
