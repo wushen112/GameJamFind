@@ -1,18 +1,19 @@
-﻿
+﻿import TimeController from "./TimeController";
+
 @Component
 export default class NpcAnimation extends Script {
     @Property({ displayName: "动画guid" })
     private AnimaGuid: string = "";
-    @Property({ displayName: "动画动画插槽",enumType :AnimSlot})
+    @Property({ displayName: "动画动画插槽", enumType: AnimSlot })
     private animSlot: AnimSlot = 0;
     @Property({ displayName: "姿态guid" })
     private StanceGuid: string = "";
     @Property({ displayName: "挂件guid" })
     private propGuid: string = "";
-    @Property({ displayName: "挂件插槽", enumType :HumanoidSlotType})
-    private NpcSlotType: HumanoidSlotType=16;
+    @Property({ displayName: "挂件插槽", enumType: HumanoidSlotType })
+    private NpcSlotType: HumanoidSlotType = 16;
     @Property({ displayName: "是否开启碰撞" })
-    private Collission: boolean=true;
+    private Collission: boolean = true;
 
     private Npc: Character;
     private anima: Animation;
@@ -20,15 +21,15 @@ export default class NpcAnimation extends Script {
     private prop: GameObject;
     /** 当脚本被实例后，会在第一帧更新前调用此函数 */
     protected onStart(): void {
-            this.Npc = this.gameObject as Character;
-            this.init()
+        this.Npc = this.gameObject as Character;
+        this.init()
     }
 
     //初始化人物
     async init() {
-        if(this.Collission){
+        if (this.Collission) {
             this.Npc.setCollision(CollisionStatus.On)
-        }else{
+        } else {
             this.Npc.setCollision(CollisionStatus.QueryCollisionOnly)
         }
         //判断是否有动画
@@ -61,6 +62,7 @@ export default class NpcAnimation extends Script {
             this.Npc.attachToSlot(this.prop, this.NpcSlotType)
             console.log("Stance:" + this.gameObject + ":" + this.anima)
         }
+        this.useUpdate=true
     }
 
     /**
@@ -69,7 +71,12 @@ export default class NpcAnimation extends Script {
      * @param dt 当前帧与上一帧的延迟 / 秒
      */
     protected onUpdate(dt: number): void {
-
+        //检测时间暂停
+        if (TimeController.instance.time == 0) {
+            this.Npc.customTimeDilation = 0.01
+        } else {
+            this.Npc.customTimeDilation = 1
+        }
     }
 
     /** 脚本被销毁时最后一帧执行完调用此函数 */
