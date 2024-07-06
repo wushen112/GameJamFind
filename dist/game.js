@@ -1,7 +1,73 @@
 'use strict';
 
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 11:08:02
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 11:09:01
+ * @FilePath: \test\JavaScripts\EventData.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+class EventData {
+}
+EventData.GameStart = "gameStart";
+
 var foreign1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: EventData
+});
+
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 14:11:24
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 14:17:15
+ * @FilePath: \test\JavaScripts\GameController.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+class GameController {
+    static get instance() {
+        if (!this._insance) {
+            this._insance = new GameController();
+        }
+        return this._insance;
+    }
+    onUpdate() {
+    }
+}
+
+var foreign2 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: GameController
+});
+
+var foreign3 = /*#__PURE__*/Object.freeze({
     __proto__: null
+});
+
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 11:29:43
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 14:06:20
+ * @FilePath: \test\JavaScripts\TimeController.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+class TimeController {
+    constructor() {
+        this.time = 0;
+    }
+    static get instance() {
+        if (!this._instance) {
+            this._instance = new TimeController();
+        }
+        return this._instance;
+    }
+}
+
+var foreign9 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: TimeController
 });
 
 /******************************************************************************
@@ -27,6 +93,328 @@ function __decorate(decorators, target, key, desc) {
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/DefaultUI.ui
+*/
+let DefaultUI_Generate = class DefaultUI_Generate extends UIScript {
+    get virtualJoystickPanel() {
+        if (!this.virtualJoystickPanel_Internal && this.uiWidgetBase) {
+            this.virtualJoystickPanel_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/virtualJoystickPanel');
+        }
+        return this.virtualJoystickPanel_Internal;
+    }
+    get mCanvas_Time() {
+        if (!this.mCanvas_Time_Internal && this.uiWidgetBase) {
+            this.mCanvas_Time_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time');
+        }
+        return this.mCanvas_Time_Internal;
+    }
+    get mText_Time() {
+        if (!this.mText_Time_Internal && this.uiWidgetBase) {
+            this.mText_Time_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time/mText_Time');
+        }
+        return this.mText_Time_Internal;
+    }
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+DefaultUI_Generate = __decorate([
+    UIBind('UI/DefaultUI.ui')
+], DefaultUI_Generate);
+var DefaultUI_Generate$1 = DefaultUI_Generate;
+
+var foreign15 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: DefaultUI_Generate$1
+});
+
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 10:39:43
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 15:54:10
+ * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 10:39:43
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 14:06:40
+ * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+class DefaultUI extends DefaultUI_Generate$1 {
+    constructor() {
+        super(...arguments);
+        //倒计时0.1秒计时器
+        this._timer = 0;
+        /**总时间 */
+        this.time = 180;
+    }
+    onStart() {
+        this.virtualJoystickPanel.onInputDir.add((vec) => {
+            TimeController.instance.time = Vector2.distance(Vector2.zero, vec);
+        });
+    }
+    onUpdate(dt) {
+        TweenUtil.TWEEN.update();
+        this._timer += dt * TimeController.instance.time;
+        console.log("当前速度是", TimeController.instance.time);
+        if (this._timer >= 0.1 && this.time > 0) {
+            this.time -= 0.1;
+            this._timer = 0;
+            //TODO 添加一个倒计时的Ui
+            const data = this.calTime(this.time);
+            this.mText_Time.text = data.minute + ':' + data.second + ':' + data.ms;
+        }
+        if (this.time <= 0) ;
+        //const hitResult = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,ScreenUtil.getSightBeadPosition(),true,true)
+        //console.log(hitResult[0].gameObject.name)
+    }
+    calTime(time) {
+        const minute = Math.floor(time / 60);
+        const second = Math.floor(time % 60);
+        const ms = Math.round((time - Math.floor(time)) * 10);
+        return { minute, second, ms };
+    }
+}
+// @UIBind('')
+// export default class DefaultUI2 extends UIScript {
+// 	private obj_canvas : Canvas;
+// 	private select_ui : Select_UI
+// 	private tip_canvas : Canvas;
+// 	private PLayTime : number = 120 //游玩时间
+// 	private BoxState : boolean = false; //宝箱领取状态
+// 	private goalText : TextBlock;//玩家金币数目
+// 	private goalImage : Image;//玩家金币图标
+// 	private vir : VirtualJoystickPanel
+// 	/*****************************物品栏相关********************************/
+// 	private M_slots :Array<Slot_UI> = new Array<Slot_UI>();
+// 	private slots: Map<string,Slot_Data> = new Map<string,Slot_Data>();
+// 	private slot_cnt :number
+// 	public init_canvas(cnt:number){
+// 		this.slot_cnt = cnt
+// 		for(let i = 0 ; i< cnt ; i++){
+// 			let slot = UIService.create(Slot_UI)
+// 			slot.init(i)
+// 			this.obj_canvas.addChild(slot.uiWidgetBase)
+// 			this.M_slots.push(slot)
+// 		}
+// 	}
+// 	private update_slot(){
+// 		let index = 0
+// 		for(let value of this.slots.values()){
+// 			if(value.cnt>0){
+// 				this.M_slots[index].update_ui(value.cnt,value.icon_id)
+// 				index++
+// 			}
+// 			else
+// 				continue
+// 		}
+// 		for(index;index<this.M_slots.length;index++){
+// 			this.M_slots[index].init(index)
+// 		}
+// 	}
+// 	/**********************************************************************/
+// 	/** 仅在游戏时间对非模板实例调用一次 */
+//     protected  onStart() {
+// 		//设置能否每帧触发onUpdate
+// 		this.canUpdate = true;
+// 		//找到对应的跳跃按钮
+//         const jumpBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Button_Jump') as Button
+// 		const LayBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Button_Lay') as Button
+// 		this.goalText = this.uiWidgetBase.findChildByPath('RootCanvas/Goal/TextBlock') as TextBlock
+// 		const IllBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Ill/Ill_Button') as Button
+// 		const TrailBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Trailing/Ill_Button') as Button
+// 		const WingBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Wing/Ill_Button') as Button
+// 		const Cloth = this.uiWidgetBase.findChildByPath('RootCanvas/Cloth/Ill_Button') as Button
+// 		const Hat = this.uiWidgetBase.findChildByPath('RootCanvas/Hat/Ill_Button') as Button
+// 		const Anim = this.uiWidgetBase.findChildByPath('RootCanvas/Anim/Ill_Button') as Button
+// 		const BGM = this.uiWidgetBase.findChildByPath('RootCanvas/BGM/Ill_Button') as Button
+// 		this.obj_canvas = this.uiWidgetBase.findChildByPath('RootCanvas/ScrollBox/Canvas') as Canvas
+// 		const dot = this.uiWidgetBase.findChildByPath('RootCanvas/Image') as Image
+// 		const RSTBtn = this.uiWidgetBase.findChildByPath('RootCanvas/RstButton') as Button
+// 		this.goalImage = this.uiWidgetBase.findChildByPath('RootCanvas/Goal/IMG') as Image
+// 		this.timeUI = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time/mText_Time') as TextBlock
+// 		this.vir = this.uiWidgetBase.findChildByPath('RootCanvas/VirtualJoystickPanel') as VirtualJoystickPanel
+// 		this.vir.onInputDir.add((vec)=>{
+// 			TimeController.instance.time = Vector2.distance(Vector2.zero,vec)
+// 		})
+// 		RSTBtn.onPressed.add(()=>{
+// 			M_Player.instance.Rst();
+// 		})
+// 		Event.addLocalListener("dot",(preset:boolean)=>{
+// 			if(!preset)
+// 				dot.destroyObject()
+// 		})
+// 		this.tip_canvas = this.uiWidgetBase.findChildByPath('RootCanvas/Canvas_1') as Canvas
+// 		/**********tip相关***********/
+// 		Event.addLocalListener("Tips",(tip:string)=>{
+// 			this.UpdateTip(tip)
+// 		})
+// 		/***************************/
+// 		/*********物品栏相关*********/
+// 		Event.addLocalListener("Init_Slot",(cnt:number)=>{this.init_canvas(cnt)})
+// 		Event.addLocalListener("Get_Slot_Obj",(id:string,tag:string)=>{
+// 			let temp = this.slots.get(tag)
+// 			if(temp){
+// 				temp.cnt++
+// 			}
+// 			else{
+// 				var slot_data : Slot_Data = {
+// 					icon_id : id,
+// 					tag: tag,
+// 					cnt : 1
+// 				}
+// 				this.slots.set(tag,slot_data)
+// 			}
+// 			this.update_slot()
+// 		})
+// 		Event.addLocalListener("Update_Slot",(flag:boolean,tag_ary:any,consume_cnt:any)=>{
+// 			if(!flag)
+// 				return
+// 			console.log("ui")
+// 			for(let i = 0 ; i < tag_ary.length ;i++){
+// 				let data = this.slots.get(tag_ary[i])
+// 				data.cnt -= consume_cnt[i]
+// 			}
+// 			this.update_slot()
+// 		})
+// 		/************************/
+// 		/*********按钮相关*********/
+// 		Event.addLocalListener("visible_button",(tag:string,scr:any,type:number,event_name:string)=>{
+// 			if(this.select_ui)
+// 				return
+// 			this.select_ui = UIService.show(Select_UI,scr,tag,type,event_name,this.slots)
+// 			this.select_ui.uiWidgetBase.position = new Vector2(1450,700)
+// 			//this.update_slot()
+// 		})
+// 		Event.addLocalListener("Unvisible_button",()=>{
+// 			try {
+// 				this.select_ui.destroy()
+// 				this.select_ui = undefined
+// 			} catch (error) {
+// 			}
+// 		})
+// 		/************************/
+// 		/*********图鉴相关*********/
+// 		Event.addLocalListener("Update_gold",()=>{
+// 			this.UpdateGold()
+// 		})
+// 		IllBtn.onPressed.add(()=>{
+// 			Items.instance.Update_UI(SlateVisibility.Visible)
+// 		})
+// 		TrailBtn.onPressed.add(()=>{
+// 			Event.dispatchToLocal("Open_UI",1)
+// 		})
+// 		WingBtn.onPressed.add(()=>{
+// 			Event.dispatchToLocal("Open_UI",2)
+// 		})
+// 		Cloth.onPressed.add(()=>{
+// 			Event.dispatchToLocal("Open_UI",3)
+// 		})
+// 		Hat.onPressed.add(()=>{
+// 			Event.dispatchToLocal("Open_UI",4)
+// 		})
+// 		Anim.onPressed.add(()=>{
+// 			Event.dispatchToLocal("Open_UI",5)
+// 		})
+// 		BGM.onPressed.add(()=>{
+// 			Event.dispatchToLocal("Open_UI",6)
+// 		})
+// 		/************************/
+// 		//点击跳跃按钮,异步获取人物后执行跳跃
+//         jumpBtn.onPressed.add(()=>{
+// 			Player.asyncGetLocalPlayer().then((player) => {
+// 				player.character.changeState(CharacterStateType.Jumping);
+// 			});
+// 		})	 
+// 		LayBtn.onPressed.add(()=>{
+// 			M_Player.instance.Lay()
+// 		})
+// 		//******************************************倒计时宝箱功能********************************************************** */
+// 		const ReadyBG = this.uiWidgetBase.findChildByPath('RootCanvas/Box/ReadyBG') as Image   //倒计时到达后，提醒领取宝箱的背景
+// 		const BoxBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Box/Button') as Button //宝箱交互按钮
+// 		const TimeText = this.uiWidgetBase.findChildByPath('RootCanvas/Box/Time') as TextBlock //宝箱领取倒计时文本
+// 		//倒计时逻辑,每两分钟给予一次奖励
+// 		setInterval(()=>{
+// 			if(!this.BoxState)
+// 				this.PLayTime--
+// 			if(this.PLayTime == 0){
+// 				this.BoxState = true
+// 				TimeText.text = "宝箱已就绪"
+// 				ReadyBG.visibility = SlateVisibility.Visible
+// 			}
+// 			else
+// 				TimeText.text = this.PLayTime.toString()+"s"
+// 		},1000)
+// 		BoxBtn.onPressed.add(()=>{
+// 			if(this.BoxState){
+// 				let RandomGold = MathUtil.randomInt(1,6) //随机生成一个数，作为奖励奖杯数
+// 				this.UpdateTip("获取"+RandomGold+"个奖杯")
+// 				M_Player.instance.PlayerGoalCnt += RandomGold
+// 				this.UpdateGold()
+// 				this.PLayTime = 120 ;
+// 				this.BoxState = false;
+// 				ReadyBG.visibility = SlateVisibility.Hidden
+// 				TimeText.text = this.PLayTime.toString()+"s"
+// 			}
+// 			else
+// 				this.UpdateTip("宝箱还未准备好")
+// 		})
+// 		//**************************************************************************************************************** */
+//     }
+// 	//更新玩家金币数
+// 	private UpdateGold(){
+// 		Tools.imageJump(this.goalImage)
+// 		this.goalText.text = M_Player.instance.PlayerGoalCnt.toString()
+// 	}
+// 	//更新Tip
+// 	private UpdateTip(tip:string){
+// 		let tip_ui = UIService.create(Tip_UI)
+// 			tip_ui.init(tip)
+// 			this.tip_canvas.addChild(tip_ui.uiWidgetBase)
+// 			setTimeout(() => {
+// 				tip_ui.destroy()
+// 			}, 2000);
+// 	}
+// 	onUpdate(dt){
+// 		TweenUtil.TWEEN.update();
+// 		this._timer += dt * TimeController.instance.time 
+// 		console.log("当前速度是",TimeController.instance.time )
+// 		if(this._timer >= 0.1&&this.time>0){
+// 			this.time -= 0.1;
+// 			this._timer = 0;
+// 			//TODO 添加一个倒计时的Ui
+// 			const data = this.calTime(this.time);
+// 			this.timeUI.text = data.minute+':'+data.second+':'+data.ms
+// 		}
+// 		if(this.time<=0){
+// 			//TODO 走死亡路径
+// 		}
+// 		//const hitResult = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,ScreenUtil.getSightBeadPosition(),true,true)
+// 		//console.log(hitResult[0].gameObject.name)
+// 	}
+// 	calTime(time:number){
+// 		const minute = Math.floor (time /60);
+// 		const second = Math.floor (time%60);
+// 		const ms =Math.round( (time - Math.floor(time))*10);
+// 		return {minute,second,ms};
+// 	}
+// }
+
+var foreign4 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: DefaultUI
+});
 
 //import ItemTrigger from "../Trigger/ItemTrigger"
 //import SlotTrigger from "../Trigger/SlotTrigger"
@@ -79,9 +467,54 @@ class Obj_Manager {
     }
 }
 
-var foreign4 = /*#__PURE__*/Object.freeze({
+var foreign6 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     Obj_Manager: Obj_Manager
+});
+
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/StartGame.ui
+*/
+let StartGame_Generate = class StartGame_Generate extends UIScript {
+    get mBtn_Start() {
+        if (!this.mBtn_Start_Internal && this.uiWidgetBase) {
+            this.mBtn_Start_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mBtn_Start');
+        }
+        return this.mBtn_Start_Internal;
+    }
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+StartGame_Generate = __decorate([
+    UIBind('UI/StartGame.ui')
+], StartGame_Generate);
+var StartGame_Generate$1 = StartGame_Generate;
+
+var foreign25 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: StartGame_Generate$1
+});
+
+class MainUI extends StartGame_Generate$1 {
+    onStart() {
+        this.mBtn_Start.onClicked.add(() => {
+            UIService.hideUI(this);
+            //TODO
+            UIService.show(DefaultUI);
+            Event.dispatchToLocal(EventData.GameStart);
+        });
+    }
+}
+
+var foreign7 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: MainUI
 });
 
 var Tools;
@@ -741,7 +1174,7 @@ class M_Player {
     }
     //射线检测
     test_query() {
-        let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position, Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(600)), false, false, [], false, false, this.PlayerChar);
+        let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position, Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(600)), false, true, [], false, false, this.PlayerChar);
         Obj_Manager.instance.check_get(res);
     }
     //根据资源GUID播放音乐
@@ -890,16 +1323,16 @@ let GameStart = class GameStart extends Script {
             //设置摄像机模式
             if (this.preset) {
                 setTimeout(() => {
-                    Camera.currentCamera.preset = 0;
+                    //  Camera.currentCamera.preset = 0
                     Camera.currentCamera.springArm.collisionEnabled = false;
-                    Camera.currentCamera.springArm.length = 0;
+                    //  Camera.currentCamera.springArm.length = 0
                     Event.dispatchToLocal("dot", this.preset);
                 }, 500);
             }
             else {
                 setTimeout(() => {
-                    Camera.currentCamera.preset = 1;
-                    Camera.currentCamera.springArm.length = 350;
+                    //  Camera.currentCamera.preset = 1
+                    // Camera.currentCamera.springArm.length = 350
                     Event.dispatchToLocal("dot", this.preset);
                 }, 500);
             }
@@ -944,6 +1377,8 @@ let GameStart = class GameStart extends Script {
                 M_Player.instance.UpdateTitle(title);
             });
         }
+        this.useUpdate = true;
+        UIService.show(MainUI);
     }
     onUpdate(dt) {
         this.cnt_time += dt;
@@ -994,7 +1429,7 @@ GameStart = __decorate([
 ], GameStart);
 var GameStart$1 = GameStart;
 
-var foreign3 = /*#__PURE__*/Object.freeze({
+var foreign5 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     Dress: Dress,
     get Dress_UI () { return Dress_UI; },
@@ -1013,209 +1448,29 @@ var foreign3 = /*#__PURE__*/Object.freeze({
     default: GameStart$1
 });
 
-let DefaultUI = class DefaultUI extends UIScript {
-    constructor() {
-        super(...arguments);
-        this.PLayTime = 120; //游玩时间
-        this.BoxState = false; //宝箱领取状态
-        /*****************************物品栏相关********************************/
-        this.M_slots = new Array();
-        this.slots = new Map();
-    }
-    init_canvas(cnt) {
-        this.slot_cnt = cnt;
-        for (let i = 0; i < cnt; i++) {
-            let slot = UIService.create(Slot_UI);
-            slot.init(i);
-            this.obj_canvas.addChild(slot.uiWidgetBase);
-            this.M_slots.push(slot);
-        }
-    }
-    update_slot() {
-        let index = 0;
-        for (let value of this.slots.values()) {
-            if (value.cnt > 0) {
-                this.M_slots[index].update_ui(value.cnt, value.icon_id);
-                index++;
-            }
-            else
-                continue;
-        }
-        for (index; index < this.M_slots.length; index++) {
-            this.M_slots[index].init(index);
-        }
-    }
-    /**********************************************************************/
-    /** 仅在游戏时间对非模板实例调用一次 */
+let NpcStac = class NpcStac extends Script {
+    /** 当脚本被实例后，会在第一帧更新前调用此函数 */
     onStart() {
-        //设置能否每帧触发onUpdate
-        this.canUpdate = true;
-        //找到对应的跳跃按钮
-        const jumpBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Button_Jump');
-        const LayBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Button_Lay');
-        this.goalText = this.uiWidgetBase.findChildByPath('RootCanvas/Goal/TextBlock');
-        const IllBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Ill/Ill_Button');
-        const TrailBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Trailing/Ill_Button');
-        const WingBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Wing/Ill_Button');
-        const Cloth = this.uiWidgetBase.findChildByPath('RootCanvas/Cloth/Ill_Button');
-        const Hat = this.uiWidgetBase.findChildByPath('RootCanvas/Hat/Ill_Button');
-        const Anim = this.uiWidgetBase.findChildByPath('RootCanvas/Anim/Ill_Button');
-        const BGM = this.uiWidgetBase.findChildByPath('RootCanvas/BGM/Ill_Button');
-        this.obj_canvas = this.uiWidgetBase.findChildByPath('RootCanvas/ScrollBox/Canvas');
-        const dot = this.uiWidgetBase.findChildByPath('RootCanvas/Image');
-        const RSTBtn = this.uiWidgetBase.findChildByPath('RootCanvas/RstButton');
-        this.goalImage = this.uiWidgetBase.findChildByPath('RootCanvas/Goal/IMG');
-        RSTBtn.onPressed.add(() => {
-            M_Player.instance.Rst();
-        });
-        Event.addLocalListener("dot", (preset) => {
-            if (!preset)
-                dot.destroyObject();
-        });
-        this.tip_canvas = this.uiWidgetBase.findChildByPath('RootCanvas/Canvas_1');
-        /**********tip相关***********/
-        Event.addLocalListener("Tips", (tip) => {
-            this.UpdateTip(tip);
-        });
-        /***************************/
-        /*********物品栏相关*********/
-        Event.addLocalListener("Init_Slot", (cnt) => { this.init_canvas(cnt); });
-        Event.addLocalListener("Get_Slot_Obj", (id, tag) => {
-            let temp = this.slots.get(tag);
-            if (temp) {
-                temp.cnt++;
-            }
-            else {
-                var slot_data = {
-                    icon_id: id,
-                    tag: tag,
-                    cnt: 1
-                };
-                this.slots.set(tag, slot_data);
-            }
-            this.update_slot();
-        });
-        Event.addLocalListener("Update_Slot", (flag, tag_ary, consume_cnt) => {
-            if (!flag)
-                return;
-            console.log("ui");
-            for (let i = 0; i < tag_ary.length; i++) {
-                let data = this.slots.get(tag_ary[i]);
-                data.cnt -= consume_cnt[i];
-            }
-            this.update_slot();
-        });
-        /************************/
-        /*********按钮相关*********/
-        Event.addLocalListener("visible_button", (tag, scr, type, event_name) => {
-            if (this.select_ui)
-                return;
-            this.select_ui = UIService.show(Select_UI, scr, tag, type, event_name, this.slots);
-            this.select_ui.uiWidgetBase.position = new Vector2(1450, 700);
-            //this.update_slot()
-        });
-        Event.addLocalListener("Unvisible_button", () => {
-            try {
-                this.select_ui.destroy();
-                this.select_ui = undefined;
-            }
-            catch (error) {
-            }
-        });
-        /************************/
-        /*********图鉴相关*********/
-        Event.addLocalListener("Update_gold", () => {
-            this.UpdateGold();
-        });
-        IllBtn.onPressed.add(() => {
-            Items.instance.Update_UI(SlateVisibility.Visible);
-        });
-        TrailBtn.onPressed.add(() => {
-            Event.dispatchToLocal("Open_UI", 1);
-        });
-        WingBtn.onPressed.add(() => {
-            Event.dispatchToLocal("Open_UI", 2);
-        });
-        Cloth.onPressed.add(() => {
-            Event.dispatchToLocal("Open_UI", 3);
-        });
-        Hat.onPressed.add(() => {
-            Event.dispatchToLocal("Open_UI", 4);
-        });
-        Anim.onPressed.add(() => {
-            Event.dispatchToLocal("Open_UI", 5);
-        });
-        BGM.onPressed.add(() => {
-            Event.dispatchToLocal("Open_UI", 6);
-        });
-        /************************/
-        //点击跳跃按钮,异步获取人物后执行跳跃
-        jumpBtn.onPressed.add(() => {
-            Player.asyncGetLocalPlayer().then((player) => {
-                player.character.changeState(CharacterStateType.Jumping);
-            });
-        });
-        LayBtn.onPressed.add(() => {
-            M_Player.instance.Lay();
-        });
-        //******************************************倒计时宝箱功能********************************************************** */
-        const ReadyBG = this.uiWidgetBase.findChildByPath('RootCanvas/Box/ReadyBG'); //倒计时到达后，提醒领取宝箱的背景
-        const BoxBtn = this.uiWidgetBase.findChildByPath('RootCanvas/Box/Button'); //宝箱交互按钮
-        const TimeText = this.uiWidgetBase.findChildByPath('RootCanvas/Box/Time'); //宝箱领取倒计时文本
-        //倒计时逻辑,每两分钟给予一次奖励
-        setInterval(() => {
-            if (!this.BoxState)
-                this.PLayTime--;
-            if (this.PLayTime == 0) {
-                this.BoxState = true;
-                TimeText.text = "宝箱已就绪";
-                ReadyBG.visibility = SlateVisibility.Visible;
-            }
-            else
-                TimeText.text = this.PLayTime.toString() + "s";
-        }, 1000);
-        BoxBtn.onPressed.add(() => {
-            if (this.BoxState) {
-                let RandomGold = MathUtil.randomInt(1, 6); //随机生成一个数，作为奖励奖杯数
-                this.UpdateTip("获取" + RandomGold + "个奖杯");
-                M_Player.instance.PlayerGoalCnt += RandomGold;
-                this.UpdateGold();
-                this.PLayTime = 120;
-                this.BoxState = false;
-                ReadyBG.visibility = SlateVisibility.Hidden;
-                TimeText.text = this.PLayTime.toString() + "s";
-            }
-            else
-                this.UpdateTip("宝箱还未准备好");
-        });
-        //**************************************************************************************************************** */
     }
-    //更新玩家金币数
-    UpdateGold() {
-        Tools.imageJump(this.goalImage);
-        this.goalText.text = M_Player.instance.PlayerGoalCnt.toString();
+    /**
+     * 周期函数 每帧执行
+     * 此函数执行需要将this.useUpdate赋值为true
+     * @param dt 当前帧与上一帧的延迟 / 秒
+     */
+    onUpdate(dt) {
     }
-    //更新Tip
-    UpdateTip(tip) {
-        let tip_ui = UIService.create(Tip_UI);
-        tip_ui.init(tip);
-        this.tip_canvas.addChild(tip_ui.uiWidgetBase);
-        setTimeout(() => {
-            tip_ui.destroy();
-        }, 2000);
-    }
-    onUpdate() {
-        TweenUtil.TWEEN.update();
+    /** 脚本被销毁时最后一帧执行完调用此函数 */
+    onDestroy() {
     }
 };
-DefaultUI = __decorate([
-    UIBind('')
-], DefaultUI);
-var DefaultUI$1 = DefaultUI;
+NpcStac = __decorate([
+    Component
+], NpcStac);
+var NpcStac$1 = NpcStac;
 
-var foreign2 = /*#__PURE__*/Object.freeze({
+var foreign8 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    default: DefaultUI$1
+    default: NpcStac$1
 });
 
 let ItemTrigger = class ItemTrigger extends Script {
@@ -1297,7 +1552,7 @@ ItemTrigger = __decorate([
 ], ItemTrigger);
 var ItemTrigger$1 = ItemTrigger;
 
-var foreign5 = /*#__PURE__*/Object.freeze({
+var foreign10 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: ItemTrigger$1
 });
@@ -1343,7 +1598,7 @@ NPCTrigger = __decorate([
 ], NPCTrigger);
 var NPCTrigger$1 = NPCTrigger;
 
-var foreign6 = /*#__PURE__*/Object.freeze({
+var foreign11 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: NPCTrigger$1
 });
@@ -1404,7 +1659,7 @@ Pos_Trigger = __decorate([
 ], Pos_Trigger);
 var Pos_Trigger$1 = Pos_Trigger;
 
-var foreign7 = /*#__PURE__*/Object.freeze({
+var foreign12 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Pos_Trigger$1
 });
@@ -1464,7 +1719,7 @@ SlotTrigger = __decorate([
 ], SlotTrigger);
 var SlotTrigger$1 = SlotTrigger;
 
-var foreign8 = /*#__PURE__*/Object.freeze({
+var foreign13 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: SlotTrigger$1
 });
@@ -1626,32 +1881,9 @@ UseItemTrigger = __decorate([
 ], UseItemTrigger);
 var UseItemTrigger$1 = UseItemTrigger;
 
-var foreign9 = /*#__PURE__*/Object.freeze({
+var foreign14 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: UseItemTrigger$1
-});
-
-/**
- * AUTO GENERATE BY UI EDITOR.
- * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
- * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
- * UI: UI/DefaultUI.ui
-*/
-let DefaultUI_Generate = class DefaultUI_Generate extends UIScript {
-    /**
-    * onStart 之前触发一次
-    */
-    onAwake() {
-    }
-};
-DefaultUI_Generate = __decorate([
-    UIBind('UI/DefaultUI.ui')
-], DefaultUI_Generate);
-var DefaultUI_Generate$1 = DefaultUI_Generate;
-
-var foreign10 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: DefaultUI_Generate$1
 });
 
 /**
@@ -1672,7 +1904,7 @@ Dress_UI_Generate = __decorate([
 ], Dress_UI_Generate);
 var Dress_UI_Generate$1 = Dress_UI_Generate;
 
-var foreign11 = /*#__PURE__*/Object.freeze({
+var foreign16 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Dress_UI_Generate$1
 });
@@ -1695,7 +1927,7 @@ GameManagerUI_Generate = __decorate([
 ], GameManagerUI_Generate);
 var GameManagerUI_Generate$1 = GameManagerUI_Generate;
 
-var foreign12 = /*#__PURE__*/Object.freeze({
+var foreign17 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: GameManagerUI_Generate$1
 });
@@ -1718,7 +1950,7 @@ Get_Item_UI_Generate = __decorate([
 ], Get_Item_UI_Generate);
 var Get_Item_UI_Generate$1 = Get_Item_UI_Generate;
 
-var foreign13 = /*#__PURE__*/Object.freeze({
+var foreign18 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Get_Item_UI_Generate$1
 });
@@ -1741,7 +1973,7 @@ IAAUI_Generate = __decorate([
 ], IAAUI_Generate);
 var IAAUI_Generate$1 = IAAUI_Generate;
 
-var foreign14 = /*#__PURE__*/Object.freeze({
+var foreign19 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: IAAUI_Generate$1
 });
@@ -1764,7 +1996,7 @@ Illustrate_UI_Generate = __decorate([
 ], Illustrate_UI_Generate);
 var Illustrate_UI_Generate$1 = Illustrate_UI_Generate;
 
-var foreign15 = /*#__PURE__*/Object.freeze({
+var foreign20 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Illustrate_UI_Generate$1
 });
@@ -1787,7 +2019,7 @@ Item_UI_Generate = __decorate([
 ], Item_UI_Generate);
 var Item_UI_Generate$1 = Item_UI_Generate;
 
-var foreign16 = /*#__PURE__*/Object.freeze({
+var foreign21 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Item_UI_Generate$1
 });
@@ -1810,7 +2042,7 @@ Level_UI_Generate = __decorate([
 ], Level_UI_Generate);
 var Level_UI_Generate$1 = Level_UI_Generate;
 
-var foreign17 = /*#__PURE__*/Object.freeze({
+var foreign22 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Level_UI_Generate$1
 });
@@ -1833,7 +2065,7 @@ Select_UI_Generate = __decorate([
 ], Select_UI_Generate);
 var Select_UI_Generate$1 = Select_UI_Generate;
 
-var foreign18 = /*#__PURE__*/Object.freeze({
+var foreign23 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Select_UI_Generate$1
 });
@@ -1856,7 +2088,7 @@ Slot_UI_Generate = __decorate([
 ], Slot_UI_Generate);
 var Slot_UI_Generate$1 = Slot_UI_Generate;
 
-var foreign19 = /*#__PURE__*/Object.freeze({
+var foreign24 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Slot_UI_Generate$1
 });
@@ -1897,7 +2129,7 @@ Tips_Generate = __decorate([
 ], Tips_Generate);
 var Tips_Generate$1 = Tips_Generate;
 
-var foreign20 = /*#__PURE__*/Object.freeze({
+var foreign26 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Tips_Generate$1
 });
@@ -1920,7 +2152,7 @@ Tip_UI_Generate = __decorate([
 ], Tip_UI_Generate);
 var Tip_UI_Generate$1 = Tip_UI_Generate;
 
-var foreign21 = /*#__PURE__*/Object.freeze({
+var foreign27 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Tip_UI_Generate$1
 });
@@ -1943,7 +2175,7 @@ UserRankUI_Generate = __decorate([
 ], UserRankUI_Generate);
 var UserRankUI_Generate$1 = UserRankUI_Generate;
 
-var foreign22 = /*#__PURE__*/Object.freeze({
+var foreign28 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: UserRankUI_Generate$1
 });
@@ -2150,7 +2382,7 @@ var IconType;
     IconType[IconType["WEEK_CHECK_SCORE"] = 5] = "WEEK_CHECK_SCORE";
 })(IconType || (IconType = {}));
 
-var foreign23 = /*#__PURE__*/Object.freeze({
+var foreign29 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     get IconType () { return IconType; },
     default: GameAnimation
@@ -2292,61 +2524,73 @@ Tips.MOVE_SPEED = 500;
 /**停留时间 */
 Tips.KEEP_TIME = 0.5;
 
-var foreign24 = /*#__PURE__*/Object.freeze({
+var foreign30 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     default: Tips
 });
 
 const MWModuleMap = { 
-     'EF845E584ECE1C8E53A96195763FC1A5': foreign1,
-     'E793F4E748068B7014AF149815249190': foreign2,
-     'E6FC771744B6D913C9441E8A915DBCC2': foreign3,
-     '490247FE43D457B85EF057977517099F': foreign4,
-     '4A90E38C4192D7FAF16F83898FCAC219': foreign5,
-     '809067014B3CF9466A80A6BDF1F8A03C': foreign6,
-     'B2294BEE486C64585D4D6C9D2E2A29B7': foreign7,
-     'BE51F1314FF9E1B0831555944A504573': foreign8,
-     '1AF9AC044BAA508BD6CB78A1D707B013': foreign9,
-     'D19D4E004C90F3D4E782A2AFE156D630': foreign10,
-     '0965A9604AF9AD8B0D8833AEA19AD6B3': foreign11,
-     '47D601104E1D68F07F2871B500E05DDA': foreign12,
-     'B32DECB342B4A4672D51B18EACB7414D': foreign13,
-     '8185F352414C0F496EE35CA1F89225DD': foreign14,
-     '6EB27D4A41492DD6186ED4B7EE8D2769': foreign15,
-     '8429EB3645CB15E6D119FE9993CE5143': foreign16,
-     'B65F55934F932B773F12C3B17E2BD513': foreign17,
-     '4EE162D549346C5B7AF997BDA462E33A': foreign18,
-     'E92897A248DE8503D010E6862B7DEAF3': foreign19,
-     '170235FE46D26B4DAADC9293EE730933': foreign20,
-     'DC156E8E44BD796E1A1BEDB806E0B1FF': foreign21,
-     '49C2BC27412134605F5B07941953FA9F': foreign22,
-     '29D97FD64EBCDB9B626BAD9E95CEB3B0': foreign23,
-     '20B62ED84F3052C4D65101B34996EF09': foreign24,
+     '0E7183864A7BE7B6C4C7DB81F06D570F': foreign1,
+     '6A7B488949D3ABA96D0BAF849CA1E1AE': foreign2,
+     'EF845E584ECE1C8E53A96195763FC1A5': foreign3,
+     'E793F4E748068B7014AF149815249190': foreign4,
+     'E6FC771744B6D913C9441E8A915DBCC2': foreign5,
+     '490247FE43D457B85EF057977517099F': foreign6,
+     '479D7D3447F0007FEBC3848FA422CC17': foreign7,
+     'DBC140CC44FE89A79BCC09B71D68A796': foreign8,
+     '580046DB47BBB90B934FA39B65B973E2': foreign9,
+     '4A90E38C4192D7FAF16F83898FCAC219': foreign10,
+     '809067014B3CF9466A80A6BDF1F8A03C': foreign11,
+     'B2294BEE486C64585D4D6C9D2E2A29B7': foreign12,
+     'BE51F1314FF9E1B0831555944A504573': foreign13,
+     '1AF9AC044BAA508BD6CB78A1D707B013': foreign14,
+     'D19D4E004C90F3D4E782A2AFE156D630': foreign15,
+     '0965A9604AF9AD8B0D8833AEA19AD6B3': foreign16,
+     '47D601104E1D68F07F2871B500E05DDA': foreign17,
+     'B32DECB342B4A4672D51B18EACB7414D': foreign18,
+     '8185F352414C0F496EE35CA1F89225DD': foreign19,
+     '6EB27D4A41492DD6186ED4B7EE8D2769': foreign20,
+     '8429EB3645CB15E6D119FE9993CE5143': foreign21,
+     'B65F55934F932B773F12C3B17E2BD513': foreign22,
+     '4EE162D549346C5B7AF997BDA462E33A': foreign23,
+     'E92897A248DE8503D010E6862B7DEAF3': foreign24,
+     'CD5328F04B946C23AB08E68E155C2D5B': foreign25,
+     '170235FE46D26B4DAADC9293EE730933': foreign26,
+     'DC156E8E44BD796E1A1BEDB806E0B1FF': foreign27,
+     '49C2BC27412134605F5B07941953FA9F': foreign28,
+     '29D97FD64EBCDB9B626BAD9E95CEB3B0': foreign29,
+     '20B62ED84F3052C4D65101B34996EF09': foreign30,
 };
-const MWFileMapping = new WeakMap([[foreign1 || {}, "JavaScripts/M_XC/Data/Data_interface"],
-[foreign2 || {}, "JavaScripts/M_XC/DefaultUI"],
-[foreign3 || {}, "JavaScripts/M_XC/GameStart"],
-[foreign4 || {}, "JavaScripts/M_XC/Obj_Manager"],
-[foreign5 || {}, "JavaScripts/Trigger/ItemTrigger"],
-[foreign6 || {}, "JavaScripts/Trigger/NPCTrigger"],
-[foreign7 || {}, "JavaScripts/Trigger/Pos_Trigger"],
-[foreign8 || {}, "JavaScripts/Trigger/SlotTrigger"],
-[foreign9 || {}, "JavaScripts/Trigger/UseItemTrigger"],
-[foreign10 || {}, "JavaScripts/ui-generate/DefaultUI_generate"],
-[foreign11 || {}, "JavaScripts/ui-generate/Dress_UI_generate"],
-[foreign12 || {}, "JavaScripts/ui-generate/GameManagerUI_generate"],
-[foreign13 || {}, "JavaScripts/ui-generate/Get_Item_UI_generate"],
-[foreign14 || {}, "JavaScripts/ui-generate/IAAUI_generate"],
-[foreign15 || {}, "JavaScripts/ui-generate/Illustrate_UI_generate"],
-[foreign16 || {}, "JavaScripts/ui-generate/Item_UI_generate"],
-[foreign17 || {}, "JavaScripts/ui-generate/Level_UI_generate"],
-[foreign18 || {}, "JavaScripts/ui-generate/Select_UI_generate"],
-[foreign19 || {}, "JavaScripts/ui-generate/Slot_UI_generate"],
-[foreign20 || {}, "JavaScripts/ui-generate/Tips_generate"],
-[foreign21 || {}, "JavaScripts/ui-generate/Tip_UI_generate"],
-[foreign22 || {}, "JavaScripts/ui-generate/UserRankUI_generate"],
-[foreign23 || {}, "JavaScripts/util/GameAnimaiton"],
-[foreign24 || {}, "JavaScripts/util/Tips"]]);
+const MWFileMapping = new WeakMap([[foreign1 || {}, "JavaScripts/EventData"],
+[foreign2 || {}, "JavaScripts/GameController"],
+[foreign3 || {}, "JavaScripts/M_XC/Data/Data_interface"],
+[foreign4 || {}, "JavaScripts/M_XC/DefaultUI"],
+[foreign5 || {}, "JavaScripts/M_XC/GameStart"],
+[foreign6 || {}, "JavaScripts/M_XC/Obj_Manager"],
+[foreign7 || {}, "JavaScripts/M_XC/ui/UIMain"],
+[foreign8 || {}, "JavaScripts/NpcAnimation"],
+[foreign9 || {}, "JavaScripts/TimeController"],
+[foreign10 || {}, "JavaScripts/Trigger/ItemTrigger"],
+[foreign11 || {}, "JavaScripts/Trigger/NPCTrigger"],
+[foreign12 || {}, "JavaScripts/Trigger/Pos_Trigger"],
+[foreign13 || {}, "JavaScripts/Trigger/SlotTrigger"],
+[foreign14 || {}, "JavaScripts/Trigger/UseItemTrigger"],
+[foreign15 || {}, "JavaScripts/ui-generate/DefaultUI_generate"],
+[foreign16 || {}, "JavaScripts/ui-generate/Dress_UI_generate"],
+[foreign17 || {}, "JavaScripts/ui-generate/GameManagerUI_generate"],
+[foreign18 || {}, "JavaScripts/ui-generate/Get_Item_UI_generate"],
+[foreign19 || {}, "JavaScripts/ui-generate/IAAUI_generate"],
+[foreign20 || {}, "JavaScripts/ui-generate/Illustrate_UI_generate"],
+[foreign21 || {}, "JavaScripts/ui-generate/Item_UI_generate"],
+[foreign22 || {}, "JavaScripts/ui-generate/Level_UI_generate"],
+[foreign23 || {}, "JavaScripts/ui-generate/Select_UI_generate"],
+[foreign24 || {}, "JavaScripts/ui-generate/Slot_UI_generate"],
+[foreign25 || {}, "JavaScripts/ui-generate/StartGame_generate"],
+[foreign26 || {}, "JavaScripts/ui-generate/Tips_generate"],
+[foreign27 || {}, "JavaScripts/ui-generate/Tip_UI_generate"],
+[foreign28 || {}, "JavaScripts/ui-generate/UserRankUI_generate"],
+[foreign29 || {}, "JavaScripts/util/GameAnimaiton"],
+[foreign30 || {}, "JavaScripts/util/Tips"]]);
 
 exports.MWFileMapping = MWFileMapping;
 exports.MWModuleMap = MWModuleMap;
