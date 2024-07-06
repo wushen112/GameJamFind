@@ -13,6 +13,12 @@ export default class EventController  {
         }
         return this._instance;
     }
+
+    /**成功条件 劫匪 */
+    public success1:boolean = false
+    /**成功条件叫醒机长 */
+    public success2:boolean = false
+
     public get EventMap(){
         return UIService.getUI(DefaultUI).slots;
     }
@@ -21,12 +27,23 @@ export default class EventController  {
         return UIService.getUI(DefaultUI).exChange;
     }
 
-    public judge(tag:string,obj:GameObject){
-        this[`${tag}`](obj);
+    public judge(obj:GameObject){
+        try {
+            this[`${obj.tag}`](obj);
+            return false;
+        } catch (error) {
+            console.log("没有找到方法")
+            return true;
+        }
+        
     }
 
 
 
+    /**
+     * @param obj 
+     * @returns 返回是否拾取
+     */
     private ToiletDoor(obj:GameObject){
         if(this.EventMap.has("tissue")){
             //TODO 黑屏一下打开门
@@ -35,21 +52,26 @@ export default class EventController  {
         }else{
             Tips.show("门外有人吗，能给我哪些纸巾吗，万分感谢！！！")
         }
+        return false
     }
 
-    private cola(obj:GameObject){
+    private CR_gril(obj:GameObject){
         if(this.EventMap.has("cola")){
             //TODO 黑屏一下打开机长大门
             obj.worldTransform.rotation = Rotation.zero
         }else{
             Tips.show("那个客人想要一杯可乐，可是可乐已经没了，要被投诉了")
         }
+        return false
     }
 
-    private bag(obj){
+    private parachute(obj){
         if(!this.EventMap.has("bag")){
             Tips.show("乘客您好现在没有危险请不要触碰降落伞");
+        }else{
+
         }
+        return false
     }
 
     private terrorist(obj:GameObject){
@@ -57,16 +79,22 @@ export default class EventController  {
             Tips.show("这个人看起来好危险");
         }else{
             //TODO 黑屏一下恐怖分子倒下
+            this.success1=true;
             const char =  (obj as Character).loadAnimation("");
             char.play();
         }
+        
     }
+
     private aircraftDoor(Obj:GameObject){
         Obj.worldTransform.position = Vector.zero;
-
+ 
+        
     }
+
     private commander(){
         Tips.show("哦 我睡着了吗，请你不要举报我，拜托了！")
+        this.success2 = true;
     }
 
 

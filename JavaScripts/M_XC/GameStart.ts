@@ -876,6 +876,8 @@ export default class GameStart extends Script {
 
     private cnt_time = 0 ;//计时器
 
+
+    private _character:Character = null;
     protected onStart(): void {
         if(SystemUtil.isServer()){
             Event.addClientListener("SetName",(player : Player,name:string)=>{
@@ -957,8 +959,11 @@ export default class GameStart extends Script {
                 M_Player.instance.UpdateTitle(title);
             })
         }
-        Event.addLocalListener(EventData.DIE,(end:Ending)=>{
-            GameController.instance.judgeDie(end);
+
+        this._character = Player.localPlayer.character;
+
+        Event.addLocalListener(EventData.Over,()=>{
+            GameController.instance.judgeDie();
         })
  
 
@@ -988,5 +993,9 @@ export default class GameStart extends Script {
             M_Player.instance.test_query()
             this.cnt_time = 0
         }
+        if(this._character.worldTransform.position.z<= -750){
+            GameController.instance.judgeDie(true);
+        }
+
     }
 }
