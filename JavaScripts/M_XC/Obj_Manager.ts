@@ -71,7 +71,12 @@ export class Obj_Manager  {
 
     public map:Map<string,string> = new Map();
     init(){
-        this.map.set("tag","imgid")
+        this.map.set("toiletPegs","48727")
+        this.map.set("cola","48727")
+        this.map.set("bag","48727")
+        this.map.set("parachute","48727")
+        this.map.set("tissue","48727")
+
     }
     public getItem(){
         if(!this.curItem){
