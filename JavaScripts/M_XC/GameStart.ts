@@ -5,6 +5,7 @@
  * @abstract 解决“披萨问题”
  * @abstract 增加收获奖杯动效
  */
+import GameController from "../GameController";
 import { Obj_Manager } from "./Obj_Manager";
 import MainUI from "./ui/UIMain";
 
@@ -962,6 +963,21 @@ export default class GameStart extends Script {
 
         UIService.show(MainUI)
 
+        this.initCamera()
+
+    }
+
+    async initCamera(){
+        //TODO 两个摄像机
+        await GameObject.asyncFindGameObjectById("2E7C9721").then((e)=>{
+            GameController.instance.startCamera = e as Camera;
+        })
+        GameObject.asyncFindGameObjectById("076F21BB").then((e)=>{
+            GameController.instance.endCamera = e as Camera;
+        })
+        GameController.instance.currCameta = Camera.currentCamera;
+
+        Camera.switch  ( GameController.instance.startCamera); 
     }
 
     protected onUpdate(dt: number): void {
