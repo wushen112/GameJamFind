@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 10:39:43
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-06 16:09:24
+ * @LastEditTime: 2024-07-06 20:31:32
  * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,9 +14,11 @@
  * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
+import EventData from "../EventData";
 import TimeController from "../TimeController";
 import DefaultUI_Generate from "../ui-generate/DefaultUI_generate";
 import { Items, M_Player, Select_UI, Slot_UI, Tip_UI, Tools } from "./GameStart";
+import { Obj_Manager } from "./Obj_Manager";
 
 
 export default class DefaultUI extends DefaultUI_Generate{
@@ -26,10 +28,50 @@ export default class DefaultUI extends DefaultUI_Generate{
 	/**总时间 */
 	public time:number = 180;
 
+	private slot_cnt :number
+
+	private M_slots :Array<Slot_UI> = new Array<Slot_UI>();
+
+	private slots: Map<string,Slot_Data> = new Map<string,Slot_Data>();
 	onStart(){
 		this.virtualJoystickPanel.onInputDir.add((vec)=>{
 			TimeController.instance.time = Vector2.distance(Vector2.zero,vec)
 		})
+		this.mBtn_exchange.onClicked.add(()=>{
+			Obj_Manager.instance.getItem();
+		})
+		//获得物品栏
+		Event.addLocalListener(EventData.Get_Item,(id:string,tag:string)=>{
+			
+			let temp = this.slots.get(tag)
+			if(temp){
+				temp.cnt++
+			}
+			else{
+				var slot_data : Slot_Data = {
+					icon_id : id,
+					tag: tag,
+					cnt : 1
+				}
+				this.slots.set(tag,slot_data)
+			}
+			this.update_slot()
+		})
+		//更新物品栏
+		Event.addLocalListener("Update_Slot",(flag:boolean,tag_ary:any,consume_cnt:any)=>{
+			if(!flag)
+				return
+			console.log("ui")
+			for(let i = 0 ; i < tag_ary.length ;i++){
+				let data = this.slots.get(tag_ary[i])
+				data.cnt -= consume_cnt[i]
+			}
+
+			this.update_slot()
+		})
+		//初始化物品栏
+		Event.addLocalListener(EventData.Init_Slot,(cnt:number)=>{this.init_canvas(cnt)})
+
 		this.canUpdate = true;
 	}
 
@@ -37,10 +79,34 @@ export default class DefaultUI extends DefaultUI_Generate{
 
 	}
 
+	public init_canvas(cnt:number){
+		this.slot_cnt = cnt
+		for(let i = 0 ; i< cnt ; i++){
+			let slot = UIService.create(Slot_UI)
+			slot.init(i)
+			this.canvas.addChild(slot.uiWidgetBase)
+			this.M_slots.push(slot)
+		}
+	}
+
+	private update_slot(){
+		let index = 0
+		for(let value of this.slots.values()){
+			if(value.cnt>0){
+				this.M_slots[index].update_ui(value.cnt,value.icon_id)
+				index++
+			}
+			else
+				continue
+		}
+		for(index;index<this.M_slots.length;index++){
+			this.M_slots[index].init(index)
+		}
+	}
+
 	onUpdate(dt){
 		TweenUtil.TWEEN.update();
 		this._timer += dt * TimeController.instance.time 
-		console.log("当前速度是",TimeController.instance.time )
 		if(this._timer >= 0.1&&this.time>0){
 			this.time -= 0.1;
 			this._timer = 0;

@@ -5,7 +5,8 @@
  * @abstract 解决“披萨问题”
  * @abstract 增加收获奖杯动效
  */
-import GameController from "../GameController";
+import EventData from "../EventData";
+import GameController, { Ending } from "../GameController";
 import { Obj_Manager } from "./Obj_Manager";
 import MainUI from "./ui/UIMain";
 
@@ -111,10 +112,8 @@ export  class Slot_UI extends UIScript {
     //更新物品栏UI
     public update_ui(cnt:number,id:string){
         this.Cnt_text.text = cnt.toString()
-        assetIDChangeIconUrlRequest([id]).then(()=>{	
-            this.Obj_BG.setImageByAssetIconData(getAssetIconDataByAssetID(id))
-            this.Obj_BG.size = new Vector2(150,150)
-        })
+        this.Obj_BG.imageGuid = id
+        this.Obj_BG.size = new Vector2(150,150)
         this.Cnt_text.visibility = SlateVisibility.Visible
     }
 
@@ -710,7 +709,7 @@ export class M_Player {
     //射线检测
     public test_query(){ 
        let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(600))
-       ,false,true,[],false,false,this.PlayerChar)
+       ,true,true,[],false,false,this.PlayerChar)
        Obj_Manager.instance.check_get(res)
     }
     //根据资源GUID播放音乐
@@ -897,7 +896,6 @@ export default class GameStart extends Script {
             //是否开启编辑模式
             if(this.IsPie) UIService.show(GameManagerUI);
             //初始化物品栏
-            Event.dispatchToLocal("Init_Slot",this.slots);
 
             //设置摄像机模式
             if(this.preset ){
@@ -959,10 +957,14 @@ export default class GameStart extends Script {
                 M_Player.instance.UpdateTitle(title);
             })
         }
+        Event.addLocalListener(EventData.DIE,(end:Ending)=>{
+            GameController.instance.judgeDie(end);
+        })
+ 
+
         this.useUpdate = true
 
         UIService.show(MainUI)
-
         this.initCamera()
 
     }
