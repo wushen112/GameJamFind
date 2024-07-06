@@ -902,7 +902,7 @@ export default class GameStart extends Script {
                 setTimeout(() => {
                   //  Camera.currentCamera.preset = 0
                     Camera.currentCamera.springArm.collisionEnabled = false
-                    Camera.currentCamera.springArm.length = 0
+                  //  Camera.currentCamera.springArm.length = 0
                     Event.dispatchToLocal("dot",this.preset)
                 }, 500);
             
@@ -910,7 +910,7 @@ export default class GameStart extends Script {
             else{
                 setTimeout(() => {
                   //  Camera.currentCamera.preset = 1
-                    Camera.currentCamera.springArm.length = 350
+                   // Camera.currentCamera.springArm.length = 350
                     Event.dispatchToLocal("dot",this.preset)
                 }, 500);
             }
