@@ -40,7 +40,7 @@ export default class DefaultUI extends DefaultUI_Generate{
 			TimeController.instance.time = Vector2.distance(Vector2.zero,vec)
 		})
 		this.mBtn_exchange.onClicked.add(()=>{
-			Obj_Manager.instance.getItem();
+			Obj_Manager.instance.exChange();
 		})
 		//获得物品栏
 		Event.addLocalListener(EventData.Get_Item,(id:string,tag:string)=>{
