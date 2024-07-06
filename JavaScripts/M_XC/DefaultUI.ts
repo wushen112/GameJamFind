@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 10:39:43
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-06 14:01:24
+ * @LastEditTime: 2024-07-06 14:06:40
  * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -271,8 +271,10 @@ export default class DefaultUI extends UIScript {
 	onUpdate(dt){
 		TweenUtil.TWEEN.update();
 		this._timer += dt * TimeController.instance.time 
+		console.log("当前速度是",TimeController.instance.time )
 		if(this._timer >= 0.1&&this.time>0){
 			this.time -= 0.1;
+			this._timer = 0;
 			//TODO 添加一个倒计时的Ui
 			const data = this.calTime(this.time);
 			this.timeUI.text = data.minute+':'+data.second+':'+data.ms
