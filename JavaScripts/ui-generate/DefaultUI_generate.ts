@@ -17,6 +17,27 @@ export default class DefaultUI_Generate extends UIScript {
 		}
 		return this.virtualJoystickPanel_Internal
 	}
+	private mBtn_exchange_Internal: mw.Button
+	public get mBtn_exchange(): mw.Button {
+		if(!this.mBtn_exchange_Internal&&this.uiWidgetBase) {
+			this.mBtn_exchange_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mBtn_exchange') as mw.Button
+		}
+		return this.mBtn_exchange_Internal
+	}
+	private mBtn_prop_Internal: mw.Button
+	public get mBtn_prop(): mw.Button {
+		if(!this.mBtn_prop_Internal&&this.uiWidgetBase) {
+			this.mBtn_prop_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mBtn_prop') as mw.Button
+		}
+		return this.mBtn_prop_Internal
+	}
+	private canvas_Internal: mw.Canvas
+	public get canvas(): mw.Canvas {
+		if(!this.canvas_Internal&&this.uiWidgetBase) {
+			this.canvas_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/ScrollBox/canvas') as mw.Canvas
+		}
+		return this.canvas_Internal
+	}
 	private mCanvas_Time_Internal: mw.Canvas
 	public get mCanvas_Time(): mw.Canvas {
 		if(!this.mCanvas_Time_Internal&&this.uiWidgetBase) {
