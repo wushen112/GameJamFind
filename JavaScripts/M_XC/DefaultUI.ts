@@ -1,4 +1,13 @@
-﻿import { Items, M_Player, Select_UI, Slot_UI, Tip_UI, Tools } from "./GameStart";
+﻿/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 10:39:43
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 14:06:40
+ * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+import TimeController from "../TimeController";
+import { Items, M_Player, Select_UI, Slot_UI, Tip_UI, Tools } from "./GameStart";
 
 @UIBind('')
 export default class DefaultUI extends UIScript {
@@ -9,11 +18,18 @@ export default class DefaultUI extends UIScript {
 	private BoxState : boolean = false; //宝箱领取状态
 	private goalText : TextBlock;//玩家金币数目
 	private goalImage : Image;//玩家金币图标
+	/**时间的文字表现的ui */
+	private timeUI : TextBlock;
+	private vir : VirtualJoystickPanel
 
 	/*****************************物品栏相关********************************/
 	private M_slots :Array<Slot_UI> = new Array<Slot_UI>();
 	private slots: Map<string,Slot_Data> = new Map<string,Slot_Data>();
 	private slot_cnt :number
+	//倒计时0.1秒计时器
+	private  _timer :number = 0;
+	/**总时间 */
+	public time:number = 180;
 	public init_canvas(cnt:number){
 		this.slot_cnt = cnt
 		for(let i = 0 ; i< cnt ; i++){
@@ -74,6 +90,15 @@ export default class DefaultUI extends UIScript {
 
 		this.goalImage = this.uiWidgetBase.findChildByPath('RootCanvas/Goal/IMG') as Image
 
+		this.timeUI = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Time/mText_Time') as TextBlock
+		
+		this.vir = this.uiWidgetBase.findChildByPath('RootCanvas/VirtualJoystickPanel') as VirtualJoystickPanel
+		
+		
+
+		this.vir.onInputDir.add((vec)=>{
+			TimeController.instance.time = Vector2.distance(Vector2.zero,vec)
+		})
 		RSTBtn.onPressed.add(()=>{
 			M_Player.instance.Rst();
 		})
@@ -243,7 +268,27 @@ export default class DefaultUI extends UIScript {
 			}, 2000);
 	}
 
-	onUpdate(){
+	onUpdate(dt){
 		TweenUtil.TWEEN.update();
+		this._timer += dt * TimeController.instance.time 
+		console.log("当前速度是",TimeController.instance.time )
+		if(this._timer >= 0.1&&this.time>0){
+			this.time -= 0.1;
+			this._timer = 0;
+			//TODO 添加一个倒计时的Ui
+			const data = this.calTime(this.time);
+			this.timeUI.text = data.minute+':'+data.second+':'+data.ms
+		}
+		if(this.time<=0){
+			//TODO 走死亡路径
+		}
 	}
+
+	calTime(time:number){
+		const minute = Math.floor (time /60);
+		const second = Math.floor (time%60);
+		const ms =Math.round( (time - Math.floor(time))*10);
+		return {minute,second,ms};
+	}
+
 }
