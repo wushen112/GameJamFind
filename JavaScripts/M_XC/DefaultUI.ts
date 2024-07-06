@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 10:39:43
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-06 20:31:32
+ * @LastEditTime: 2024-07-06 21:31:59
  * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -32,7 +32,9 @@ export default class DefaultUI extends DefaultUI_Generate{
 
 	private M_slots :Array<Slot_UI> = new Array<Slot_UI>();
 
-	private slots: Map<string,Slot_Data> = new Map<string,Slot_Data>();
+	public slots: Map<string,Slot_Data> = new Map<string,Slot_Data>();
+	public exChange:Map<string,string> = new Map<string,string>()
+
 	onStart(){
 		this.virtualJoystickPanel.onInputDir.add((vec)=>{
 			TimeController.instance.time = Vector2.distance(Vector2.zero,vec)

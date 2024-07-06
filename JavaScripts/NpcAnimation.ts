@@ -1,4 +1,12 @@
-﻿import TimeController from "./TimeController";
+﻿/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 20:59:00
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-06 21:04:37
+ * @FilePath: \test\JavaScripts\NpcAnimation.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+import TimeController from "./TimeController";
 
 @Component
 export default class NpcAnimation extends Script {
@@ -23,6 +31,7 @@ export default class NpcAnimation extends Script {
     protected onStart(): void {
         this.Npc = this.gameObject as Character;
         this.init()
+        this.useUpdate = true
     }
 
     //初始化人物
@@ -62,7 +71,6 @@ export default class NpcAnimation extends Script {
             this.Npc.attachToSlot(this.prop, this.NpcSlotType)
             console.log("Stance:" + this.gameObject + ":" + this.anima)
         }
-        this.useUpdate=true
     }
 
     /**
@@ -71,12 +79,9 @@ export default class NpcAnimation extends Script {
      * @param dt 当前帧与上一帧的延迟 / 秒
      */
     protected onUpdate(dt: number): void {
-        // 检测时间暂停时进行时停
-        if (TimeController.instance.time == 0) {
-            this.anima.speed = 0.05
-        } else {
-            this.anima.speed = 1
-        }
+        //检测时间暂停
+            this.anima.speed = TimeController.instance.time
+
     }
 
     /** 脚本被销毁时最后一帧执行完调用此函数 */
