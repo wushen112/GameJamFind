@@ -71,11 +71,11 @@ export default class NpcAnimation extends Script {
      * @param dt 当前帧与上一帧的延迟 / 秒
      */
     protected onUpdate(dt: number): void {
-        //检测时间暂停
+        // 检测时间暂停时进行时停
         if (TimeController.instance.time == 0) {
-            this.Npc.customTimeDilation = 0.01
+            this.anima.speed = 0.05
         } else {
-            this.Npc.customTimeDilation = 1
+            this.anima.speed = 1
         }
     }
 
