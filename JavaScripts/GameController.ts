@@ -32,6 +32,8 @@ export default class GameController{
             case Ending.dieBybomb:
                 this.dieBybomb();
                 break;
+            case Ending.AirCollision:
+                this.airCollision()
             case Ending.dropFail:
                 this.drop();
                 break;
@@ -45,10 +47,27 @@ export default class GameController{
     }
     /**爆炸死亡  */
     async dieBybomb(){
-        const effect = await Effect.asyncSpawn("") as Effect;
-        effect.worldTransform.position = Vector.zero;
+        const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
         effect.play();
         
+    }
+
+    airCollision(){
+        const airA =GameObject.findGameObjectById("2293A559") as GameObject;
+        const airB = GameObject.findGameObjectById("1F8FDF36") as GameObject;
+        const effect = GameObject.findGameObjectById("0BDCEFE5") as Effect;
+        let tempPosition:Vector=Vector.zero
+        const airAPosition=airA.worldTransform.position.clone();
+        const airBPosition=airB.worldTransform.position.clone();
+        let airTween = new mw.Tween(airBPosition).to({ x:airAPosition.x,y:airAPosition.y,z:airAPosition.z },2000).onUpdate((value) => {
+            tempPosition.x= value.x
+            tempPosition.y= value.y
+            tempPosition.z= value.z
+            airB.worldTransform.position= tempPosition
+        }).interpolation(TweenUtil.Interpolation.Bezier)
+        setTimeout(() => {
+            effect.play();
+        }, 1800);
     }
     /**掉落结局 */
     drop(){
@@ -63,6 +82,7 @@ export default class GameController{
 
 export enum Ending{
     dieBybomb,
+    AirCollision,
     dropFail,
     dropWin,
     win

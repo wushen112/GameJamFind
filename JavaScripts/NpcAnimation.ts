@@ -41,7 +41,7 @@ export default class NpcAnimation extends Script {
             this.anima.loop = 0;
             this.anima.slot = this.animSlot;
             this.anima.play()
-            console.log("Anima:" + this.gameObject + ":" + this.anima)
+            // console.log("Anima:" + this.gameObject + ":" + this.anima)
         }
         //判断是否有姿态
         if (this.StanceGuid != null && this.StanceGuid != "") {
@@ -51,7 +51,7 @@ export default class NpcAnimation extends Script {
             this.Stance = this.Npc.loadSubStance(this.StanceGuid);
             this.Stance.blendMode = StanceBlendMode.BlendLower;
             this.Stance.play();
-            console.log("Stance:" + this.gameObject + ":" + this.anima)
+            // console.log("Stance:" + this.gameObject + ":" + this.Stance)
         }
         //判断是否有挂件
         if (this.propGuid != null && this.propGuid != "") {
@@ -60,7 +60,7 @@ export default class NpcAnimation extends Script {
             }
             this.prop = GameObject.spawn(this.propGuid)
             this.Npc.attachToSlot(this.prop, this.NpcSlotType)
-            console.log("Stance:" + this.gameObject + ":" + this.anima)
+            // console.log("prop:" + this.gameObject + ":" + this.prop)
         }
         this.useUpdate=true
     }
