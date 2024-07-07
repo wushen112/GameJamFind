@@ -21,66 +21,61 @@ export default class GameController {
         }
 
         return this._insance;
-    
+
     }
 
 
     public startCamera: Camera = null;
     public endCamera: Camera = null;
     public currCameta: Camera = null
-    public hitCamera:Camera = null;
+    public hitCamera: Camera = null;
     onUpdate() {
 
     }
-    public startPos = new Vector(2039,1088,540)
+    public startPos = new Vector(2039, 1088, 540)
     LoopFrist() {
         Player.localPlayer.character.worldTransform.position = this.startPos;
         //音效
-        let sound = "17357BC7"
+        let sound = GameObject.findGameObjectById("17357BC7") as Sound
         //特效
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
         let hud = UIService.show(Awake_generate)
         hud.mCanvas_Black.visibility = 0;
-        let eye1 = hud.mImg_Eye1
-        let eye2 = hud.mImg_Eye2
-        let eye1Pos = 0
-        let eye2Pos = new Vector2(0, 0)
-        
+
         // 眨眼
-        let eye1Tween = new mw.Tween({ value: eye1.size.y }).to({ value: eye1.size.y / 2 }, 1000).onUpdate((obj) => {
-            eye1Pos = obj.value
-            eye1.size.y = eye1Pos
-        }).interpolation(TweenUtil.Interpolation.Bezier).repeat(2)
-        let eye2Tween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y * 0.75 }, 1000).onUpdate((obj) => {
-            eye2Pos.y = obj.value
-            eye2.position = eye2Pos
-        }).interpolation(TweenUtil.Interpolation.Bezier).repeat(2)
-        //闭眼
-        let eye1BackTween = new mw.Tween({ value: eye1.size.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 1000).onUpdate((obj) => {
-            eye1Pos = obj.value
-            eye1.size.y = eye1Pos
-        }).interpolation(TweenUtil.Interpolation.Bezier)
-        let eye2BackTween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 1000).onUpdate((obj) => {
-            eye2Pos.y = obj.value
-            eye2.position = eye2Pos
-        }).interpolation(TweenUtil.Interpolation.Bezier)
-
-
-        SoundService.playSound(sound)
+        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 500).onUpdate((obj) => {
+            hud.mCanvas_Black.renderOpacity = obj.value
+        })
+        let eye1BackTween = new mw.Tween({ value: 0 }).to({ value: 1 }, 500).onUpdate((obj) => {
+            hud.mCanvas_Black.renderOpacity = obj.value
+        })
+        sound.play()
         setTimeout(() => {
             eye1Tween.start().chain(eye1BackTween.start())
-            eye2Tween.start().chain(eye2BackTween.start())
+            eye1BackTween.start().chain(eye1Tween.start())
             setTimeout(() => {
                 effect.play();
                 setTimeout(() => {
                     UIService.hide(Awake_generate)
                     //进入正式游戏写这里面
-                    
+                    this.gameStart()
                 }, 500);
-            }, 4000);
+            }, 2000);
         }, 1000);
     }
 
+    gameStart() {
+        let hud = UIService.show(Awake_generate)
+        let sound = GameObject.findGameObjectById("22185F22") as Sound
+        sound.play()
+        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 500).onUpdate((obj) => {
+            hud.mCanvas_Black.renderOpacity = obj.value
+        }).start();
+        setTimeout(() => {
+            UIService.hide(Awake_generate)
+            //进入正式游戏写这里面
+        }, 500);
+    }
     //TODO 判断死亡
     judgeDie(isJump = false) {
         if (isJump) {
@@ -110,26 +105,26 @@ export default class GameController {
         effect.loopCount = 3;
         effect.worldTransform.position = Player.localPlayer.character.worldTransform.position;
         effect.play();
-        
+
     }
 
     airCollision() {
         const airA = GameObject.findGameObjectById("2293A559") as GameObject;
         const airB = GameObject.findGameObjectById("1F8FDF36") as GameObject;
         const effect = GameObject.findGameObjectById("0BDCEFE5") as Effect;
-        const airAPosition=airA.worldTransform.position.clone();
-        const airBPosition=airB.worldTransform.position.clone();
-        let airTween = new mw.Tween(airBPosition).to(airAPosition,2000).onUpdate((value) => {
-            airB.worldTransform.position= value
+        const airAPosition = airA.worldTransform.position.clone();
+        const airBPosition = airB.worldTransform.position.clone();
+        let airTween = new mw.Tween(airBPosition).to(airAPosition, 2000).onUpdate((value) => {
+            airB.worldTransform.position = value
         }).start();
         setTimeout(() => {
             effect.play();
-           
+
         }, 1800);
         setTimeout(() => {
-            Camera.switch(GameController.instance.currCameta,0.2)
+            Camera.switch(GameController.instance.currCameta, 0.2)
         }, 2000);
-        Camera.switch(GameController.instance.hitCamera,0.2)
+        Camera.switch(GameController.instance.hitCamera, 0.2)
 
     }
     /**掉落结局 */
@@ -143,21 +138,21 @@ export default class GameController {
     /**真正胜利的结局 */
     win() {
         const air = GameObject.findGameObjectById("3481F2C3") as GameObject;
-        new Tween(air.worldTransform.position).to(new Vector(-24037,9640,-74971),1000)
-        .onUpdate((value)=>{
-            air.worldTransform.position=value
-        })
-        .onComplete(()=>{
-            new Tween(air.worldTransform.position).to(new Vector(-1203,9640,-74971),1000)
-            .onUpdate((value)=>{
-                air.worldTransform.position=value
+        new Tween(air.worldTransform.position).to(new Vector(-24037, 9640, -74971), 1000)
+            .onUpdate((value) => {
+                air.worldTransform.position = value
             })
-            .onComplete(()=>{
-                Tips.show("恭喜你，成功落地")
-            })
-            .start()
-        }).start()
-      //  Camera.currentCamera.lock(air)
+            .onComplete(() => {
+                new Tween(air.worldTransform.position).to(new Vector(-1203, 9640, -74971), 1000)
+                    .onUpdate((value) => {
+                        air.worldTransform.position = value
+                    })
+                    .onComplete(() => {
+                        Tips.show("恭喜你，成功落地")
+                    })
+                    .start()
+            }).start()
+        //  Camera.currentCamera.lock(air)
     }
 
 }
