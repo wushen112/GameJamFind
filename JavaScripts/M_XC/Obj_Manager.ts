@@ -14,7 +14,7 @@ import EventController from "../EventController"
 import EventData from "../EventData"
 import DefaultUI from "./DefaultUI"
 
-export class Obj_Manager  {
+export class Obj_Manager {
 
     private static _instacne: Obj_Manager
     public static get instance(): Obj_Manager {
@@ -25,60 +25,75 @@ export class Obj_Manager  {
         return Obj_Manager._instacne
     }
 
-    
-    private _preobj:Model = null
 
-    public curItem:HitResult
-    public check_get(res : any){
-        let ui_flag : boolean = false
-        res.forEach(result =>{
+    private _preobj: Model = null
+
+    public curItem: HitResult
+    public check_get(res: any) {
+        let ui_flag: boolean = false
+        res.forEach(result => {
             let obj = result.gameObject
-            if(obj&&obj.tag){
+            if (obj && obj.tag) {
                 UIService.getUI(DefaultUI).mBtn_exchange.visibility = SlateVisibility.Visible
                 ui_flag = true;
-                this.model_outline(true,obj);
+                this.model_outline(true, obj);
                 this.curItem = result;
             }
         })
-        if(!ui_flag){
+        if (!ui_flag) {
             UIService.getUI(DefaultUI).mBtn_exchange.visibility = SlateVisibility.Hidden
             // Event.dispatchToLocal("OutLine_false")
-            if(this._preobj){
+            if (this._preobj) {
                 this._preobj.setOutline(false)
             }
         }
     }
 
-    public map:Map<string,string> = new Map();
-    init(){
-        this.map.set("toiletPegs","48727")
-        this.map.set("cola","48727")
-        this.map.set("bag","48727")
-        this.map.set("parachute","48727")
-        this.map.set("tissue","48727")
+    public map: Map<string, string> = new Map();
+    init() {
+        this.map.set("toiletPegs", "94326")
+        this.map.set("cola", "108587")
+        this.map.set("bag", "48727")
+        this.map.set("parachute", "parachute")
+        this.map.set("tissue", "157595")
 
     }
-    public exChange(){
-        if(!this.curItem){
-            return ;
+    public mapInit: string[] = {
+        "1D4A1AED",
+        "3CA8D82F",
+        "3CA8D82F",
+        "39CB3D87",
+        "0EAB4A0D",
+        "16E2A181",
+        "13A1CAC2",
+        "1AF79C2A",
+    "25C4CFD7",
+        "066EBE81",
+        "28F0DA02",
+        "306A95D0"
+
+    }
+    public exChange() {
+        if (!this.curItem) {
+            return;
         }
         const gameObj = this.curItem.gameObject
         const imgId = this.map.get(gameObj.tag)
         const result = EventController.instance.judge(gameObj)
-        if(result){
-            Event.dispatchToLocal(EventData.Get_Item,imgId,gameObj.tag,gameObj);
+        if (result) {
+            Event.dispatchToLocal(EventData.Get_Item, imgId, gameObj.tag, gameObj);
             gameObj.setVisibility(false)
             gameObj.setCollision(PropertyStatus.Off);
         }
     }
 
-    private model_outline(flag:boolean,obj:Model){
-        if(this._preobj&&this._preobj!=obj){
+    private model_outline(flag: boolean, obj: Model) {
+        if (this._preobj && this._preobj != obj) {
             this._preobj.setOutline(false)
         }
-        if(flag){
+        if (flag) {
             this._preobj = obj
-            obj.setOutline(true , new LinearColor(1,1,1),0.5)
+            obj.setOutline(true, new LinearColor(1, 1, 1), 0.5)
         }
 
     }
