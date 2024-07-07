@@ -20,6 +20,8 @@ export default class NpcAnimation extends Script {
     private propGuid: string = "";
     @Property({ displayName: "挂件插槽", enumType: HumanoidSlotType })
     private NpcSlotType: HumanoidSlotType = 16;
+    @Property({ displayName: "挂件旋转" })
+    private NpcSlotRot: mw.Rotation;
     @Property({ displayName: "是否开启碰撞" })
     private Collission: boolean = true;
 
@@ -69,6 +71,7 @@ export default class NpcAnimation extends Script {
             }
             this.prop = GameObject.spawn(this.propGuid)
             this.Npc.attachToSlot(this.prop, this.NpcSlotType)
+            this.prop.localTransform.rotation=this.NpcSlotRot
             // console.log("prop:" + this.gameObject + ":" + this.prop)
         }
     }
