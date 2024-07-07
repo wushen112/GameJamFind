@@ -114,7 +114,7 @@ export default class EventController {
         if (!this.EventMap.has("toiletPegs")) {
             Tips.show("我：这个人看起来很可疑，一直看时间");
         } else if (!this.terroristState) {
-            //TODO 黑屏一下恐怖分子倒下
+            //TODO 黑屏一下坏人倒下
 
             setTimeout(() => {
                 //TODO 黑屏一下打开机长大门p
@@ -132,7 +132,7 @@ export default class EventController {
                 }, 1500);
             }, 1000);
         } else {
-            Tips.show("倒下的恐怖分子")
+            Tips.show("倒下的坏人")
         }
 
     }
