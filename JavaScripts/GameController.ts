@@ -154,7 +154,7 @@ export default class GameController {
     dropFail() {
         Camera.switch(GameController.instance.BagCamera, 0.2)
         this.EndTips = UIService.show(EndTips_generate)
-        this.EndTips.mText_Take.text = "也许只是个书包？"
+        this.EndTips.mText_Take.text = "大部分人从高空跳下都会摔死"
         setTimeout(() => {
             UIService.hide(EndTips_generate)
             setTimeout(() => {

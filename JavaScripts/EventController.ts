@@ -63,7 +63,7 @@ export default class EventController {
                 UIService.getUI(DefaultUI).update_slot();
                 setTimeout(() => {
                     UIService.hide(BlackChange_generate)
-                },1500);
+                }, 1500);
             }, 1000);
         } else {
             Tips.show("大叔：不给我纸巾我是不会出去的！！！")
@@ -73,11 +73,19 @@ export default class EventController {
 
     private CR_gril(obj: GameObject) {
         if (this.EventMap.has("cola")) {
-            //TODO 黑屏一下打开机长大门
-            obj.setVisibility(false);
-            obj.setCollision(PropertyStatus.Off);
-            obj.getChildren()[0].setVisibility(false);
-            obj.getChildren()[0].setCollision(PropertyStatus.Off);
+            Tips.show("空乘：谢谢，我这就拿去给机长")
+            setTimeout(() => {
+                //TODO 黑屏一下打开机长大门
+                this.Black = UIService.show(BlackChange_generate)
+                this.Black.mImg_take.text = "空乘进去了，门打开了"
+                obj.setVisibility(false);
+                obj.setCollision(PropertyStatus.Off);
+                obj.getChildren()[0].setVisibility(false);
+                obj.getChildren()[0].setCollision(PropertyStatus.Off);
+                setTimeout(() => {
+                    UIService.hide(BlackChange_generate)
+                }, 1500);
+            }, 1000);
         } else {
             Tips.show("空乘：机长想喝橙汁，但是我不能走开")
         }
@@ -105,12 +113,20 @@ export default class EventController {
             Tips.show("我：这个人看起来很可疑，一直看时间");
         } else {
             //TODO 黑屏一下恐怖分子倒下
-            this.success1 = true;
-            const char = (obj as Character).loadAnimation("8355");
-            char.play();
             setTimeout(() => {
-                char.pause()
-            }, 1500);
+                //TODO 黑屏一下打开机长大门
+                this.Black = UIService.show(BlackChange_generate)
+                this.Black.mImg_take.text = "眼前的男人，大叫一声便倒下了"
+                this.success1 = true;
+                const char = (obj as Character).loadAnimation("8355");
+                char.play();
+                setTimeout(() => {
+                    char.speed = 0
+                }, 600);
+                setTimeout(() => {
+                    UIService.hide(BlackChange_generate)
+                }, 1500);
+            }, 1000);
         }
 
     }
@@ -121,7 +137,7 @@ export default class EventController {
     }
 
     private commander() {
-        Tips.show("哦 我睡着了吗，请你不要举报我，拜托了！")
+        Tips.show("机长：嗯？ 我睡着了吗？对不起！")
         this.success2 = true;
     }
 
