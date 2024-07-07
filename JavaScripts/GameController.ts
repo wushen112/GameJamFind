@@ -9,7 +9,7 @@ import Tips from "./util/Tips";
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 14:11:24
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 11:39:52
+ * @LastEditTime: 2024-07-07 13:40:07
  * @FilePath: \test\JavaScripts\GameController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -88,6 +88,7 @@ export default class GameController {
         setTimeout(() => {
             UIService.hide(Awake_generate)
             //进入正式游戏写这里面
+            UIService.show(DefaultUI);
         }, 500);
     }
     //TODO 判断死亡

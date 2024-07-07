@@ -988,6 +988,8 @@ export default class GameStart extends Script {
 			UIService.getUI(DefaultUI).slots.clear();
             UIService.getUI(DefaultUI).update_slot();
             UIService.getUI(DefaultUI).time = 60;
+            Obj_Manager.instance.init_obj();
+            GameController.instance.gameStart();
         })
  
         Event.addLocalListener(EventData.GameStart,()=>{
