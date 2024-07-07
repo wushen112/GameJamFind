@@ -8,6 +8,7 @@
 import EventController from "../EventController";
 import EventData from "../EventData";
 import GameController, { Ending } from "../GameController";
+import GameAnimation from "../util/GameAnimaiton";
 import DefaultUI from "./DefaultUI";
 import { Obj_Manager } from "./Obj_Manager";
 import MainUI from "./ui/UIMain";
@@ -839,41 +840,41 @@ export class PlayData extends Subdata{
 
 @Component
 export default class GameStart extends Script {
-    // @Property({displayName:"是否开启编辑模式",group:"编辑模式"})
-    // private IsPie : boolean = false;
+    @Property({displayName:"是否开启编辑模式",group:"编辑模式"})
+    private IsPie : boolean = false;
 
-    // @Property({displayName:"默认复活点",group:"基础设置"})
-    // private reborn_pos : Vector = Vector.zero;
+    @Property({displayName:"默认复活点",group:"基础设置"})
+    private reborn_pos : Vector = Vector.zero;
 
-    // @Property({displayName:"物品栏数",group:"基础设置"})
-    // private slots : number = 20;
+    @Property({displayName:"物品栏数",group:"基础设置"})
+    private slots : number = 20;
 
-    // @Property({displayName:"是否启用第一人称",group:"基础设置"})
-    // private preset : boolean = false;
+    @Property({displayName:"是否启用第一人称",group:"基础设置"})
+    private preset : boolean = false;
 
-    // @Property({displayName:"关卡",group:"关卡列表",arrayDefault:new LevelList("",0)})
-    // public LevelLists : LevelList[] = [];
+    @Property({displayName:"关卡",group:"关卡列表",arrayDefault:new LevelList("",0)})
+    public LevelLists : LevelList[] = [];
 
-    // @Property({displayName:"称谓",group:"称谓列表",arrayDefault:new TitleList("",0)})
-    // public TitleLists : TitleList[] = [];
+    @Property({displayName:"称谓",group:"称谓列表",arrayDefault:new TitleList("",0)})
+    public TitleLists : TitleList[] = [];
 
-    // @Property({displayName:"音乐",group:"音乐列表",arrayDefault:new AssetList("","")})
-    // public MusicLists : AssetList[] = [];
+    @Property({displayName:"音乐",group:"音乐列表",arrayDefault:new AssetList("","")})
+    public MusicLists : AssetList[] = [];
 
-    // @Property({displayName:"拖尾装扮",group:"拖尾装扮列表",arrayDefault:new AssetList("","")})
-    // public TrailLists : AssetList[] = [];
+    @Property({displayName:"拖尾装扮",group:"拖尾装扮列表",arrayDefault:new AssetList("","")})
+    public TrailLists : AssetList[] = [];
 
-    // @Property({displayName:"换装资源",group:"换装资源列表",arrayDefault:new AssetList("","")})
-    // public ClothLists : AssetList[] = [];
+    @Property({displayName:"换装资源",group:"换装资源列表",arrayDefault:new AssetList("","")})
+    public ClothLists : AssetList[] = [];
 
-    // @Property({displayName:"动作资源",group:"动作资源列表",arrayDefault:new AssetList("","")})
-    // public AnimLists : AssetList[] = [];
+    @Property({displayName:"动作资源",group:"动作资源列表",arrayDefault:new AssetList("","")})
+    public AnimLists : AssetList[] = [];
 
-    // @Property({displayName:"翅膀资源",group:"翅膀资源列表",arrayDefault:new TransformAssetList("","",Vector.zero,new Rotation(0,0,90),Vector.one)})
-    // public WingLists : TransformAssetList[]=[];
+    @Property({displayName:"翅膀资源",group:"翅膀资源列表",arrayDefault:new TransformAssetList("","",Vector.zero,new Rotation(0,0,90),Vector.one)})
+    public WingLists : TransformAssetList[]=[];
 
-    // @Property({displayName:"头顶装扮资源",group:"头顶装扮资源列表",arrayDefault:new TransformAssetList("","",Vector.zero,Rotation.zero,Vector.one)})
-    // public HatLists : TransformAssetList[]=[];
+    @Property({displayName:"头顶装扮资源",group:"头顶装扮资源列表",arrayDefault:new TransformAssetList("","",Vector.zero,Rotation.zero,Vector.one)})
+    public HatLists : TransformAssetList[]=[];
 
 
     private cnt_time = 0 ;//计时器
@@ -881,86 +882,86 @@ export default class GameStart extends Script {
 
     private _character:Character = null;
     protected onStart(): void {
-        // if(SystemUtil.isServer()){
-        //     Event.addClientListener("SetName",(player : Player,name:string)=>{
-        //         player.character.displayName = name
-        //     })
+        if(SystemUtil.isServer()){
+            Event.addClientListener("SetName",(player : Player,name:string)=>{
+                player.character.displayName = name
+            })
 
-        //     DataStorage.setTemporaryStorage(SystemUtil.isPIE) 
+            DataStorage.setTemporaryStorage(SystemUtil.isPIE) 
 
-        //     Event.addClientListener("PlayerLeaveSave",(player:Player,Data:Array<string>)=>{
-        //         DataCenterS.getData(player,PlayData).DataArr = Data
-        //         DataCenterS.getData(player,PlayData).save(true)
-        //     })
-        //     Event.addClientListener("完成关卡",(player:Player,event_name:string)=>{
-        //         Event.dispatchToLocal(event_name)
-        //     })
-        // }
-        // else{
-        //     //是否开启编辑模式
-        //     if(this.IsPie) UIService.show(GameManagerUI);
-        //     //初始化物品栏
+            Event.addClientListener("PlayerLeaveSave",(player:Player,Data:Array<string>)=>{
+                DataCenterS.getData(player,PlayData).DataArr = Data
+                DataCenterS.getData(player,PlayData).save(true)
+            })
+            Event.addClientListener("完成关卡",(player:Player,event_name:string)=>{
+                Event.dispatchToLocal(event_name)
+            })
+        }
+        else{
+            //是否开启编辑模式
+            if(this.IsPie) UIService.show(GameManagerUI);
+            //初始化物品栏
 
-        //     //设置摄像机模式
-        //     if(this.preset ){
-        //         setTimeout(() => {
-        //           //  Camera.currentCamera.preset = 0
-        //             Camera.currentCamera.springArm.collisionEnabled = false
-        //           //  Camera.currentCamera.springArm.length = 0
-        //             Event.dispatchToLocal("dot",this.preset)
-        //         }, 500);
+            //设置摄像机模式
+            if(this.preset ){
+                setTimeout(() => {
+                  //  Camera.currentCamera.preset = 0
+                    Camera.currentCamera.springArm.collisionEnabled = false
+                  //  Camera.currentCamera.springArm.length = 0
+                    Event.dispatchToLocal("dot",this.preset)
+                }, 500);
             
-        //     }
-        //     else{
-        //         setTimeout(() => {
-        //           //  Camera.currentCamera.preset = 1
-        //            // Camera.currentCamera.springArm.length = 350
-        //             Event.dispatchToLocal("dot",this.preset)
-        //         }, 500);
-        //     }
-        //     this.useUpdate = this.preset
+            }
+            else{
+                setTimeout(() => {
+                  //  Camera.currentCamera.preset = 1
+                   // Camera.currentCamera.springArm.length = 350
+                    Event.dispatchToLocal("dot",this.preset)
+                }, 500);
+            }
+            this.useUpdate = this.preset
 
-        //     //初始化玩家信息
-        //     M_Player.instance.init(this.reborn_pos,this.TitleLists[0].Title_Name)
-        //     //初始化资源信息
-        //     Dress.instance.init(this.TrailLists,1);
-        //     Dress.instance.init(this.WingLists,2);
-        //     Dress.instance.init(this.ClothLists,3);
-        //     Dress.instance.init(this.HatLists,4);
-        //     Dress.instance.init(this.AnimLists,5);
-        //     Dress.instance.init(this.MusicLists,6);
-        //     //配置关卡物品信息
-        //     Items.instance._init(this.LevelLists);
-        //     //监听并创建广告
-        //     Event.addLocalListener("IAA",(tip:string,type:number,level_num:number,own:number,Asset_GUID:string)=>{
-        //         UIService.show(IAA,tip,type,level_num,own,Asset_GUID)
-        //     })
-        //     //装扮发放
-        //     Event.addLocalListener("Get_Dress",(type:number,id:number,Asset_GUID:string)=>{
-        //         Dress.instance.Update_DressUI(id,type)
-        //         switch (type) {
-        //             case 2:
-        //                 M_Player.instance.GetAsset(Asset_GUID,type,new Transform(this.WingLists[id].Asset_Position,this.WingLists[id].Asset_Rotation,this.WingLists[id].Asset_Scale));
-        //                 break;
-        //             case 4:
-        //                 M_Player.instance.GetAsset(Asset_GUID,type,new Transform(this.HatLists[id].Asset_Position,this.HatLists[id].Asset_Rotation,this.HatLists[id].Asset_Scale));
-        //                 break;
-        //             default:
-        //                 M_Player.instance.GetAsset(Asset_GUID,type);
-        //                 break;
-        //         }
-        //     })
+            //初始化玩家信息
+            M_Player.instance.init(this.reborn_pos,this.TitleLists[0].Title_Name)
+            //初始化资源信息
+            Dress.instance.init(this.TrailLists,1);
+            Dress.instance.init(this.WingLists,2);
+            Dress.instance.init(this.ClothLists,3);
+            Dress.instance.init(this.HatLists,4);
+            Dress.instance.init(this.AnimLists,5);
+            Dress.instance.init(this.MusicLists,6);
+            //配置关卡物品信息
+            Items.instance._init(this.LevelLists);
+            //监听并创建广告
+            Event.addLocalListener("IAA",(tip:string,type:number,level_num:number,own:number,Asset_GUID:string)=>{
+                UIService.show(IAA,tip,type,level_num,own,Asset_GUID)
+            })
+            //装扮发放
+            Event.addLocalListener("Get_Dress",(type:number,id:number,Asset_GUID:string)=>{
+                Dress.instance.Update_DressUI(id,type)
+                switch (type) {
+                    case 2:
+                        M_Player.instance.GetAsset(Asset_GUID,type,new Transform(this.WingLists[id].Asset_Position,this.WingLists[id].Asset_Rotation,this.WingLists[id].Asset_Scale));
+                        break;
+                    case 4:
+                        M_Player.instance.GetAsset(Asset_GUID,type,new Transform(this.HatLists[id].Asset_Position,this.HatLists[id].Asset_Rotation,this.HatLists[id].Asset_Scale));
+                        break;
+                    default:
+                        M_Player.instance.GetAsset(Asset_GUID,type);
+                        break;
+                }
+            })
 
-        //     Event.addLocalListener("Update_gold",()=>{
-        //         M_Player.instance.IllustrateCnt++;
-        //         let title = this.TitleLists[0].Title_Name;
-        //         this.TitleLists.forEach((Title)=>{
-        //             if(Title.Title_Gold<=M_Player.instance.IllustrateCnt)
-        //                 title = Title.Title_Name;
-        //         })
-        //         M_Player.instance.UpdateTitle(title);
-        //     })
-        // }
+            Event.addLocalListener("Update_gold",()=>{
+                M_Player.instance.IllustrateCnt++;
+                let title = this.TitleLists[0].Title_Name;
+                this.TitleLists.forEach((Title)=>{
+                    if(Title.Title_Gold<=M_Player.instance.IllustrateCnt)
+                        title = Title.Title_Name;
+                })
+                M_Player.instance.UpdateTitle(title);
+            })
+        }
         InputUtil.onKeyDown(Keys.L,()=>{
             GameController.instance.win()
         })
@@ -986,7 +987,7 @@ export default class GameStart extends Script {
         })
  
         Event.addLocalListener(EventData.GameStart,()=>{
-
+            GameController.instance.LoopFrist()
         })
 
         this.useUpdate = true
