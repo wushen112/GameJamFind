@@ -94,6 +94,7 @@ export default class GameController {
         setTimeout(() => {
             UIService.hide(Awake_generate)
             //进入正式游戏写这里面
+            Tips.show("我：刚刚是梦吗");
             UIService.show(DefaultUI);
         }, 500);
     }
@@ -176,7 +177,8 @@ export default class GameController {
 
     /**真正胜利的结局 */
     win() {
-        const air = GameObject.findGameObjectById("3481F2C3") as GameObject;
+        const air = GameObject.findGameObjectById("3481F2C3") as GameObject;119832
+        let sound = GameObject.findGameObjectById("119832") as Sound
         new Tween(air.worldTransform.position).to(new Vector(-24037, 9640, -74971), 1000)
             .onUpdate((value) => {
                 air.worldTransform.position = value
@@ -187,7 +189,9 @@ export default class GameController {
                         air.worldTransform.position = value
                     })
                     .onComplete(() => {
-                        Tips.show("恭喜你，成功落地")
+                        sound.play()
+                        this.EndTips = UIService.show(EndTips_generate)
+                        this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！"
                     })
                     .start()
             }).start()
