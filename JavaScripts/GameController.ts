@@ -1,5 +1,6 @@
 import EventController from "./EventController";
 import DefaultUI from "./M_XC/DefaultUI";
+import DefaultUI_generate from "./ui-generate/DefaultUI_generate";
 import { Obj_Manager } from "./M_XC/Obj_Manager";
 import GameAnimation from "./util/GameAnimaiton";
 import Tips from "./util/Tips";
@@ -12,85 +13,129 @@ import Tips from "./util/Tips";
  * @FilePath: \test\JavaScripts\GameController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-export default class GameController{
-    private static _insance : GameController;
-    public static get instance(){
-        if(!this._insance){
+export default class GameController {
+    private static _insance: GameController;
+    public static get instance() {
+        if (!this._insance) {
             this._insance = new GameController();
         }
         return this._insance;
-    } 
-
-
-    public startCamera:Camera = null;
-    public endCamera:Camera = null;
-    public currCameta:Camera = null
-    onUpdate(){ 
-        
     }
 
 
+    public startCamera: Camera = null;
+    public endCamera: Camera = null;
+    public currCameta: Camera = null
+    onUpdate() {
+
+    }
+
+    LoopFrist() {
+        //音效
+        let sound = "17357BC7"
+        //特效
+        const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
+        let hud = UIService.show(DefaultUI_generate)
+        hud.mCanvas_Black.visibility = 0;
+        let eye1 = hud.mImg_Eye1
+        let eye2 = hud.mImg_Eye2
+        let eye1Pos = 0
+        let eye2Pos = new Vector2(0, 0)
+        
+        // 眨眼
+        let eye1Tween = new mw.Tween({ value: eye1.size.y }).to({ value: eye1.size.y / 2 }, 2000).onUpdate((obj) => {
+            eye1Pos = obj.value
+            eye1.size.y = eye1Pos
+        }).interpolation(TweenUtil.Interpolation.Bezier).repeat(2)
+        let eye2Tween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y * 0.75 }, 2000).onUpdate((obj) => {
+            eye2Pos.y = obj.value
+            eye2.position = eye2Pos
+        }).interpolation(TweenUtil.Interpolation.Bezier).repeat(2)
+        //闭眼
+        let eye1BackTween = new mw.Tween({ value: eye1.size.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 2000).onUpdate((obj) => {
+            eye1Pos = obj.value
+            eye1.size.y = eye1Pos
+        }).interpolation(TweenUtil.Interpolation.Bezier)
+        let eye2BackTween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 2000).onUpdate((obj) => {
+            eye2Pos.y = obj.value
+            eye2.position = eye2Pos
+        }).interpolation(TweenUtil.Interpolation.Bezier)
+
+
+        SoundService.playSound(sound)
+        setTimeout(() => {
+            eye1Tween.start().chain(eye1BackTween.start())
+            eye2Tween.start().chain(eye2BackTween.start())
+            setTimeout(() => {
+                effect.play();
+                setTimeout(() => {
+                    //进入正式游戏写这里面
+                }, 500);
+            }, 4000);
+        }, 1000);
+    }
+
     //TODO 判断死亡
-    judgeDie(isJump = false){
-        if(isJump){
-            if(UIService.getUI(DefaultUI).slots.has("parachute")){
+    judgeDie(isJump = false) {
+        if (isJump) {
+            if (UIService.getUI(DefaultUI).slots.has("parachute")) {
                 this.dropSuccess();
-            }else{
+            } else {
                 this.dropFail();
             }
-            return ;
+            return;
         }
 
-        
-        if(EventController.instance.success1 == false){
+
+        if (EventController.instance.success1 == false) {
             this.dieBybomb();
-            return ;
+            return;
         }
-        if(EventController.instance.success2 == false   ){
+        if (EventController.instance.success2 == false) {
             this.airCollision();
-            return ;
+            return;
         }
 
         this.win();
     }
     /**爆炸死亡  */
-    dieBybomb(){
+    dieBybomb() {
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
         effect.play();
     }
 
-    airCollision(){
-        const airA =GameObject.findGameObjectById("2293A559") as GameObject;
+    airCollision() {
+        const airA = GameObject.findGameObjectById("2293A559") as GameObject;
         const airB = GameObject.findGameObjectById("1F8FDF36") as GameObject;
         const effect = GameObject.findGameObjectById("0BDCEFE5") as Effect;
-        let tempPosition:Vector=Vector.zero
-        const airAPosition=airA.worldTransform.position.clone();
-        const airBPosition=airB.worldTransform.position.clone();
-        let airTween = new mw.Tween(airBPosition).to({ x:airAPosition.x,y:airAPosition.y,z:airAPosition.z },2000).onUpdate((value) => {
-            tempPosition.x= value.x
-            tempPosition.y= value.y
-            tempPosition.z= value.z
-            airB.worldTransform.position= tempPosition
+        let tempPosition: Vector = Vector.zero
+        const airAPosition = airA.worldTransform.position.clone();
+        const airBPosition = airB.worldTransform.position.clone();
+        let airTween = new mw.Tween(airBPosition).to({ x: airAPosition.x, y: airAPosition.y, z: airAPosition.z }, 2000).onUpdate((value) => {
+            tempPosition.x = value.x
+            tempPosition.y = value.y
+            tempPosition.z = value.z
+            airB.worldTransform.position = tempPosition
         }).interpolation(TweenUtil.Interpolation.Bezier)
         setTimeout(() => {
             effect.play();
         }, 1800);
     }
     /**掉落结局 */
-    dropFail(){
+    dropFail() {
         Tips.show("恭喜你，落地失败");
     }
-    dropSuccess(){
+    dropSuccess() {
         Tips.show("恭喜你，成功落地");
     }
     /**真正胜利的结局 */
-    win(){
-        
+    win() {
+
     }
 
 }
 
-export enum Ending{
+export enum Ending {
     dieBybomb,
     airCollision,
     dropFail,
