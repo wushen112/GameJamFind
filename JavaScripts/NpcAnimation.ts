@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 20:59:00
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-06 21:04:37
+ * @LastEditTime: 2024-07-07 15:14:28
  * @FilePath: \test\JavaScripts\NpcAnimation.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -83,6 +83,10 @@ export default class NpcAnimation extends Script {
      */
     protected onUpdate(dt: number): void {
         //检测时间暂停
+        if(!this.anima){
+            return;
+        }
+
         if (TimeController.instance.time == 0) {
             this.anima.speed = 0.1
         } else {
