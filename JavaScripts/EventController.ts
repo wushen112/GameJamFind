@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-07 00:31:49
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 12:16:44
+ * @LastEditTime: 2024-07-07 15:25:29
  * @FilePath: \test\JavaScripts\EventController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -108,25 +108,31 @@ export default class EventController {
         return false
     }
 
+    public terroristState:boolean = false
+    public chatAnim:Animation;
     private terrorist(obj: GameObject) {
         if (!this.EventMap.has("toiletPegs")) {
             Tips.show("我：这个人看起来很可疑，一直看时间");
-        } else {
+        } else if(!this.terroristState){
             //TODO 黑屏一下恐怖分子倒下
+            
             setTimeout(() => {
                 //TODO 黑屏一下打开机长大门
                 this.Black = UIService.show(BlackChange_generate)
                 this.Black.mImg_take.text = "眼前的男人，大叫一声便倒下了"
                 this.success1 = true;
-                const char = (obj as Character).loadAnimation("8355");
-                char.play();
+                this.chatAnim = (obj as Character).loadAnimation("8355");
+                this.chatAnim.play();
+                this.terroristState = true;
                 setTimeout(() => {
-                    char.speed = 0
+                    this.chatAnim.speed = 0
                 }, 600);
                 setTimeout(() => {
                     UIService.hide(BlackChange_generate)
                 }, 1500);
             }, 1000);
+        }else{
+            Tips.show("倒下的恐怖分子")
         }
 
     }

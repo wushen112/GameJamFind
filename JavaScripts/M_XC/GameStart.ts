@@ -994,9 +994,12 @@ export default class GameStart extends Script {
                 EventController.instance.success2 = false;
                 UIService.getUI(DefaultUI).slots.clear();
                 UIService.getUI(DefaultUI).update_slot();
-                UIService.getUI(DefaultUI).time = 60;
+                UIService.getUI(DefaultUI).time = 30;
                 GameController.instance.gameStart();
                 Obj_Manager.instance.init_obj();
+                EventController.instance.terroristState = false
+                EventController.instance.chatAnim.stop()
+
             }, 3000);
 
 
