@@ -126,7 +126,7 @@ export default class EventController {
                 this.terroristState = true;
                 setTimeout(() => {
                     this.chatAnim.speed = 0
-                }, 600);
+                }, 800);
                 setTimeout(() => {
                     UIService.hide(BlackChange_generate)
                 }, 1500);

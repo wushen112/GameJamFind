@@ -89,7 +89,7 @@ export default class GameController {
         let hud = UIService.show(Awake_generate)
         let sound = GameObject.findGameObjectById("22185F22") as Sound
         sound.play()
-        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 500).onUpdate((obj) => {
+        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 800).onUpdate((obj) => {
             hud.mCanvas_Black.renderOpacity = obj.value
         }).start();
         setTimeout(() => {
@@ -131,7 +131,6 @@ export default class GameController {
         setTimeout(() => {
             Camera.switch(GameController.instance.currCameta, 0.5)
         }, 2000);
-
     }
 
     airCollision() {
@@ -181,25 +180,14 @@ export default class GameController {
 
     /**真正胜利的结局 */
     win() {
-        const air = GameObject.findGameObjectById("3481F2C3") as GameObject;119832
+        const air = GameObject.findGameObjectById("3481F2C3") as GameObject;
         let sound = GameObject.findGameObjectById("119832") as Sound
-        new Tween(air.worldTransform.position).to(new Vector(-24037, 9640, -74971), 1000)
-            .onUpdate((value) => {
-                air.worldTransform.position = value
-            })
-            .onComplete(() => {
-                new Tween(air.worldTransform.position).to(new Vector(-1203, 9640, -74971), 1000)
-                    .onUpdate((value) => {
-                        air.worldTransform.position = value
-                    })
-                    .onComplete(() => {
-                        sound.play()
-                        this.EndTips = UIService.show(EndTips_generate)
-                        this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！"
-                    })
-                    .start()
-            }).start()
-        //  Camera.currentCamera.lock(air)
+        Camera.switch(GameController.instance.endCamera)
+        setTimeout(() => {
+            sound.play()
+            this.EndTips = UIService.show(EndTips_generate)
+            this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！"
+        }, 300);
     }
 
 }
