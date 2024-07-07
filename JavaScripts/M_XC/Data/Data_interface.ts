@@ -2,4 +2,5 @@
     icon_id : string ;
     tag : string;
     cnt : number;
+    obj : GameObject;
 }

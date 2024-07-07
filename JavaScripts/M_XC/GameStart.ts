@@ -7,6 +7,7 @@
  */
 import EventData from "../EventData";
 import GameController, { Ending } from "../GameController";
+import DefaultUI from "./DefaultUI";
 import { Obj_Manager } from "./Obj_Manager";
 import MainUI from "./ui/UIMain";
 
@@ -708,7 +709,7 @@ export class M_Player {
     }
     //射线检测
     public test_query(){ 
-       let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(600))
+       let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(150))
        ,true,true,[],false,false,this.PlayerChar)
        Obj_Manager.instance.check_get(res)
     }
@@ -959,13 +960,21 @@ export default class GameStart extends Script {
                 M_Player.instance.UpdateTitle(title);
             })
         }
-
+        InputUtil.onKeyDown(Keys.L,()=>{
+            GameController.instance.airCollision()
+        })
         this._character = Player.localPlayer.character;
 
         Event.addLocalListener(EventData.Over,()=>{
             GameController.instance.judgeDie();
         })
  
+        Event.addLocalListener(EventData.GameStart,()=>{
+            UIService.getUI(DefaultUI).slots.forEach((value,key)=>{
+                value.obj.setVisibility(true);
+                value.obj.setCollision(PropertyStatus.Off);
+            })
+        })
 
         this.useUpdate = true
 
@@ -982,6 +991,10 @@ export default class GameStart extends Script {
         GameObject.asyncFindGameObjectById("076F21BB").then((e)=>{
             GameController.instance.endCamera = e as Camera;
         })
+        GameObject.asyncFindGameObjectById("0568C96E").then((e)=>{
+            GameController.instance.hitCamera = e as Camera ;
+        })
+
         GameController.instance.currCameta = Camera.currentCamera;
 
         Camera.switch  ( GameController.instance.startCamera); 

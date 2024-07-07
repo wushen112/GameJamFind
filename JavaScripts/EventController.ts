@@ -1,3 +1,11 @@
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-07 00:31:49
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-07 09:43:25
+ * @FilePath: \test\JavaScripts\EventController.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import EventData from "./EventData";
 import DefaultUI from "./M_XC/DefaultUI";
 import { Obj_Manager } from "./M_XC/Obj_Manager";
@@ -66,7 +74,8 @@ export default class EventController  {
         if(!this.EventMap.has("bag")){
             Tips.show("乘客您好现在没有危险请不要触碰降落伞");
         }else{
-
+            Tips.show("趁现在偷偷获得降落伞");
+            Obj_Manager.instance.exChange();
         }
         return false
     }

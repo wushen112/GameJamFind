@@ -1,4 +1,12 @@
-﻿
+﻿/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-07 00:37:21
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-07 10:30:11
+ * @FilePath: \test\JavaScripts\StartGameTween.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+
 @Component
 export default class StartGameTween extends Script {
     private aircraft: GameObject
@@ -18,21 +26,21 @@ export default class StartGameTween extends Script {
             tempPosition.y= value.y
             tempPosition.z= value.z
             this.aircraft.worldTransform.position= tempPosition
-            console.log("up"+tempPosition)
+            //console.log("up"+tempPosition)
         }).interpolation(TweenUtil.Interpolation.Bezier)
         let downTween = new mw.Tween(UpPos).to({ x:downPos.x,y:downPos.y,z:downPos.z }, MathUtil.randomInt(2000,3000)).onUpdate((value) => {
             tempPosition.x= value.x
             tempPosition.y= value.y
             tempPosition.z= value.z
             this.aircraft.worldTransform.position = tempPosition
-            console.log("down"+tempPosition)
+          //  console.log("down"+tempPosition)
         }).interpolation(TweenUtil.Interpolation.Bezier)
         let upTween = new mw.Tween(downPos).to({ x:UpPos.x,y:UpPos.y,z:UpPos.z }, MathUtil.randomInt(2000,3000)).onUpdate((value) => {
             tempPosition.x= value.x
             tempPosition.y= value.y
             tempPosition.z= value.z
             this.aircraft.worldTransform.position= tempPosition
-            console.log("up"+tempPosition)
+           // console.log("up"+tempPosition)
         }).interpolation(TweenUtil.Interpolation.Bezier)
         fristTween.onComplete((Boolean) => {
             downTween.start()
