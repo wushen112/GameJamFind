@@ -69,6 +69,7 @@ export default class GameController {
             setTimeout(() => {
                 effect.play();
                 setTimeout(() => {
+                    hud.mCanvas_Black.visibility=1
                     //进入正式游戏写这里面
                 }, 500);
             }, 4000);
@@ -116,7 +117,7 @@ export default class GameController {
             tempPosition.y = value.y
             tempPosition.z = value.z
             airB.worldTransform.position = tempPosition
-        }).interpolation(TweenUtil.Interpolation.Bezier)
+        }).interpolation(TweenUtil.Interpolation.Bezier).start()
         setTimeout(() => {
             effect.play();
         }, 1800);
