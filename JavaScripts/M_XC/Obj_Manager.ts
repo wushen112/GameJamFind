@@ -58,21 +58,21 @@ export class Obj_Manager {
         this.map.set("tissue", "157595")
 
     }
-    public mapInit: string[] = {
-        "1D4A1AED",
-        "3CA8D82F",
-        "3CA8D82F",
-        "39CB3D87",
-        "0EAB4A0D",
-        "16E2A181",
-        "13A1CAC2",
-        "1AF79C2A",
-    "25C4CFD7",
-        "066EBE81",
-        "28F0DA02",
-        "306A95D0"
+    // public mapInit: string[] = {
+    //     "1D4A1AED",
+    //     "3CA8D82F",
+    //     "3CA8D82F",
+    //     "39CB3D87",
+    //     "0EAB4A0D",
+    //     "16E2A181",
+    //     "13A1CAC2",
+    //     "1AF79C2A",
+    // "25C4CFD7",
+    //     "066EBE81",
+    //     "28F0DA02",
+    //     "306A95D0"
 
-    }
+    // }
     public exChange() {
         if (!this.curItem) {
             return;
