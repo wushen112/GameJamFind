@@ -108,7 +108,7 @@ export  class Slot_UI extends UIScript {
         this.Obj_BG = this.uiWidgetBase.findChildByPath('RootCanvas/Obj_BG') as Image
         this.Cnt_text = this.uiWidgetBase.findChildByPath('RootCanvas/Obj_Cnt') as TextBlock
         //设置初始参数
-        this.Obj_BG.imageGuid = "163360"
+        this.Obj_BG.imageGuid = "298813"
         this.Cnt_text.visibility = SlateVisibility.Hidden 
         this.index = id
     }
@@ -712,7 +712,7 @@ export class M_Player {
     //射线检测
     public test_query(){ 
        let res = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,Camera.currentCamera.worldTransform.position.add(Camera.currentCamera.worldTransform.getForwardVector().multiply(150))
-       ,true,true,[],false,false,this.PlayerChar)
+       ,true,false,[],false,false,this.PlayerChar)
        Obj_Manager.instance.check_get(res)
     }
     //根据资源GUID播放音乐
@@ -973,23 +973,34 @@ export default class GameStart extends Script {
             })
         })
 
-        //监听游戏结束事件
+        //监听游戏结束事件重置所有数据
 
         Event.addLocalListener(EventData.Over,(isJump:boolean =false)=>{
             UIService.hide(DefaultUI);
+            const data = UIService.getUI(DefaultUI).calTime(60);
+            UIService.getUI(DefaultUI).mText_Time.text = data.minute+':'+data.second+':'+data.ms
             Player.localPlayer.character.worldTransform.position = new Vector(2039,1088,540)
             GameController.instance.judgeDie(isJump);
             UIService.getUI(DefaultUI).slots.forEach((value,key)=>{
                 value.obj.setVisibility(true);
                 value.obj.setCollision(PropertyStatus.On);
             })
-            EventController.instance.success1 = false;
-			EventController.instance.success2 = false;
-			UIService.getUI(DefaultUI).slots.clear();
-            UIService.getUI(DefaultUI).update_slot();
-            UIService.getUI(DefaultUI).time = 60;
-            // Obj_Manager.instance.init_obj();
-            GameController.instance.gameStart();
+           
+            
+            //GameController.instance.gameStart();
+
+            setTimeout(() => {
+                EventController.instance.success1 = false;
+                EventController.instance.success2 = false;
+                UIService.getUI(DefaultUI).slots.clear();
+                UIService.getUI(DefaultUI).update_slot();
+                UIService.getUI(DefaultUI).time = 60;
+                GameController.instance.gameStart();
+                Obj_Manager.instance.init_obj();
+            }, 3000);
+
+
+
         })
  
         Event.addLocalListener(EventData.GameStart,()=>{

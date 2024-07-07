@@ -5,12 +5,13 @@ import { Obj_Manager } from "./M_XC/Obj_Manager";
 import GameAnimation from "./util/GameAnimaiton";
 import EndTips_generate from "./ui-generate/EndTips_generate"
 import Tips from "./util/Tips";
+import MainUI from "./M_XC/ui/UIMain";
 
 /*
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 14:11:24
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 13:40:07
+ * @LastEditTime: 2024-07-07 14:53:20
  * @FilePath: \test\JavaScripts\GameController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -125,8 +126,11 @@ export default class GameController {
     dieBybomb() {
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
         effect.loopCount = 3;
-        effect.worldTransform.position = Player.localPlayer.character.worldTransform.position;
         effect.play();
+        Camera.switch(GameController.instance.hitCamera, 0.5)
+        setTimeout(() => {
+            Camera.switch(GameController.instance.currCameta, 0.5)
+        }, 2000);
 
     }
 

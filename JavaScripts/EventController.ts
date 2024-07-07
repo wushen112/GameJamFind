@@ -133,7 +133,8 @@ export default class EventController {
 
     /**开门 */
     private aircraftDoor(Obj: GameObject) {
-        Obj.worldTransform.position = Vector.zero;
+        Obj.setVisibility(false);
+        Obj.setCollision(PropertyStatus.Off)
     }
 
     private commander() {
