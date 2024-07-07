@@ -66,13 +66,15 @@ export default class GameController {
                 effect.play();
                 soundBao.play()
                 setTimeout(() => {
+                    eye1Tween.pause()
+                    eye1BackTween.pause()
+                    hud.mCanvas_Black.renderOpacity=1
                     soundQueen.play()
                     setTimeout(() => {
                         UIService.hide(Awake_generate)
                         //进入正式游戏写这里面
                         this.gameStart()
                     }, 3000);
-
                 }, 500);
             }, 2000);
         }, 1400);
