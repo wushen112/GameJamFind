@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 10:39:43
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 12:11:50
+ * @LastEditTime: 2024-07-07 15:02:21
  * @FilePath: \test\JavaScripts\M_XC\Obj_Manager.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -58,21 +58,21 @@ export class Obj_Manager {
         this.map.set("tissue", "157595")
 
     }
-    // public mapInit: string[] = {
-    //     "1D4A1AED",
-    //     "3CA8D82F",
-    //     "3CA8D82F",
-    //     "39CB3D87",
-    //     "0EAB4A0D",
-    //     "16E2A181",
-    //     "13A1CAC2",
-    //     "1AF79C2A",
-    // "25C4CFD7",
-    //     "066EBE81",
-    //     "28F0DA02",
-    //     "306A95D0"
+    public mapInit: string[] = [
+        "1D4A1AED",
+        "3CA8D82F",
+        "3CA8D82F",
+        "39CB3D87",
+        "0EAB4A0D",
+        "16E2A181",
+        "13A1CAC2",
+        "1AF79C2A",
+        "25C4CFD7",
+        "066EBE81",
+        "28F0DA02",
+        "306A95D0",
+    ]
 
-    // }
     public exChange() {
         if (!this.curItem) {
             return;
@@ -96,5 +96,12 @@ export class Obj_Manager {
             obj.setOutline(true, new LinearColor(1, 1, 1), 0.5)
         }
 
+    }
+    init_obj(){
+        this.mapInit.forEach(async (e)=>{
+            const gameObj =await GameObject.asyncFindGameObjectById(e)
+            gameObj.setVisibility(true);
+            gameObj.setCollision(PropertyStatus.On);
+        })
     }
 }

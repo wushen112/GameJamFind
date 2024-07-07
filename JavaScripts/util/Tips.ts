@@ -14,7 +14,7 @@ export default class Tips extends Tips_Generate {
 	/**移动速度 */
 	private static readonly MOVE_SPEED = 500;
 	/**停留时间 */
-	private static readonly KEEP_TIME = 0.5;
+	private static readonly KEEP_TIME = 1.5;
 	/**Tips单例 */
 	private static _instance: Tips;
 	/**当前空闲的条目*/

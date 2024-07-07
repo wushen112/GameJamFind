@@ -5,12 +5,13 @@ import { Obj_Manager } from "./M_XC/Obj_Manager";
 import GameAnimation from "./util/GameAnimaiton";
 import EndTips_generate from "./ui-generate/EndTips_generate"
 import Tips from "./util/Tips";
+import MainUI from "./M_XC/ui/UIMain";
 
 /*
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 14:11:24
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 13:40:07
+ * @LastEditTime: 2024-07-07 14:53:20
  * @FilePath: \test\JavaScripts\GameController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -124,8 +125,11 @@ export default class GameController {
     dieBybomb() {
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
         effect.loopCount = 3;
-        effect.worldTransform.position = Player.localPlayer.character.worldTransform.position;
         effect.play();
+        Camera.switch(GameController.instance.hitCamera, 0.5)
+        setTimeout(() => {
+            Camera.switch(GameController.instance.currCameta, 0.5)
+        }, 2000);
 
     }
 
@@ -177,21 +181,26 @@ export default class GameController {
     /**真正胜利的结局 */
     win() {
         const air = GameObject.findGameObjectById("3481F2C3") as GameObject;
-        new Tween(air.worldTransform.position).to(new Vector(-24037, 9640, -74971), 1000)
-            .onUpdate((value) => {
-                air.worldTransform.position = value
-            })
-            .onComplete(() => {
-                new Tween(air.worldTransform.position).to(new Vector(-1203, 9640, -74971), 1000)
-                    .onUpdate((value) => {
-                        air.worldTransform.position = value
-                    })
-                    .onComplete(() => {
-                        Tips.show("恭喜你，成功落地")
-                    })
-                    .start()
-            }).start()
-        //  Camera.currentCamera.lock(air)
+        // new Tween(air.worldTransform.position).to(new Vector(-24037, 9640, -74971), 1000)
+        //     .onUpdate((value) => {
+        //         air.worldTransform.position = value
+        //     })
+        //     .onComplete(() => {
+        //         new Tween(air.worldTransform.position).to(new Vector(-1203, 9640, -74971), 1000)
+        //             .onUpdate((value) => {
+        //                 air.worldTransform.position = value
+        //             })
+        //             .onComplete(() => {
+        //                 Tips.show("恭喜你，成功落地")
+        //                 setTimeout(() => {
+        //                     Tips.show("真的--成功了吗")
+        //                     UIService.show(MainUI);
+        //                     Camera.switch(GameController.instance.startCamera,0.5)
+        //                 }, 1000);
+        //             })
+        //             .start()
+        //     }).start()
+         Camera.switch(GameController.instance.endCamera)
     }
 
 }
