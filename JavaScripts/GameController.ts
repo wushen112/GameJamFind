@@ -3,6 +3,7 @@ import DefaultUI from "./M_XC/DefaultUI";
 import Awake_generate from "./ui-generate/Awake_generate";
 import { Obj_Manager } from "./M_XC/Obj_Manager";
 import GameAnimation from "./util/GameAnimaiton";
+import EndTips_generate from "./ui-generate/EndTips_generate"
 import Tips from "./util/Tips";
 
 /*
@@ -29,11 +30,14 @@ export default class GameController {
     public endCamera: Camera = null;
     public currCameta: Camera = null
     public hitCamera: Camera = null;
+    public BagCamera: Camera = null;
+    public parachuteCamera: Camera = null;
+    private EndTips: EndTips_generate
     onUpdate() {
 
     }
     LoopFrist() {
-       
+
         //音效
         let soundNao = GameObject.findGameObjectById("17357BC7") as Sound
         let soundQueen = GameObject.findGameObjectById("01EC1A8F") as Sound
@@ -44,10 +48,10 @@ export default class GameController {
         hud.mCanvas_Black.visibility = 0;
 
         // 眨眼
-        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 500).onUpdate((obj) => {
+        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0.2 }, 500).onUpdate((obj) => {
             hud.mCanvas_Black.renderOpacity = obj.value
         })
-        let eye1BackTween = new mw.Tween({ value: 0 }).to({ value: 1 }, 500).onUpdate((obj) => {
+        let eye1BackTween = new mw.Tween({ value: 0.2 }).to({ value: 1 }, 500).onUpdate((obj) => {
             hud.mCanvas_Black.renderOpacity = obj.value
         })
         soundNao.play()
@@ -66,9 +70,11 @@ export default class GameController {
                 setTimeout(() => {
                     eye1Tween.pause()
                     eye1BackTween.pause()
-                    hud.mCanvas_Black.renderOpacity=1
+                    hud.mCanvas_Black.renderOpacity = 1
                     soundQueen.play()
                     setTimeout(() => {
+                        soundBao.pause()
+                        soundQueen.pause()
                         UIService.hide(Awake_generate)
                         //进入正式游戏写这里面
                         this.gameStart()
@@ -140,14 +146,22 @@ export default class GameController {
             Camera.switch(GameController.instance.currCameta, 0.2)
         }, 2000);
         Camera.switch(GameController.instance.hitCamera, 0.2)
-
+        setTimeout(() => {
+            UIService.hide(EndTips_generate)
+        }, 2000);
     }
     /**掉落结局 */
     dropFail() {
-        Tips.show("恭喜你，落地失败");
+        Camera.switch(GameController.instance.BagCamera, 0.2)
+        this.EndTips.mText_Take.text = "也许只是个书包？"
     }
     dropSuccess() {
-        Tips.show("恭喜你，成功落地");
+        Camera.switch(GameController.instance.parachuteCamera, 0.2)
+        this.EndTips = UIService.show(EndTips_generate)
+        this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄"
+        setTimeout(() => {
+            UIService.hide(EndTips_generate)
+        }, 2000);
     }
 
     /**真正胜利的结局 */

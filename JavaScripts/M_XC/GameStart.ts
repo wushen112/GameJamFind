@@ -988,7 +988,7 @@ export default class GameStart extends Script {
 			UIService.getUI(DefaultUI).slots.clear();
             UIService.getUI(DefaultUI).update_slot();
             UIService.getUI(DefaultUI).time = 60;
-            Obj_Manager.instance.init_obj();
+            // Obj_Manager.instance.init_obj();
             GameController.instance.gameStart();
         })
  
@@ -1013,6 +1013,12 @@ export default class GameStart extends Script {
         })
         GameObject.asyncFindGameObjectById("0568C96E").then((e)=>{
             GameController.instance.hitCamera = e as Camera ;
+        })
+        GameObject.asyncFindGameObjectById("39D20B5C").then((e)=>{
+            GameController.instance.BagCamera = e as Camera ;
+        })
+         GameObject.asyncFindGameObjectById("2885B76B").then((e)=>{
+            GameController.instance.parachuteCamera = e as Camera ;
         })
 
         GameController.instance.currCameta = Camera.currentCamera;
