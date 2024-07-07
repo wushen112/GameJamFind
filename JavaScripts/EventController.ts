@@ -119,7 +119,7 @@ export default class EventController {
             setTimeout(() => {
                 //TODO 黑屏一下打开机长大门
                 this.Black = UIService.show(BlackChange_generate)
-                this.Black.mImg_take.text = "眼前的男人，大叫一声便倒下了"
+                this.Black.mImg_take.text = "用扫把挥向眼前的男人，他大叫一声便倒下了"
                 this.success1 = true;
                 this.chatAnim = (obj as Character).loadAnimation("8355");
                 this.chatAnim.play();

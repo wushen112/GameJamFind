@@ -51,10 +51,10 @@ export class Obj_Manager {
 
     public map: Map<string, string> = new Map();
     init() {
-        this.map.set("toiletPegs", "94326")
+        this.map.set("toiletPegs", "77108")
         this.map.set("cola", "108587")
-        this.map.set("bag", "48727")
-        this.map.set("parachute", "parachute")
+        this.map.set("bag", "108324")
+        this.map.set("parachute", "94326")
         this.map.set("tissue", "157595")
 
     }

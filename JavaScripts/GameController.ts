@@ -6,6 +6,7 @@ import GameAnimation from "./util/GameAnimaiton";
 import EndTips_generate from "./ui-generate/EndTips_generate"
 import Tips from "./util/Tips";
 import MainUI from "./M_XC/ui/UIMain";
+import BlackChange_generate from "./ui-generate/BlackChange_generate";
 
 /*
  * @Author: wushen112 330177253@qq.com
@@ -17,6 +18,7 @@ import MainUI from "./M_XC/ui/UIMain";
  */
 export default class GameController {
     private static _insance: GameController;
+    private Black: BlackChange_generate
     public static get instance() {
         if (!this._insance) {
             this._insance = new GameController();
@@ -92,12 +94,12 @@ export default class GameController {
         let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 800).onUpdate((obj) => {
             hud.mCanvas_Black.renderOpacity = obj.value
         }).start();
+        //进入正式游戏写这里面
         setTimeout(() => {
             UIService.hide(Awake_generate)
-            //进入正式游戏写这里面
             Tips.show("我：刚刚是梦吗");
             UIService.show(DefaultUI);
-        }, 500);
+        }, 1500);
     }
     //TODO 判断死亡
     judgeDie(isJump = false) {
@@ -126,11 +128,17 @@ export default class GameController {
     dieBybomb() {
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
         effect.loopCount = 3;
-        effect.play();
-        Camera.switch(GameController.instance.hitCamera, 0.5)
+        this.EndTips = UIService.show(EndTips_generate)
+        this.EndTips.mText_Take.text = "飞机内部发生了爆炸，无人幸免"
+        Camera.switch(GameController.instance.hitCamera, 0)
         setTimeout(() => {
-            Camera.switch(GameController.instance.currCameta, 0.5)
+            effect.play();
+        }, 500);
+        setTimeout(() => {
+            UIService.hide(EndTips_generate)
+            Camera.switch(GameController.instance.currCameta, 0)
         }, 2000);
+
     }
 
     airCollision() {
@@ -139,24 +147,28 @@ export default class GameController {
         const effect = GameObject.findGameObjectById("0BDCEFE5") as Effect;
         const airAPosition = airA.worldTransform.position.clone();
         const airBPosition = airB.worldTransform.position.clone();
+        Camera.switch(GameController.instance.hitCamera, 0)
         let airTween = new mw.Tween(airBPosition).to(airAPosition, 2000).onUpdate((value) => {
             airB.worldTransform.position = value
         }).start();
         setTimeout(() => {
+            this.EndTips = UIService.show(EndTips_generate)
+            this.EndTips.mText_Take.text = "飞机发生了撞击，无人幸免"
             effect.play();
-
-        }, 1800);
+        }, 1000);
         setTimeout(() => {
-            Camera.switch(GameController.instance.currCameta, 0.2)
-        }, 2000);
-        Camera.switch(GameController.instance.hitCamera, 0.2)
-        setTimeout(() => {
+            Camera.switch(GameController.instance.currCameta, 0)
             UIService.hide(EndTips_generate)
-        }, 2000);
+        }, 4000);
     }
     /**掉落结局 */
     dropFail() {
+        this.Black = UIService.show(BlackChange_generate)
+        this.Black.mImg_take.text = "一跃而下，如同飞鸟"
         Camera.switch(GameController.instance.BagCamera, 0.2)
+        setTimeout(() => {
+            UIService.hide(BlackChange_generate)
+        }, 1000);
         this.EndTips = UIService.show(EndTips_generate)
         this.EndTips.mText_Take.text = "大部分人从高空跳下都会摔死"
         setTimeout(() => {
@@ -167,7 +179,12 @@ export default class GameController {
         }, 2000);
     }
     dropSuccess() {
+        this.Black = UIService.show(BlackChange_generate)
+        this.Black.mImg_take.text = "一跃而下，如同飞鸟"
         Camera.switch(GameController.instance.parachuteCamera, 0.2)
+        setTimeout(() => {
+            UIService.hide(BlackChange_generate)
+        }, 1000);
         this.EndTips = UIService.show(EndTips_generate)
         this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄"
         setTimeout(() => {
@@ -180,14 +197,19 @@ export default class GameController {
 
     /**真正胜利的结局 */
     win() {
+        this.Black = UIService.show(BlackChange_generate)
+        this.Black.mImg_take.text = "这之后一路无事发生，平安落地"
         const air = GameObject.findGameObjectById("3481F2C3") as GameObject;
-        let sound = GameObject.findGameObjectById("119832") as Sound
+        let sound = GameObject.findGameObjectById("15C6D457") as Sound
         Camera.switch(GameController.instance.endCamera)
         setTimeout(() => {
-            sound.play()
-            this.EndTips = UIService.show(EndTips_generate)
-            this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！"
-        }, 300);
+            UIService.hide(BlackChange_generate)
+            setTimeout(() => {
+                sound.play()
+                this.EndTips = UIService.show(EndTips_generate)
+                this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！"
+            }, 300);
+        }, 1500);
     }
 
 }
