@@ -7,6 +7,7 @@ import EndTips_generate from "./ui-generate/EndTips_generate"
 import Tips from "./util/Tips";
 import MainUI from "./M_XC/ui/UIMain";
 import BlackChange_generate from "./ui-generate/BlackChange_generate";
+import StartGame_Generate from "./ui-generate/StartGame_generate";
 
 /*
  * @Author: wushen112 330177253@qq.com
@@ -124,6 +125,34 @@ export default class GameController {
 
         this.win();
     }
+
+
+    reset() {
+        UIService.hide(EndTips_generate)
+        Camera.switch(GameController.instance.currCameta, 0)
+        EventController.instance.success1 = false;
+        EventController.instance.success2 = false;
+        UIService.getUI(DefaultUI).slots.clear();
+        UIService.getUI(DefaultUI).update_slot();
+        UIService.getUI(DefaultUI).time = 30;
+        GameController.instance.gameStart();
+        Obj_Manager.instance.init_obj();
+        EventController.instance.terroristState = false
+        
+        let air = GameObject.findGameObjectById("28F0DA02") as Character
+        let airAnima = air.loadAnimation("157422")
+        airAnima.loop = 0;
+        airAnima.slot = AnimSlot.Upper;
+        airAnima.play()
+
+        let ikun = GameObject.findGameObjectById("1D4A1AED") as Character
+        let ikunAnima = ikun.loadAnimation("285778")
+        ikunAnima.loop = 0;
+        ikunAnima.slot = AnimSlot.Upper;
+        ikunAnima.play()
+
+    }
+
     /**爆炸死亡  */
     dieBybomb() {
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
@@ -135,11 +164,11 @@ export default class GameController {
             effect.play();
         }, 500);
         setTimeout(() => {
-            UIService.hide(EndTips_generate)
-            Camera.switch(GameController.instance.currCameta, 0)
+            this.reset()
         }, 2000);
 
     }
+    public tempPos :Vector = Vector.zero
 
     airCollision() {
         const airA = GameObject.findGameObjectById("2293A559") as GameObject;
@@ -147,6 +176,7 @@ export default class GameController {
         const effect = GameObject.findGameObjectById("0BDCEFE5") as Effect;
         const airAPosition = airA.worldTransform.position.clone();
         const airBPosition = airB.worldTransform.position.clone();
+        this.tempPos = airB.worldTransform.position.clone();
         Camera.switch(GameController.instance.hitCamera, 0)
         let airTween = new mw.Tween(airBPosition).to(airAPosition, 2000).onUpdate((value) => {
             airB.worldTransform.position = value
@@ -157,8 +187,8 @@ export default class GameController {
             effect.play();
         }, 1000);
         setTimeout(() => {
-            Camera.switch(GameController.instance.currCameta, 0)
-            UIService.hide(EndTips_generate)
+            airB.worldTransform.position = this.tempPos;
+            this.reset()
         }, 4000);
     }
     /**掉落结局 */
@@ -169,12 +199,12 @@ export default class GameController {
         setTimeout(() => {
             UIService.hide(BlackChange_generate)
         }, 1000);
-        this.EndTips = UIService.show(EndTips_generate)
-        this.EndTips.mText_Take.text = "大部分人从高空跳下都会摔死"
         setTimeout(() => {
-            UIService.hide(EndTips_generate)
+            this.EndTips = UIService.show(EndTips_generate)
+            this.EndTips.mText_Take.text = "大部分人从高空跳下都会摔死"
             setTimeout(() => {
-                Camera.switch(GameController.instance.currCameta, 0.2)
+                UIService.hide(EndTips_generate)
+                this.reset()
             }, 2000);
         }, 2000);
     }
@@ -185,12 +215,13 @@ export default class GameController {
         setTimeout(() => {
             UIService.hide(BlackChange_generate)
         }, 1000);
-        this.EndTips = UIService.show(EndTips_generate)
-        this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄"
+
         setTimeout(() => {
             UIService.hide(EndTips_generate)
+            this.EndTips = UIService.show(EndTips_generate)
+            this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄"
             setTimeout(() => {
-                Camera.switch(GameController.instance.currCameta, 0.2)
+                this.reset();
             }, 2000);
         }, 2000);
     }
@@ -208,6 +239,13 @@ export default class GameController {
                 sound.play()
                 this.EndTips = UIService.show(EndTips_generate)
                 this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！"
+                setTimeout(() => {
+                    this.reset();
+                    Camera.switch(GameController.instance.startCamera, 0)
+                    UIService.hide(EndTips_generate)
+                    UIService.show(StartGame_Generate)
+                    UIService.hide(DefaultUI)
+                }, 3000);
             }, 300);
         }, 1500);
     }

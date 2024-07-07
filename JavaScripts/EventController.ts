@@ -108,30 +108,30 @@ export default class EventController {
         return false
     }
 
-    public terroristState:boolean = false
-    public chatAnim:Animation;
+    public terroristState: boolean = false
+    public chatAnim: Animation;
     private terrorist(obj: GameObject) {
         if (!this.EventMap.has("toiletPegs")) {
             Tips.show("我：这个人看起来很可疑，一直看时间");
-        } else if(!this.terroristState){
+        } else if (!this.terroristState) {
             //TODO 黑屏一下恐怖分子倒下
-            
+
             setTimeout(() => {
-                //TODO 黑屏一下打开机长大门
+                //TODO 黑屏一下打开机长大门p
                 this.Black = UIService.show(BlackChange_generate)
                 this.Black.mImg_take.text = "用扫把挥向眼前的男人，他大叫一声便倒下了"
                 this.success1 = true;
-                this.chatAnim = (obj as Character).loadAnimation("8355");
-                this.chatAnim.play();
+                const chatAnim = (obj as Character).loadAnimation("8355");
+                chatAnim.play();
                 this.terroristState = true;
                 setTimeout(() => {
-                    this.chatAnim.speed = 0
+                    chatAnim.speed = 0
                 }, 800);
                 setTimeout(() => {
                     UIService.hide(BlackChange_generate)
                 }, 1500);
             }, 1000);
-        }else{
+        } else {
             Tips.show("倒下的恐怖分子")
         }
 
@@ -142,9 +142,16 @@ export default class EventController {
         Obj.setVisibility(false);
         Obj.setCollision(PropertyStatus.Off)
     }
-
-    private commander() {
+    public airAnim:Animation = null;
+    private commander(Obj: GameObject) {
         Tips.show("机长：嗯？ 我睡着了吗？对不起！")
+        AssetUtil.asyncDownloadAsset("14015")
+        this.airAnim = (Obj as Character).loadAnimation("14749");
+        this.airAnim.slot = AnimSlot.Upper;
+        setTimeout(() => {
+            this.airAnim.speed=0
+        }, 500);
+        this.airAnim.play();
         this.success2 = true;
     }
 

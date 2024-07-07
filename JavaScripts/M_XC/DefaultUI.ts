@@ -124,7 +124,7 @@ export default class DefaultUI extends DefaultUI_Generate{
 			this._timer = 0;
 			//TODO 添加一个倒计时的Ui
 			const data = this.calTime(this.time);
-			this.mText_Time.text = data.minute+':'+data.second+':'+data.ms
+			this.mText_Time.text = data.second+':'+data.ms
 		}
 		if(this.time<=0){
 			//TODO 走死亡路径
@@ -137,10 +137,9 @@ export default class DefaultUI extends DefaultUI_Generate{
 	}
 
 	calTime(time:number){
-		const minute = Math.floor (time /60);
 		const second = Math.floor (time%60);
 		const ms =Math.round( (time - Math.floor(time))*10);
-		return {minute,second,ms};
+		return {second,ms};
 	}
 
 }

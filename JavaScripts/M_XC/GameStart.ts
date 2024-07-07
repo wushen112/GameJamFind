@@ -977,8 +977,8 @@ export default class GameStart extends Script {
 
         Event.addLocalListener(EventData.Over,(isJump:boolean =false)=>{
             UIService.hide(DefaultUI);
-            const data = UIService.getUI(DefaultUI).calTime(60);
-            UIService.getUI(DefaultUI).mText_Time.text = data.minute+':'+data.second+':'+data.ms
+            const data = UIService.getUI(DefaultUI).calTime(30);
+            UIService.getUI(DefaultUI).mText_Time.text = data.second+':'+data.ms
             Player.localPlayer.character.worldTransform.position = new Vector(2039,1088,540)
             GameController.instance.judgeDie(isJump);
             UIService.getUI(DefaultUI).slots.forEach((value,key)=>{
@@ -989,18 +989,7 @@ export default class GameStart extends Script {
             
             //GameController.instance.gameStart();
 
-            setTimeout(() => {
-                EventController.instance.success1 = false;
-                EventController.instance.success2 = false;
-                UIService.getUI(DefaultUI).slots.clear();
-                UIService.getUI(DefaultUI).update_slot();
-                UIService.getUI(DefaultUI).time = 30;
-                GameController.instance.gameStart();
-                Obj_Manager.instance.init_obj();
-                EventController.instance.terroristState = false
-                EventController.instance.chatAnim.stop()
-
-            }, 3000);
+            
 
 
 

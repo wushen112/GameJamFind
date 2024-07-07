@@ -163,6 +163,103 @@ var foreign17 = /*#__PURE__*/Object.freeze({
     default: Awake_generate
 });
 
+/*
+ * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-06 10:39:43
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-07 15:02:21
+ * @FilePath: \test\JavaScripts\M_XC\Obj_Manager.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+//import ItemTrigger from "../Trigger/ItemTrigger"
+//import SlotTrigger from "../Trigger/SlotTrigger"
+//import UseItemTrigger from "../Trigger/UseItemTrigger"
+class Obj_Manager {
+    constructor() {
+        this._preobj = null;
+        this.map = new Map();
+        this.mapInit = [
+            "1D4A1AED",
+            "3CA8D82F",
+            "3CA8D82F",
+            "39CB3D87",
+            "0EAB4A0D",
+            "16E2A181",
+            "25C4CFD7",
+            "066EBE81",
+            "28F0DA02",
+            "306A95D0",
+        ];
+    }
+    static get instance() {
+        if (Obj_Manager._instacne == null) {
+            Obj_Manager._instacne = new Obj_Manager();
+            Obj_Manager._instacne.init();
+        }
+        return Obj_Manager._instacne;
+    }
+    check_get(res) {
+        let ui_flag = false;
+        res.forEach(result => {
+            let obj = result.gameObject;
+            if (obj && obj.tag) {
+                UIService.getUI(DefaultUI).mBtn_exchange.visibility = SlateVisibility.Visible;
+                ui_flag = true;
+                this.model_outline(true, obj);
+                this.curItem = result;
+            }
+        });
+        if (!ui_flag) {
+            UIService.getUI(DefaultUI).mBtn_exchange.visibility = SlateVisibility.Hidden;
+            // Event.dispatchToLocal("OutLine_false")
+            if (this._preobj) {
+                this._preobj.setOutline(false);
+            }
+        }
+    }
+    init() {
+        this.map.set("toiletPegs", "77108");
+        this.map.set("cola", "108587");
+        this.map.set("bag", "108324");
+        this.map.set("parachute", "94326");
+        this.map.set("tissue", "157595");
+    }
+    exChange() {
+        if (!this.curItem) {
+            return;
+        }
+        const gameObj = this.curItem.gameObject;
+        const imgId = this.map.get(gameObj.tag);
+        const result = EventController.instance.judge(gameObj);
+        if (result) {
+            Event.dispatchToLocal(EventData.Get_Item, imgId, gameObj.tag, gameObj);
+            gameObj.setVisibility(false);
+            gameObj.setCollision(PropertyStatus.Off);
+        }
+    }
+    model_outline(flag, obj) {
+        if (this._preobj && this._preobj != obj) {
+            this._preobj.setOutline(false);
+        }
+        if (flag) {
+            this._preobj = obj;
+            obj.setOutline(true, new LinearColor(1, 1, 1), 0.5);
+        }
+    }
+    init_obj() {
+        this.mapInit.forEach(async (e) => {
+            const gameObj = await GameObject.asyncFindGameObjectById(e);
+            gameObj.setVisibility(true);
+            gameObj.setCollision(PropertyStatus.On);
+        });
+    }
+}
+
+var foreign7 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    Obj_Manager: Obj_Manager
+});
+
 /**
  * AUTO GENERATE BY UI EDITOR.
  * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
@@ -403,6 +500,35 @@ var foreign18 = /*#__PURE__*/Object.freeze({
     default: BlackChange_generate
 });
 
+/**
+ * AUTO GENERATE BY UI EDITOR.
+ * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
+ * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
+ * UI: UI/StartGame.ui
+*/
+let StartGame_Generate = class StartGame_Generate extends UIScript {
+    get mBtn_Start() {
+        if (!this.mBtn_Start_Internal && this.uiWidgetBase) {
+            this.mBtn_Start_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mBtn_Start');
+        }
+        return this.mBtn_Start_Internal;
+    }
+    /**
+    * onStart 之前触发一次
+    */
+    onAwake() {
+    }
+};
+StartGame_Generate = __decorate([
+    UIBind('UI/StartGame.ui')
+], StartGame_Generate);
+var StartGame_Generate$1 = StartGame_Generate;
+
+var foreign31 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: StartGame_Generate$1
+});
+
 /*
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 14:11:24
@@ -419,6 +545,7 @@ class GameController {
         this.hitCamera = null;
         this.BagCamera = null;
         this.parachuteCamera = null;
+        this.tempPos = Vector.zero;
     }
     static get instance() {
         if (!this._insance) {
@@ -508,6 +635,28 @@ class GameController {
         }
         this.win();
     }
+    reset() {
+        UIService.hide(EndTips_generate);
+        Camera.switch(GameController.instance.currCameta, 0);
+        EventController.instance.success1 = false;
+        EventController.instance.success2 = false;
+        UIService.getUI(DefaultUI).slots.clear();
+        UIService.getUI(DefaultUI).update_slot();
+        UIService.getUI(DefaultUI).time = 30;
+        GameController.instance.gameStart();
+        Obj_Manager.instance.init_obj();
+        EventController.instance.terroristState = false;
+        let air = GameObject.findGameObjectById("28F0DA02");
+        let airAnima = air.loadAnimation("157422");
+        airAnima.loop = 0;
+        airAnima.slot = AnimSlot.Upper;
+        airAnima.play();
+        let ikun = GameObject.findGameObjectById("1D4A1AED");
+        let ikunAnima = ikun.loadAnimation("285778");
+        ikunAnima.loop = 0;
+        ikunAnima.slot = AnimSlot.Upper;
+        ikunAnima.play();
+    }
     /**爆炸死亡  */
     dieBybomb() {
         const effect = GameObject.findGameObjectById("0318B5B8");
@@ -519,8 +668,7 @@ class GameController {
             effect.play();
         }, 500);
         setTimeout(() => {
-            UIService.hide(EndTips_generate);
-            Camera.switch(GameController.instance.currCameta, 0);
+            this.reset();
         }, 2000);
     }
     airCollision() {
@@ -529,6 +677,7 @@ class GameController {
         const effect = GameObject.findGameObjectById("0BDCEFE5");
         const airAPosition = airA.worldTransform.position.clone();
         const airBPosition = airB.worldTransform.position.clone();
+        this.tempPos = airB.worldTransform.position.clone();
         Camera.switch(GameController.instance.hitCamera, 0);
         new mw.Tween(airBPosition).to(airAPosition, 2000).onUpdate((value) => {
             airB.worldTransform.position = value;
@@ -539,9 +688,9 @@ class GameController {
             effect.play();
         }, 1000);
         setTimeout(() => {
-            Camera.switch(GameController.instance.currCameta, 0);
-            UIService.hide(EndTips_generate);
-        }, 3000);
+            airB.worldTransform.position = this.tempPos;
+            this.reset();
+        }, 4000);
     }
     /**掉落结局 */
     dropFail() {
@@ -551,12 +700,12 @@ class GameController {
         setTimeout(() => {
             UIService.hide(BlackChange_generate);
         }, 1000);
-        this.EndTips = UIService.show(EndTips_generate);
-        this.EndTips.mText_Take.text = "大部分人从高空跳下都会摔死";
         setTimeout(() => {
-            UIService.hide(EndTips_generate);
+            this.EndTips = UIService.show(EndTips_generate);
+            this.EndTips.mText_Take.text = "大部分人从高空跳下都会摔死";
             setTimeout(() => {
-                Camera.switch(GameController.instance.currCameta, 0.2);
+                UIService.hide(EndTips_generate);
+                this.reset();
             }, 2000);
         }, 2000);
     }
@@ -567,12 +716,12 @@ class GameController {
         setTimeout(() => {
             UIService.hide(BlackChange_generate);
         }, 1000);
-        this.EndTips = UIService.show(EndTips_generate);
-        this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄";
         setTimeout(() => {
             UIService.hide(EndTips_generate);
+            this.EndTips = UIService.show(EndTips_generate);
+            this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄";
             setTimeout(() => {
-                Camera.switch(GameController.instance.currCameta, 0.2);
+                this.reset();
             }, 2000);
         }, 2000);
     }
@@ -589,6 +738,13 @@ class GameController {
                 sound.play();
                 this.EndTips = UIService.show(EndTips_generate);
                 this.EndTips.mText_Take.text = "你做到了，成功拯救了众人！";
+                setTimeout(() => {
+                    this.reset();
+                    Camera.switch(GameController.instance.startCamera, 0);
+                    UIService.hide(EndTips_generate);
+                    UIService.show(StartGame_Generate$1);
+                    UIService.hide(DefaultUI);
+                }, 3000);
             }, 300);
         }, 1500);
     }
@@ -606,134 +762,6 @@ var foreign3 = /*#__PURE__*/Object.freeze({
     __proto__: null,
     get Ending () { return Ending; },
     default: GameController
-});
-
-/*
- * @Author: wushen112 330177253@qq.com
- * @Date: 2024-07-06 10:39:43
- * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 15:02:21
- * @FilePath: \test\JavaScripts\M_XC\Obj_Manager.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-//import ItemTrigger from "../Trigger/ItemTrigger"
-//import SlotTrigger from "../Trigger/SlotTrigger"
-//import UseItemTrigger from "../Trigger/UseItemTrigger"
-class Obj_Manager {
-    constructor() {
-        this._preobj = null;
-        this.map = new Map();
-        this.mapInit = [
-            "1D4A1AED",
-            "3CA8D82F",
-            "3CA8D82F",
-            "39CB3D87",
-            "0EAB4A0D",
-            "16E2A181",
-            "13A1CAC2",
-            "1AF79C2A",
-            "25C4CFD7",
-            "066EBE81",
-            "28F0DA02",
-            "306A95D0",
-        ];
-    }
-    static get instance() {
-        if (Obj_Manager._instacne == null) {
-            Obj_Manager._instacne = new Obj_Manager();
-            Obj_Manager._instacne.init();
-        }
-        return Obj_Manager._instacne;
-    }
-    check_get(res) {
-        let ui_flag = false;
-        res.forEach(result => {
-            let obj = result.gameObject;
-            if (obj && obj.tag) {
-                UIService.getUI(DefaultUI).mBtn_exchange.visibility = SlateVisibility.Visible;
-                ui_flag = true;
-                this.model_outline(true, obj);
-                this.curItem = result;
-            }
-        });
-        if (!ui_flag) {
-            UIService.getUI(DefaultUI).mBtn_exchange.visibility = SlateVisibility.Hidden;
-            // Event.dispatchToLocal("OutLine_false")
-            if (this._preobj) {
-                this._preobj.setOutline(false);
-            }
-        }
-    }
-    init() {
-        this.map.set("toiletPegs", "77108");
-        this.map.set("cola", "108587");
-        this.map.set("bag", "108324");
-        this.map.set("parachute", "94326");
-        this.map.set("tissue", "157595");
-    }
-    exChange() {
-        if (!this.curItem) {
-            return;
-        }
-        const gameObj = this.curItem.gameObject;
-        const imgId = this.map.get(gameObj.tag);
-        const result = EventController.instance.judge(gameObj);
-        if (result) {
-            Event.dispatchToLocal(EventData.Get_Item, imgId, gameObj.tag, gameObj);
-            gameObj.setVisibility(false);
-            gameObj.setCollision(PropertyStatus.Off);
-        }
-    }
-    model_outline(flag, obj) {
-        if (this._preobj && this._preobj != obj) {
-            this._preobj.setOutline(false);
-        }
-        if (flag) {
-            this._preobj = obj;
-            obj.setOutline(true, new LinearColor(1, 1, 1), 0.5);
-        }
-    }
-    init_obj() {
-        this.mapInit.forEach(async (e) => {
-            const gameObj = await GameObject.asyncFindGameObjectById(e);
-            gameObj.setVisibility(true);
-            gameObj.setCollision(PropertyStatus.On);
-        });
-    }
-}
-
-var foreign7 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    Obj_Manager: Obj_Manager
-});
-
-/**
- * AUTO GENERATE BY UI EDITOR.
- * WARNING: DO NOT MODIFY THIS FILE,MAY CAUSE CODE LOST.
- * ATTENTION: onStart 等UI脚本自带函数不可改写为异步执行，有需求的异步逻辑请使用函数封装，通过函数接口在内部使用
- * UI: UI/StartGame.ui
-*/
-let StartGame_Generate = class StartGame_Generate extends UIScript {
-    get mBtn_Start() {
-        if (!this.mBtn_Start_Internal && this.uiWidgetBase) {
-            this.mBtn_Start_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mBtn_Start');
-        }
-        return this.mBtn_Start_Internal;
-    }
-    /**
-    * onStart 之前触发一次
-    */
-    onAwake() {
-    }
-};
-StartGame_Generate = __decorate([
-    UIBind('UI/StartGame.ui')
-], StartGame_Generate);
-var StartGame_Generate$1 = StartGame_Generate;
-
-var foreign31 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: StartGame_Generate$1
 });
 
 /*
@@ -1633,8 +1661,8 @@ let GameStart = class GameStart extends Script {
         //监听游戏结束事件重置所有数据
         Event.addLocalListener(EventData.Over, (isJump = false) => {
             UIService.hide(DefaultUI);
-            const data = UIService.getUI(DefaultUI).calTime(60);
-            UIService.getUI(DefaultUI).mText_Time.text = data.minute + ':' + data.second + ':' + data.ms;
+            const data = UIService.getUI(DefaultUI).calTime(30);
+            UIService.getUI(DefaultUI).mText_Time.text = data.second + ':' + data.ms;
             Player.localPlayer.character.worldTransform.position = new Vector(2039, 1088, 540);
             GameController.instance.judgeDie(isJump);
             UIService.getUI(DefaultUI).slots.forEach((value, key) => {
@@ -1642,17 +1670,6 @@ let GameStart = class GameStart extends Script {
                 value.obj.setCollision(PropertyStatus.On);
             });
             //GameController.instance.gameStart();
-            setTimeout(() => {
-                EventController.instance.success1 = false;
-                EventController.instance.success2 = false;
-                UIService.getUI(DefaultUI).slots.clear();
-                UIService.getUI(DefaultUI).update_slot();
-                UIService.getUI(DefaultUI).time = 30;
-                GameController.instance.gameStart();
-                Obj_Manager.instance.init_obj();
-                EventController.instance.terroristState = false;
-                EventController.instance.chatAnim.stop();
-            }, 3000);
         });
         Event.addLocalListener(EventData.GameStart, () => {
             GameController.instance.LoopFrist();
@@ -1835,7 +1852,7 @@ class DefaultUI extends DefaultUI_Generate$1 {
             this._timer = 0;
             //TODO 添加一个倒计时的Ui
             const data = this.calTime(this.time);
-            this.mText_Time.text = data.minute + ':' + data.second + ':' + data.ms;
+            this.mText_Time.text = data.second + ':' + data.ms;
         }
         if (this.time <= 0) {
             //TODO 走死亡路径
@@ -1845,10 +1862,9 @@ class DefaultUI extends DefaultUI_Generate$1 {
         //console.log(hitResult[0].gameObject.name)
     }
     calTime(time) {
-        const minute = Math.floor(time / 60);
         const second = Math.floor(time % 60);
         const ms = Math.round((time - Math.floor(time)) * 10);
-        return { minute, second, ms };
+        return { second, ms };
     }
 }
 // @UIBind('')
@@ -2096,6 +2112,7 @@ class EventController {
         /**成功条件叫醒机长 */
         this.success2 = false;
         this.terroristState = false;
+        this.airAnim = null;
     }
     static get instance() {
         if (!this._instance) {
@@ -2185,15 +2202,15 @@ class EventController {
         else if (!this.terroristState) {
             //TODO 黑屏一下恐怖分子倒下
             setTimeout(() => {
-                //TODO 黑屏一下打开机长大门
+                //TODO 黑屏一下打开机长大门p
                 this.Black = UIService.show(BlackChange_generate);
                 this.Black.mImg_take.text = "用扫把挥向眼前的男人，他大叫一声便倒下了";
                 this.success1 = true;
-                this.chatAnim = obj.loadAnimation("8355");
-                this.chatAnim.play();
+                const chatAnim = obj.loadAnimation("8355");
+                chatAnim.play();
                 this.terroristState = true;
                 setTimeout(() => {
-                    this.chatAnim.speed = 0;
+                    chatAnim.speed = 0;
                 }, 800);
                 setTimeout(() => {
                     UIService.hide(BlackChange_generate);
@@ -2209,8 +2226,15 @@ class EventController {
         Obj.setVisibility(false);
         Obj.setCollision(PropertyStatus.Off);
     }
-    commander() {
+    commander(Obj) {
         Tips.show("机长：嗯？ 我睡着了吗？对不起！");
+        AssetUtil.asyncDownloadAsset("14015");
+        this.airAnim = Obj.loadAnimation("14749");
+        this.airAnim.slot = AnimSlot.Upper;
+        setTimeout(() => {
+            this.airAnim.speed = 0;
+        }, 500);
+        this.airAnim.play();
         this.success2 = true;
     }
 }

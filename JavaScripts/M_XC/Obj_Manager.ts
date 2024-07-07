@@ -65,8 +65,6 @@ export class Obj_Manager {
         "39CB3D87",
         "0EAB4A0D",
         "16E2A181",
-        "13A1CAC2",
-        "1AF79C2A",
         "25C4CFD7",
         "066EBE81",
         "28F0DA02",
