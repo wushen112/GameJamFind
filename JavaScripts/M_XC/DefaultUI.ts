@@ -1,5 +1,13 @@
 ﻿/*
  * @Author: wushen112 330177253@qq.com
+ * @Date: 2024-07-07 00:31:49
+ * @LastEditors: wushen112 330177253@qq.com
+ * @LastEditTime: 2024-07-07 10:00:26
+ * @FilePath: \test\JavaScripts\M_XC\DefaultUI.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE,
+ */
+/*
+ * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 10:39:43
  * @LastEditors: wushen112 330177253@qq.com
  * @LastEditTime: 2024-07-07 00:47:05
@@ -28,7 +36,7 @@ export default class DefaultUI extends DefaultUI_Generate{
 	//倒计时0.1秒计时器
 	private  _timer :number = 0;
 	/**总时间 */
-	public time:number = 180;
+	public time:number = 10;
 
 	private slot_cnt :number
 
@@ -44,7 +52,7 @@ export default class DefaultUI extends DefaultUI_Generate{
 			Obj_Manager.instance.exChange();
 		})
 		//获得物品栏
-		Event.addLocalListener(EventData.Get_Item,(id:string,tag:string)=>{
+		Event.addLocalListener(EventData.Get_Item,(id:string,tag:string,obj:GameObject)=>{
 			
 			let temp = this.slots.get(tag)
 			if(temp){
@@ -54,7 +62,8 @@ export default class DefaultUI extends DefaultUI_Generate{
 				var slot_data : Slot_Data = {
 					icon_id : id,
 					tag: tag,
-					cnt : 1
+					cnt : 1,
+					obj:obj
 				}
 				this.slots.set(tag,slot_data)
 			}
