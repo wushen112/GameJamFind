@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 10:39:43
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 12:11:50
+ * @LastEditTime: 2024-07-07 13:34:03
  * @FilePath: \test\JavaScripts\M_XC\Obj_Manager.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -58,6 +58,11 @@ export class Obj_Manager  {
         this.map.set("tissue","48727")
 
     }
+    /**恢复所有物品状态 */
+    init_obj(){
+        
+    }
+
     public exChange(){
         if(!this.curItem){
             return ;
