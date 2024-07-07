@@ -101,7 +101,7 @@ export default class DefaultUI extends DefaultUI_Generate{
 		}
 	}
 
-	private update_slot(){
+	public update_slot(){
 		let index = 0
 		for(let value of this.slots.values()){
 			if(value.cnt>0){
@@ -130,9 +130,7 @@ export default class DefaultUI extends DefaultUI_Generate{
 			//TODO 走死亡路径
 			Event.dispatchToLocal(EventData.Over);
 			this.time = 180;
-			EventController.instance.success1 = false;
-			EventController.instance.success2 = false;
-			UIService.getUI(DefaultUI).slots.clear();
+
 		}
 
 		//const hitResult = QueryUtil.lineTrace(Camera.currentCamera.worldTransform.position,ScreenUtil.getSightBeadPosition(),true,true)
