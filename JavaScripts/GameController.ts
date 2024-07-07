@@ -1,6 +1,6 @@
 import EventController from "./EventController";
 import DefaultUI from "./M_XC/DefaultUI";
-import DefaultUI_generate from "./ui-generate/DefaultUI_generate";
+import Awake_generate from "./ui-generate/Awake_generate";
 import { Obj_Manager } from "./M_XC/Obj_Manager";
 import GameAnimation from "./util/GameAnimaiton";
 import Tips from "./util/Tips";
@@ -39,7 +39,7 @@ export default class GameController {
         let sound = "17357BC7"
         //特效
         const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
-        let hud = UIService.show(DefaultUI_generate)
+        let hud = UIService.show(Awake_generate)
         hud.mCanvas_Black.visibility = 0;
         let eye1 = hud.mImg_Eye1
         let eye2 = hud.mImg_Eye2
@@ -47,20 +47,20 @@ export default class GameController {
         let eye2Pos = new Vector2(0, 0)
         
         // 眨眼
-        let eye1Tween = new mw.Tween({ value: eye1.size.y }).to({ value: eye1.size.y / 2 }, 2000).onUpdate((obj) => {
+        let eye1Tween = new mw.Tween({ value: eye1.size.y }).to({ value: eye1.size.y / 2 }, 1000).onUpdate((obj) => {
             eye1Pos = obj.value
             eye1.size.y = eye1Pos
         }).interpolation(TweenUtil.Interpolation.Bezier).repeat(2)
-        let eye2Tween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y * 0.75 }, 2000).onUpdate((obj) => {
+        let eye2Tween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y * 0.75 }, 1000).onUpdate((obj) => {
             eye2Pos.y = obj.value
             eye2.position = eye2Pos
         }).interpolation(TweenUtil.Interpolation.Bezier).repeat(2)
         //闭眼
-        let eye1BackTween = new mw.Tween({ value: eye1.size.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 2000).onUpdate((obj) => {
+        let eye1BackTween = new mw.Tween({ value: eye1.size.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 1000).onUpdate((obj) => {
             eye1Pos = obj.value
             eye1.size.y = eye1Pos
         }).interpolation(TweenUtil.Interpolation.Bezier)
-        let eye2BackTween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 2000).onUpdate((obj) => {
+        let eye2BackTween = new mw.Tween({ value: eye2.position.y }).to({ value: hud.mCanvas_Black.position.y / 2 }, 1000).onUpdate((obj) => {
             eye2Pos.y = obj.value
             eye2.position = eye2Pos
         }).interpolation(TweenUtil.Interpolation.Bezier)
@@ -73,7 +73,7 @@ export default class GameController {
             setTimeout(() => {
                 effect.play();
                 setTimeout(() => {
-                    hud.mCanvas_Black.visibility = 1;
+                    UIService.hide(Awake_generate)
                     //进入正式游戏写这里面
                     
                 }, 500);
