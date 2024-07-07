@@ -24,13 +24,6 @@ export default class Awake_Generate extends UIScript {
 		}
 		return this.mImg_Eye1_Internal
 	}
-	private mImg_Eye2_Internal: mw.Image
-	public get mImg_Eye2(): mw.Image {
-		if(!this.mImg_Eye2_Internal&&this.uiWidgetBase) {
-			this.mImg_Eye2_Internal = this.uiWidgetBase.findChildByPath('RootCanvas/mCanvas_Black/mImg_Eye2') as mw.Image
-		}
-		return this.mImg_Eye2_Internal
-	}
 
 
  
