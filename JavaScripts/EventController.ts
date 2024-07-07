@@ -122,7 +122,7 @@ export default class EventController {
                 char.play();
                 setTimeout(() => {
                     char.speed = 0
-                }, 600);
+                }, 800);
                 setTimeout(() => {
                     UIService.hide(BlackChange_generate)
                 }, 1500);

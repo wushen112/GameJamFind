@@ -89,7 +89,7 @@ export default class GameController {
         let hud = UIService.show(Awake_generate)
         let sound = GameObject.findGameObjectById("22185F22") as Sound
         sound.play()
-        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 500).onUpdate((obj) => {
+        let eye1Tween = new mw.Tween({ value: 1 }).to({ value: 0 }, 800).onUpdate((obj) => {
             hud.mCanvas_Black.renderOpacity = obj.value
         }).start();
         setTimeout(() => {
