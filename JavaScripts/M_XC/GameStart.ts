@@ -969,13 +969,16 @@ export default class GameStart extends Script {
 
         GameObject.asyncFindGameObjectById("05FB4265").then(e=>{
             (e as Trigger).onEnter.add(()=>{
-                GameController.instance.judgeDie(true)
+               Event.dispatchToLocal(EventData.Over,true);
             })
         })
 
+        //监听游戏结束事件
 
-        Event.addLocalListener(EventData.Over,()=>{
-            GameController.instance.judgeDie();
+        Event.addLocalListener(EventData.Over,(isJump:boolean =false)=>{
+            UIService.hide(DefaultUI);
+            Player.localPlayer.character.worldTransform.position = new Vector(2039,1088,540)
+            GameController.instance.judgeDie(isJump);
             UIService.getUI(DefaultUI).slots.forEach((value,key)=>{
                 value.obj.setVisibility(true);
                 value.obj.setCollision(PropertyStatus.On);
@@ -984,6 +987,7 @@ export default class GameStart extends Script {
 			EventController.instance.success2 = false;
 			UIService.getUI(DefaultUI).slots.clear();
             UIService.getUI(DefaultUI).update_slot();
+            UIService.getUI(DefaultUI).time = 60;
         })
  
         Event.addLocalListener(EventData.GameStart,()=>{
@@ -997,8 +1001,8 @@ export default class GameStart extends Script {
 
     }
 
+    /**初始化死亡的摄像机 */
     async initCamera(){
-        //TODO 两个摄像机
         await GameObject.asyncFindGameObjectById("2E7C9721").then((e)=>{
             GameController.instance.startCamera = e as Camera;
         })

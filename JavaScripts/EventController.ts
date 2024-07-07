@@ -2,7 +2,7 @@
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-07 00:31:49
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 09:43:25
+ * @LastEditTime: 2024-07-07 12:16:44
  * @FilePath: \test\JavaScripts\EventController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -52,8 +52,11 @@ export default class EventController  {
     private ToiletDoor(obj:GameObject){
         if(this.EventMap.has("tissue")){
             //TODO 黑屏一下打开门
-            obj.worldTransform.rotation = Rotation.zero
-
+            Tips.show("大叔：你有纸巾吗， 哦 谢谢你给我纸巾，我终于可以出去了！！！")
+            obj.setVisibility(false);
+            obj.setCollision(PropertyStatus.Off);
+            UIService.getUI(DefaultUI).slots.delete("tissue");
+            UIService.getUI(DefaultUI).update_slot();
         }else{
             Tips.show("大叔：不给我纸巾我是不会出去的！！！")
         }
@@ -63,7 +66,10 @@ export default class EventController  {
     private CR_gril(obj:GameObject){
         if(this.EventMap.has("cola")){
             //TODO 黑屏一下打开机长大门
-            obj.worldTransform.rotation = Rotation.zero
+            obj.setVisibility(false);
+            obj.setCollision(PropertyStatus.Off);
+            obj.getChildren()[0].setVisibility(false);
+            obj.getChildren()[0].setCollision(PropertyStatus.Off);
         }else{
             Tips.show("空乘：机长想喝橙汁，但是我不能走开")
         }
@@ -75,9 +81,13 @@ export default class EventController  {
             Tips.show("空乘：您好，请不要乱拿东西");
             Tips.show("我：也许可以偷偷拿相似的替代");
         }else{
-            Tips.show("我：趁现在替换");
+            Tips.show("我：趁现在用背包替换替换");
             Tips.show("获得了降落伞");
-            Obj_Manager.instance.exChange();
+            UIService.getUI(DefaultUI).slots.delete("bag");
+            UIService.getUI(DefaultUI).update_slot();
+            const gameObj =  Obj_Manager.instance.curItem.gameObject
+            const imgId =  Obj_Manager.instance.map.get(gameObj.tag)
+            Event.dispatchToLocal(EventData.Get_Item,imgId,gameObj.tag,gameObj);
         }
         return false
     }
@@ -101,10 +111,9 @@ export default class EventController  {
         
     }
 
+    /**开门 */
     private aircraftDoor(Obj:GameObject){
         Obj.worldTransform.position = Vector.zero;
- 
-        
     }
 
     private commander(){
