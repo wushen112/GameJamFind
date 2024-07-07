@@ -5,8 +5,10 @@
  * @abstract 解决“披萨问题”
  * @abstract 增加收获奖杯动效
  */
+import EventController from "../EventController";
 import EventData from "../EventData";
 import GameController, { Ending } from "../GameController";
+import GameAnimation from "../util/GameAnimaiton";
 import DefaultUI from "./DefaultUI";
 import { Obj_Manager } from "./Obj_Manager";
 import MainUI from "./ui/UIMain";
@@ -961,19 +963,31 @@ export default class GameStart extends Script {
             })
         }
         InputUtil.onKeyDown(Keys.L,()=>{
-            GameController.instance.airCollision()
+            GameController.instance.win()
         })
         this._character = Player.localPlayer.character;
 
+        GameObject.asyncFindGameObjectById("05FB4265").then(e=>{
+            (e as Trigger).onEnter.add(()=>{
+                GameController.instance.judgeDie(true)
+            })
+        })
+
+
         Event.addLocalListener(EventData.Over,()=>{
             GameController.instance.judgeDie();
+            UIService.getUI(DefaultUI).slots.forEach((value,key)=>{
+                value.obj.setVisibility(true);
+                value.obj.setCollision(PropertyStatus.On);
+            })
+            EventController.instance.success1 = false;
+			EventController.instance.success2 = false;
+			UIService.getUI(DefaultUI).slots.clear();
+            UIService.getUI(DefaultUI).update_slot();
         })
  
         Event.addLocalListener(EventData.GameStart,()=>{
-            UIService.getUI(DefaultUI).slots.forEach((value,key)=>{
-                value.obj.setVisibility(true);
-                value.obj.setCollision(PropertyStatus.Off);
-            })
+            GameController.instance.LoopFrist()
         })
 
         this.useUpdate = true

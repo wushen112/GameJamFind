@@ -9,7 +9,7 @@ import Tips from "./util/Tips";
  * @Author: wushen112 330177253@qq.com
  * @Date: 2024-07-06 14:11:24
  * @LastEditors: wushen112 330177253@qq.com
- * @LastEditTime: 2024-07-07 10:46:24
+ * @LastEditTime: 2024-07-07 11:39:52
  * @FilePath: \test\JavaScripts\GameController.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -32,8 +32,9 @@ export default class GameController {
     onUpdate() {
 
     }
-
+    public startPos = new Vector(2039,1088,540)
     LoopFrist() {
+        Player.localPlayer.character.worldTransform.position = this.startPos;
         //音效
         let sound = "17357BC7"
         //特效
@@ -74,6 +75,7 @@ export default class GameController {
                 setTimeout(() => {
                     hud.mCanvas_Black.visibility = 1;
                     //进入正式游戏写这里面
+                    
                 }, 500);
             }, 4000);
         }, 1000);
@@ -137,9 +139,25 @@ export default class GameController {
     dropSuccess() {
         Tips.show("恭喜你，成功落地");
     }
+
     /**真正胜利的结局 */
     win() {
-
+        const air = GameObject.findGameObjectById("3481F2C3") as GameObject;
+        new Tween(air.worldTransform.position).to(new Vector(-24037,9640,-74971),1000)
+        .onUpdate((value)=>{
+            air.worldTransform.position=value
+        })
+        .onComplete(()=>{
+            new Tween(air.worldTransform.position).to(new Vector(-1203,9640,-74971),1000)
+            .onUpdate((value)=>{
+                air.worldTransform.position=value
+            })
+            .onComplete(()=>{
+                Tips.show("恭喜你，成功落地")
+            })
+            .start()
+        }).start()
+      //  Camera.currentCamera.lock(air)
     }
 
 }
