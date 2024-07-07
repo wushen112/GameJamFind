@@ -32,10 +32,8 @@ export default class GameController {
     onUpdate() {
 
     }
-    public startPos = new Vector(2039, 1088, 540)
-    //开始游戏过场
     LoopFrist() {
-        Player.localPlayer.character.worldTransform.position = this.startPos;
+       
         //音效
         let soundNao = GameObject.findGameObjectById("17357BC7") as Sound
         let soundQueen = GameObject.findGameObjectById("01EC1A8F") as Sound
