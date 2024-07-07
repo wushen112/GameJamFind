@@ -83,7 +83,11 @@ export default class NpcAnimation extends Script {
      */
     protected onUpdate(dt: number): void {
         //检测时间暂停
+        if (TimeController.instance.time == 0) {
+            this.anima.speed = 0.1
+        } else {
             this.anima.speed = TimeController.instance.time
+        }
 
     }
 

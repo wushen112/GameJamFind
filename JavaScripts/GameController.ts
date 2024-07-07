@@ -153,7 +153,14 @@ export default class GameController {
     /**掉落结局 */
     dropFail() {
         Camera.switch(GameController.instance.BagCamera, 0.2)
+        this.EndTips = UIService.show(EndTips_generate)
         this.EndTips.mText_Take.text = "也许只是个书包？"
+        setTimeout(() => {
+            UIService.hide(EndTips_generate)
+            setTimeout(() => {
+                Camera.switch(GameController.instance.currCameta, 0.2)
+            }, 2000);
+        }, 2000);
     }
     dropSuccess() {
         Camera.switch(GameController.instance.parachuteCamera, 0.2)
@@ -161,6 +168,9 @@ export default class GameController {
         this.EndTips.mText_Take.text = "你成功避免了死亡，但你本可成为拯救他人的英雄"
         setTimeout(() => {
             UIService.hide(EndTips_generate)
+            setTimeout(() => {
+                Camera.switch(GameController.instance.currCameta, 0.2)
+            }, 2000);
         }, 2000);
     }
 
