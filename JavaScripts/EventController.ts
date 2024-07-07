@@ -55,7 +55,7 @@ export default class EventController  {
             obj.worldTransform.rotation = Rotation.zero
 
         }else{
-            Tips.show("门外有人吗，能给我哪些纸巾吗，万分感谢！！！")
+            Tips.show("大叔：不给我纸巾我是不会出去的！！！")
         }
         return false
     }
@@ -65,16 +65,18 @@ export default class EventController  {
             //TODO 黑屏一下打开机长大门
             obj.worldTransform.rotation = Rotation.zero
         }else{
-            Tips.show("那个客人想要一杯可乐，可是可乐已经没了，要被投诉了")
+            Tips.show("空乘：机长想喝橙汁，但是我不能走开")
         }
         return false
     }
 
     private parachute(obj){
         if(!this.EventMap.has("bag")){
-            Tips.show("乘客您好现在没有危险请不要触碰降落伞");
+            Tips.show("空乘：您好，请不要乱拿东西");
+            Tips.show("我：也许可以偷偷拿相似的替代");
         }else{
-            Tips.show("趁现在偷偷获得降落伞");
+            Tips.show("我：趁现在替换");
+            Tips.show("获得了降落伞");
             Obj_Manager.instance.exChange();
         }
         return false
@@ -82,7 +84,7 @@ export default class EventController  {
 
     private terrorist(obj:GameObject){
         if(!this.EventMap.has("toiletPegs")){
-            Tips.show("这个人看起来好危险");
+            Tips.show("我：这个人看起来很可疑，一直看时间");
         }else{
             //TODO 黑屏一下恐怖分子倒下
             this.success1=true;
