@@ -33,12 +33,15 @@ export default class GameController {
 
     }
     public startPos = new Vector(2039, 1088, 540)
+    //开始游戏过场
     LoopFrist() {
         Player.localPlayer.character.worldTransform.position = this.startPos;
         //音效
-        let sound = GameObject.findGameObjectById("17357BC7") as Sound
+        let soundNao = GameObject.findGameObjectById("17357BC7") as Sound
+        let soundQueen = GameObject.findGameObjectById("01EC1A8F") as Sound
+        let soundBao = GameObject.findGameObjectById("3E1551CA") as Sound
         //特效
-        const effect = GameObject.findGameObjectById("0318B5B8") as Effect;
+        const effect = GameObject.findGameObjectById("2C6CFD01") as Effect;
         let hud = UIService.show(Awake_generate)
         hud.mCanvas_Black.visibility = 0;
 
@@ -49,19 +52,30 @@ export default class GameController {
         let eye1BackTween = new mw.Tween({ value: 0 }).to({ value: 1 }, 500).onUpdate((obj) => {
             hud.mCanvas_Black.renderOpacity = obj.value
         })
-        sound.play()
+        soundNao.play()
+        setTimeout(() => {
+            soundNao.play()
+            setTimeout(() => {
+                soundNao.play()
+            }, 400)
+        }, 400)
         setTimeout(() => {
             eye1Tween.start().chain(eye1BackTween.start())
             eye1BackTween.start().chain(eye1Tween.start())
             setTimeout(() => {
                 effect.play();
+                soundBao.play()
                 setTimeout(() => {
-                    UIService.hide(Awake_generate)
-                    //进入正式游戏写这里面
-                    this.gameStart()
+                    soundQueen.play()
+                    setTimeout(() => {
+                        UIService.hide(Awake_generate)
+                        //进入正式游戏写这里面
+                        this.gameStart()
+                    }, 3000);
+
                 }, 500);
             }, 2000);
-        }, 1000);
+        }, 1400);
     }
 
     gameStart() {
