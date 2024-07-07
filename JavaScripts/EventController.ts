@@ -88,8 +88,15 @@ export default class EventController  {
         }else{
             //TODO 黑屏一下恐怖分子倒下
             this.success1=true;
-            const char =  (obj as Character).loadAnimation("");
+            let player=obj as Character
+            let atkProp=GameObject.findGameObjectById("3EF93281")
+            atkProp.setVisibility(1)
+            player.attachToSlot(atkProp,HumanoidSlotType.RightHand)
+            const char =  (obj as Character).loadAnimation("224984");
             char.play();
+            setTimeout(() => {
+                atkProp.setVisibility(2)
+            }, 1000);
         }
         
     }

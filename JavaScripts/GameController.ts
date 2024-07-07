@@ -72,6 +72,7 @@ export default class GameController {
             setTimeout(() => {
                 effect.play();
                 setTimeout(() => {
+                    hud.mCanvas_Black.visibility = 1;
                     //进入正式游戏写这里面
                 }, 500);
             }, 4000);
@@ -118,16 +119,15 @@ export default class GameController {
         const airBPosition=airB.worldTransform.position.clone();
         let airTween = new mw.Tween(airBPosition).to(airAPosition,2000).onUpdate((value) => {
             airB.worldTransform.position= value
-            console.log("执行了的东西")
         }).start();
         setTimeout(() => {
             effect.play();
            
         }, 1800);
         setTimeout(() => {
-            Camera.switch(GameController.instance.currCameta,0.5)
+            Camera.switch(GameController.instance.currCameta,0.2)
         }, 2000);
-        Camera.switch(GameController.instance.hitCamera,0.5)
+        Camera.switch(GameController.instance.hitCamera,0.2)
 
     }
     /**掉落结局 */
